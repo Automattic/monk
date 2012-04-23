@@ -28,7 +28,7 @@ var db = require('monk')('localhost/mydb')
 #### Replica set
 
 ```js
-var db = require('monk')('localhost/mydb,192.168.1.1/mydb')
+var db = require('monk')('localhost/mydb,192.168.1.1')
 ```
 
 ### Collections
