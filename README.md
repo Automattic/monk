@@ -35,7 +35,7 @@ var db = require('monk')('localhost/mydb,192.168.1.1/mydb')
 
 #### Getting one
 
-``js
+```js
 var users = db.get('users')
 // users.insert(), users.update() … (see below)
 ```
