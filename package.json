@@ -1,0 +1,13 @@
+{
+    "name": "monk"
+  , "version": "0.1.0"
+  , "main": "lib/monk.js"
+  , "dependencies": {
+        "mongoskin": "0.3.x"
+      , "debug": "0.6.x"
+    }
+  , "devDependencies": {
+        "mocha": "1.0.x"
+      , "expect.js": "0.1.x"
+    }
+}
