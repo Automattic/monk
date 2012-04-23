@@ -4,6 +4,17 @@
 Monk is a tiny layer that provides simple yet substantial usability
 improvements for MongoDB usage within Node.JS.
 
+```js
+var db = require('monk')('localhost/mydb')
+  , users = db.get('users')
+
+users.index('name last');
+users.insert({ name: 'Tobi', bigdata: {} });
+users.find({ name: 'Loki' }, '-bigdata', function () {
+  // exclude bigdata field
+});
+```
+
 ## Features
 
 - Command buffering. You can start querying right away.
