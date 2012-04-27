@@ -115,6 +115,13 @@ users.id('hexstring') // returns ObjectId
 users.id(obj) // returns ObjectId
 ```
 
+### Updating
+
+```js
+users.update({}, {}, fn);
+users.updateById('id', {}, fn);
+```
+
 ### Finding
 
 #### Many
