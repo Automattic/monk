@@ -1,6 +1,6 @@
 {
     "name": "monk"
-  , "version": "0.1.1"
+  , "version": "0.1.2"
   , "main": "lib/monk.js"
   , "dependencies": {
         "mongoskin": "0.3.x"
