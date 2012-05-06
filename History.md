@@ -1,4 +1,10 @@
 
+0.1.5 / 2012-05-06
+==================
+
+  * Added `Collection` references to `Promise`s.
+  * Fixed `findAndModify`.
+
 0.1.4 / 2012-05-06
 ==================
 
