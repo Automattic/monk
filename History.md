@@ -1,4 +1,10 @@
 
+0.1.4 / 2012-05-06
+==================
+
+  * Ensured insert calls back with a single object.
+  * Ensured `insert` resolves promise in next tick.
+
 0.1.3 / 2012-05-03
 ==================
 
