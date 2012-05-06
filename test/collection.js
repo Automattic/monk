@@ -78,6 +78,13 @@ describe('collection', function () {
     });
   });
 
+  describe('inserting', function () {
+    it('should force callback in next tick', function (done) {
+      var p = users.insert({ a: 'b' });
+      p.complete(done);
+    });
+  });
+
   describe('promises', function () {
     var Promise = monk.Promise;
 
