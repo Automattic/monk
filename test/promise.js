@@ -4,7 +4,7 @@ var Promise = require('../lib/monk').Promise
 describe('promise', function () {
 
   it('Promise#type', function () {
-    var p = new Promise('woot');
+    var p = new Promise(null, 'woot');
     expect(p.type).to.be('woot');
   });
 

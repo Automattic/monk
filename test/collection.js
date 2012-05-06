@@ -99,49 +99,57 @@ describe('collection', function () {
     it('insert', function () {
       var p = users.insert();
       expect(p).to.be.a(Promise);
+      expect(p.col).to.be(users);
       expect(p.type).to.be('insert');
     });
 
     it('findOne', function () {
       var p = users.findOne();
       expect(p).to.be.a(Promise);
+      expect(p.col).to.be(users);
       expect(p.type).to.be('findOne');
     });
 
     it('find', function () {
       var p = users.findOne();
       expect(p).to.be.a(Promise);
+      expect(p.col).to.be(users);
       expect(p.type).to.be('findOne');
     });
 
     it('update', function () {
       var p = users.findOne();
       expect(p).to.be.a(Promise);
+      expect(p.col).to.be(users);
       expect(p.type).to.be('findOne');
     });
 
     it('findAndModify', function () {
-      var p = users.findOne();
+      var p = users.findAndModify();
       expect(p).to.be.a(Promise);
-      expect(p.type).to.be('findOne');
+      expect(p.col).to.be(users);
+      expect(p.type).to.be('findAndModify');
     });
 
     it('remove', function () {
       var p = users.findOne();
       expect(p).to.be.a(Promise);
+      expect(p.col).to.be(users);
       expect(p.type).to.be('findOne');
     });
 
     it('index', function () {
-      var p = users.findOne();
+      var p = users.index('eee');
       expect(p).to.be.a(Promise);
-      expect(p.type).to.be('findOne');
+      expect(p.col).to.be(users);
+      expect(p.type).to.be('index');
     });
 
     it('indexes', function () {
-      var p = users.findOne();
+      var p = users.indexes();
       expect(p).to.be.a(Promise);
-      expect(p.type).to.be('findOne');
+      expect(p.col).to.be(users);
+      expect(p.type).to.be('indexes');
     });
 
     it('drop', function (done) {
