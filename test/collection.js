@@ -83,6 +83,14 @@ describe('collection', function () {
       var p = users.insert({ a: 'b' });
       p.complete(done);
     });
+
+    it('should give you an object with the _id', function (done) {
+      var p = users.insert({ a: 'b' }, function (err, obj) {
+        expect(obj._id).to.be.an('object');
+        expect(obj._id.toHexString).to.not.be(undefined);
+        done();
+      });
+    });
   });
 
   describe('promises', function () {
