@@ -1,12 +1,13 @@
 
 var monk = require('../lib/monk')
   , db
-  , users
+  , users, indexes
 
 describe('collection', function () {
   before(function () {
-    db = monk('127.0.0.1/monk-' + Date.now());
-    users = db.get('users');
+    db = monk('127.0.0.1/monk');
+    users = db.get('users-' + Date.now());
+    indexes = db.get('indexes-' + Date.now());
   });
 
   describe('casting method', function () {
@@ -67,9 +68,9 @@ describe('collection', function () {
     });
 
     it('should accept options', function (done) {
-      users.index({ woot: 1 }, { unique: true }, function (err) {
+      indexes.index({ woot: 1 }, { unique: true }, function (err) {
         expect(err).to.be(null);
-        users.indexes(function (err, indexes) {
+        indexes.indexes(function (err, indexes) {
           expect(err).to.be(null);
           expect(indexes.woot_1).to.not.be(undefined);
           done();
@@ -89,6 +90,19 @@ describe('collection', function () {
         expect(obj._id).to.be.an('object');
         expect(obj._id.toHexString).to.not.be(undefined);
         done();
+      });
+    });
+  });
+
+  describe('finding', function () {
+    it('should find by id', function (done) {
+      users.insert({ c: 'd' }, function (err, doc) {
+        if (err) return done(err);
+        users.findById(doc._id, function (err, doc) {
+          if (err) return done(err);
+          expect(doc.c).to.be('d');
+          done();
+        });
       });
     });
   });
@@ -164,6 +178,9 @@ describe('collection', function () {
   });
 
   after(function (done) {
-    users.drop(done);
+    users.drop(function (err) {
+      if (err) return done(err);
+      indexes.drop(done);
+    });
   });
 });
