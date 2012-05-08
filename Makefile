@@ -3,7 +3,7 @@ TESTS = test/*.js
 REPORTER = dot
 
 test:
-	@./node_modules/.bin/mocha \
+	@DEBUG=$DEBUG,monk,monk:queries ./node_modules/.bin/mocha \
 		--require test/common.js \
 		--reporter $(REPORTER) \
 		--growl \

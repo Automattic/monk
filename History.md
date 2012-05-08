@@ -1,4 +1,12 @@
 
+0.1.7 / 2012-05-08
+==================
+
+  * Added global and collection-level options.
+  * Enabled safe mode by default.
+  * Improved error handling in tests.
+  * Fixed `update` callback with safe: false.
+
 0.1.6 / 2012-05-06
 ==================
 
