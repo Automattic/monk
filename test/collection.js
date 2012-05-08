@@ -107,6 +107,23 @@ describe('collection', function () {
     });
   });
 
+  describe('updating', function () {
+    it('should update', function (done) {
+      users.insert({ d: 'e' }, function (err, doc) {
+        if (err) return done(err);
+        var p = users.update({ _id: doc._id }, { $set: { d: 'f' } });
+        p.complete(function (err) {
+          if (err) return done(err);
+          users.findById(doc._id, function (err, doc) {
+            if (err) return done(err);
+            expect(doc.d).to.be('f');
+            done();
+          });
+        });
+      });
+    });
+  });
+
   describe('promises', function () {
     var Promise = monk.Promise;
 
