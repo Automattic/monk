@@ -25,6 +25,8 @@ users.find({ name: 'Loki' }, '-bigdata', function () {
   `update` signature style)
 - Auto-casting of `_id` in queries
 - Builds on top of [mongoskin](http://github.com/guileen/node-mongoskin)
+- Allows to set global options or collection-level options for queries. (eg:
+  `safe` is `true` by default for all queries)
 
 ## How to use
 
@@ -162,6 +164,14 @@ users.find({}, { stream: true })
   .each(function(doc){})
   .error(function(err){})
   .success(function(){});
+```
+
+### Global options
+
+```js
+var db = require('monk')('localhost/mydb')
+db.options.safe = true; // global
+db.get('users').options.safe = false; // collection-level
 ```
 
 ### Query debugging

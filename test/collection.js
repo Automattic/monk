@@ -124,6 +124,31 @@ describe('collection', function () {
     });
   });
 
+  describe('options', function () {
+    it('should allow defaults', function (done) {
+      db.options.multi = true;
+      users.update({}, { $set: { f: 'g' } }, function (err, num) {
+        expect(err).to.be(null);
+        expect(num).to.be.a('number'); // only a number of multi=true
+
+        users.options.safe = false;
+        users.options.multi = false;
+        users.update({}, { $set: { g: 'h' } }, function (err, num) {
+          expect(err).to.be(null);
+          expect(num).to.be(undefined);
+
+          users.options.safe = true;
+          users.options.multi = true;
+          users.update({}, { $set: { g: 'h' } }, { safe: false, multi: false }, function (err, num) {
+            expect(err).to.be(null);
+            expect(num).to.be(undefined);
+            done();
+          });
+        });
+      });
+    });
+  });
+
   describe('promises', function () {
     var Promise = monk.Promise;
 
