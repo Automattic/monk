@@ -97,9 +97,9 @@ describe('collection', function () {
   describe('finding', function () {
     it('should find by id', function (done) {
       users.insert({ c: 'd' }, function (err, doc) {
-        if (err) return done(err);
+        expect(err).to.be(null);
         users.findById(doc._id, function (err, doc) {
-          if (err) return done(err);
+          expect(err).to.be(null);
           expect(doc.c).to.be('d');
           done();
         });
@@ -110,12 +110,12 @@ describe('collection', function () {
   describe('updating', function () {
     it('should update', function (done) {
       users.insert({ d: 'e' }, function (err, doc) {
-        if (err) return done(err);
+        expect(err).to.be(null);
         var p = users.update({ _id: doc._id }, { $set: { d: 'f' } });
         p.complete(function (err) {
-          if (err) return done(err);
+          expect(err).to.be(null);
           users.findById(doc._id, function (err, doc) {
-            if (err) return done(err);
+            expect(err).to.be(null);
             expect(doc.d).to.be('f');
             done();
           });
@@ -186,7 +186,7 @@ describe('collection', function () {
     it('drop', function (done) {
       var col = db.get('drop-' + Date.now());
       col.insert({}, function (err) {
-        if (err) return done(err);
+        expect(err).to.be(null);
         var p = col.drop(done)
         expect(p).to.be.a(Promise);
         expect(p.type).to.be('drop');
@@ -196,7 +196,7 @@ describe('collection', function () {
 
   after(function (done) {
     users.drop(function (err) {
-      if (err) return done(err);
+      expect(err).to.be(null);
       indexes.drop(done);
     });
   });
