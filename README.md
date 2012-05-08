@@ -170,9 +170,11 @@ users.find({}, { stream: true })
 
 ```js
 var db = require('monk')('localhost/mydb')
-db.options.safe = true; // global
-db.get('users').options.safe = false; // collection-level
+db.options.multi = true; // global multi-doc update
+db.get('users').options.multi = false; // collection-level
 ```
+
+Monk sets `safe` to `true` by default.
 
 ### Query debugging
 
