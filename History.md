@@ -1,4 +1,10 @@
 
+0.1.8 / 2012-05-12
+==================
+
+  * Fixed mongoskin version
+  * Improved options docs section.
+
 0.1.7 / 2012-05-08
 ==================
 
