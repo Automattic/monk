@@ -124,6 +124,29 @@ describe('collection', function () {
     });
   });
 
+  describe('findAndModifying', function () {
+    it('should upsert', function (done) {
+      function callback (err, doc) {
+        if (err) return done(err);
+        expect(doc.find).to.be(rand);
+        users.findOne({ find: rand }, function (err, found) {
+          expect(found._id.toString()).to.be(doc._id.toString());
+          expect(found.find).to.be(rand);
+          done();
+        });
+      };
+
+      var rand = 'now-' + Date.now();
+
+      users.findAndModify(
+          { find: rand }
+        , { find: rand }
+        , { upsert: true, new: true }
+        , callback
+      );
+    });
+  });
+
   describe('options', function () {
     it('should allow defaults', function (done) {
       db.options.multi = true;
