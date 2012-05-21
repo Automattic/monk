@@ -1,4 +1,10 @@
 
+0.1.10 / 2012-05-21
+===================
+
+  * Enhanced findAndModify default behavior for upserts.
+  * Fixed findAndModify.
+
 0.1.9 / 2012-05-16
 ==================
 
