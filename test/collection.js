@@ -141,7 +141,7 @@ describe('collection', function () {
       users.findAndModify(
           { find: rand }
         , { find: rand }
-        , { upsert: true, new: true }
+        , { upsert: true }
         , callback
       );
     });
