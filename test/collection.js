@@ -125,11 +125,29 @@ describe('collection', function () {
   });
 
   describe('findAndModifying', function () {
+    it('should alter an existing document', function (done) {
+      var rand = 'now-' + Date.now();
+      users.insert({ find: rand }, function (err, doc) {
+        expect(err).to.be(null);
+        users.findAndModify({ find: rand }, { find: 'woot' }, { new: true }, function (err, doc) {
+          expect(err).to.be(null);
+          expect(doc.find).to.be('woot');
+          users.findById(doc._id, function (err, found) {
+            expect(err).to.be(null);
+            expect(found._id.toString()).to.equal(doc._id.toString());
+            expect(found.find).to.be('woot');
+            done();
+          });
+        });
+      });
+    });
+
     it('should upsert', function (done) {
       function callback (err, doc) {
         if (err) return done(err);
         expect(doc.find).to.be(rand);
         users.findOne({ find: rand }, function (err, found) {
+          expect(err).to.be(null);
           expect(found._id.toString()).to.be(doc._id.toString());
           expect(found.find).to.be(rand);
           done();
