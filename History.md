@@ -1,4 +1,9 @@
 
+0.1.11 / 2012-05-22
+===================
+
+  * Added support for new objectids through `Collection#id`
+
 0.1.10 / 2012-05-21
 ===================
 
