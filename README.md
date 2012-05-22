@@ -113,6 +113,7 @@ users.insert({ a: 'b' }, function (err, doc) {
 To cast to `ObjectId`:
 
 ```js
+users.id() // returns new generated ObjectID
 users.id('hexstring') // returns ObjectId
 users.id(obj) // returns ObjectId
 ```

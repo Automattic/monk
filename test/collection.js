@@ -20,6 +20,11 @@ describe('collection', function () {
       var oid = users.id(users.id('4ee0fd75d6bd52107c000118'));
       expect(oid.toHexString()).to.equal('4ee0fd75d6bd52107c000118');
     });
+
+    it('new oid', function () {
+      var oid = users.id();
+      expect(oid.toHexString()).to.be.a('string');
+    });
   });
 
   describe('indexes', function () {
