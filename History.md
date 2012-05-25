@@ -1,4 +1,10 @@
 
+0.1.12 / 2012-05-25
+===================
+
+  * Added package.json tags.
+  * Added support for update with ids (fixes #4)
+
 0.1.11 / 2012-05-22
 ===================
 
