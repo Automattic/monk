@@ -127,6 +127,34 @@ describe('collection', function () {
         });
       });
     });
+
+    it('should work with an objectid', function (done) {
+      users.insert({ worked: false }, function (err, doc) {
+        expect(err).to.be(null);
+        users.update(doc._id, { $set: { worked: true } }, function (err) {
+          expect(err).to.be(null);
+          users.findOne(doc._id, function (err, doc) {
+            expect(err).to.be(null);
+            expect(doc.worked).to.be(true);
+            done();
+          });
+        });
+      });
+    });
+
+    it('should work with an objectid (string)', function (done) {
+      users.insert({ worked: false }, function (err, doc) {
+        expect(err).to.be(null);
+        users.update(doc._id.toString(), { $set: { worked: true } }, function (err) {
+          expect(err).to.be(null);
+          users.findOne(doc._id, function (err, doc) {
+            expect(err).to.be(null);
+            expect(doc.worked).to.be(true);
+            done();
+          });
+        });
+      });
+    });
   });
 
   describe('findAndModifying', function () {
