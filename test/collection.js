@@ -110,6 +110,19 @@ describe('collection', function () {
         });
       });
     });
+
+    it('should only provide selected fields', function (done) {
+      users.insert({ a: 'b', c: 'd', e: 'f' }, function (err, doc) {
+        expect(err).to.be(null);
+        users.findOne(doc._id, 'a e', function (err, doc) {
+          expect(err).to.be(null);
+          expect(doc.a).to.be('b');
+          expect(doc.e).to.be('f');
+          expect(doc.c).to.be(undefined);
+          done();
+        });
+      });
+    });
   });
 
   describe('updating', function () {
