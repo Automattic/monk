@@ -170,6 +170,22 @@ describe('collection', function () {
     });
   });
 
+  describe('remove', function () {
+    it('should remove a document', function (done) {
+      users.insert({ name: 'Tobi' }, function (err, doc) {
+        if (err) return done(err);
+        users.remove({ name: 'Tobi' }, function (err) {
+          if (err) return done(err);
+          users.find({ name: 'Tobi' }, function (err, doc) {
+            if (err) return done(err);
+            expect(doc).to.eql([]);
+            done();
+          })
+        })
+      })
+    })
+  })
+
   describe('findAndModifying', function () {
     it('should alter an existing document', function (done) {
       var rand = 'now-' + Date.now();
@@ -275,10 +291,10 @@ describe('collection', function () {
     });
 
     it('remove', function () {
-      var p = users.findOne();
+      var p = users.remove();
       expect(p).to.be.a(Promise);
       expect(p.col).to.be(users);
-      expect(p.type).to.be('findOne');
+      expect(p.type).to.be('remove');
     });
 
     it('index', function () {
