@@ -123,6 +123,47 @@ describe('collection', function () {
         });
       });
     });
+
+    it('should work with streaming', function (done) {
+      var query = { a: { $exists: true } }
+        , found = 0
+      users.count(query, function (err, total) {
+        users.find(query)
+          .each(function (doc) {
+            expect(doc.a).to.not.eql(null);
+            found++;
+          })
+          .error(function (err) {
+            done(err);
+          })
+          .success(function () {
+            expect(found).to.be(total);
+            done();
+          })
+      });
+    });
+
+    it('should work with streaming option', function (done) {
+      var query = { a: { $exists: true } }
+        , found = 0
+      users.count(query, function (err, total) {
+        var promise = users.find(query, { stream: true })
+        process.nextTick(function () {
+          promise
+            .each(function (doc) {
+              expect(doc.a).to.not.eql(null);
+              found++;
+            })
+            .error(function (err) {
+              done(err);
+            })
+            .success(function () {
+              expect(found).to.be(total);
+              done();
+            })
+        });
+      });
+    });
   });
 
   describe('counting', function () {
