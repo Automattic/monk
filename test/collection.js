@@ -125,6 +125,25 @@ describe('collection', function () {
     });
   });
 
+  describe('counting', function () {
+    it('should work', function (done) {
+      users.count({ a: 'counting' }, function (err, count) {
+        expect(err).to.be(null);
+        expect(count).to.be(0);
+
+        users.insert({ a: 'counting' }, function (err) {
+          expect(err).to.be(null);
+
+          users.count({ a: 'counting' }, function (err, count) {
+            expect(err).to.be(null);
+            expect(count).to.be(1);
+            done();
+          });
+        });
+      });
+    });
+  });
+
   describe('updating', function () {
     it('should update', function (done) {
       users.insert({ d: 'e' }, function (err, doc) {
