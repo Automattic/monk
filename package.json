@@ -1,6 +1,6 @@
 {
     "name": "monk"
-  , "version": "0.1.14"
+  , "version": "0.1.15"
   , "main": "lib/monk.js"
   , "tags": ["mongodb", "mongo", "driver"]
   , "dependencies": {

@@ -1,4 +1,9 @@
 
+0.1.15 / 2012-07-14
+===================
+
+  * collection: avoid mongoskin warn when buffering commands
+
 0.1.14 / 2012-07-09
 ===================
 
