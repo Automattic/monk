@@ -1,4 +1,9 @@
 
+0.2.1 / 2012-07-14
+==================
+
+  * collection: fixed streaming when options are not supplied
+
 0.2.0 / 2012-07-14
 ==================
 
