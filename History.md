@@ -1,4 +1,9 @@
 
+0.3.0 / 2012-09-06
+==================
+
+  * collection: make `findAndModify` accept an oid as the query
+
 0.2.1 / 2012-07-14
 ==================
 
