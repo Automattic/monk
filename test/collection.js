@@ -264,6 +264,34 @@ describe('collection', function () {
       });
     });
 
+    it('should accept an id as query param', function(done){
+      users.insert({ locate: 'me' }, function(err, user){
+        expect(err).to.be(null);
+        users.findAndModify(user._id, { $set: { locate: 'you' } }, function(err){
+          expect(err).to.be(null);
+          users.findOne(user._id, function(err, user){
+            expect(err).to.be(null);
+            expect(user.locate).to.be('you');
+            done();
+          });
+        });
+      });
+    });
+
+    it('should accept an id as query param (mongo syntax)', function(done){
+      users.insert({ locate: 'me' }, function(err, user){
+        expect(err).to.be(null);
+        users.findAndModify({ query: user._id, update: { $set: { locate: 'you' } } }, function(err){
+          expect(err).to.be(null);
+          users.findOne(user._id, function(err, user){
+            expect(err).to.be(null);
+            expect(user.locate).to.be('you');
+            done();
+          });
+        });
+      });
+    });
+
     it('should upsert', function (done) {
       function callback (err, doc) {
         if (err) return done(err);
