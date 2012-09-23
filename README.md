@@ -1,4 +1,3 @@
-
 # monk
 
 Monk is a tiny layer that provides simple yet substantial usability
@@ -24,7 +23,7 @@ users.find({ name: 'Loki' }, '-bigdata', function () {
 - Improvements to the MongoDB APIs (eg: `findAndModify` supports the
   `update` signature style)
 - Auto-casting of `_id` in queries
-- Builds on top of [mongoskin](http://github.com/guileen/node-mongoskin)
+- Builds on top of [mongoskin](http://github.com/kissjs/node-mongoskin)
 - Allows to set global options or collection-level options for queries. (eg:
   `safe` is `true` by default for all queries)
 
