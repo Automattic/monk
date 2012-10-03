@@ -1,7 +1,8 @@
+/*global expect*/
 
 var monk = require('../lib/monk')
   , db
-  , users, indexes
+  , users, indexes;
 
 describe('collection', function () {
   before(function () {
@@ -23,6 +24,11 @@ describe('collection', function () {
 
     it('new oid', function () {
       var oid = users.id();
+      expect(oid.toHexString()).to.be.a('string');
+    });
+
+    it('#oid', function(){
+      var oid = users.oid();
       expect(oid.toHexString()).to.be.a('string');
     });
   });
@@ -126,7 +132,7 @@ describe('collection', function () {
 
     it('should work with streaming', function (done) {
       var query = { a: { $exists: true } }
-        , found = 0
+        , found = 0;
       users.count(query, function (err, total) {
         users.find(query)
           .each(function (doc) {
@@ -139,15 +145,15 @@ describe('collection', function () {
           .success(function () {
             expect(found).to.be(total);
             done();
-          })
+          });
       });
     });
 
     it('should work with streaming option', function (done) {
       var query = { a: { $exists: true } }
-        , found = 0
+        , found = 0;
       users.count(query, function (err, total) {
-        var promise = users.find(query, { stream: true })
+        var promise = users.find(query, { stream: true });
         process.nextTick(function () {
           promise
             .each(function (doc) {
@@ -160,7 +166,7 @@ describe('collection', function () {
             .success(function () {
               expect(found).to.be(total);
               done();
-            })
+            });
         });
       });
     });
@@ -240,11 +246,11 @@ describe('collection', function () {
             if (err) return done(err);
             expect(doc).to.eql([]);
             done();
-          })
-        })
-      })
-    })
-  })
+          });
+        });
+      });
+    });
+  });
 
   describe('findAndModifying', function () {
     it('should alter an existing document', function (done) {
@@ -403,7 +409,7 @@ describe('collection', function () {
       var col = db.get('drop-' + Date.now());
       col.insert({}, function (err) {
         expect(err).to.be(null);
-        var p = col.drop(done)
+        var p = col.drop(done);
         expect(p).to.be.a(Promise);
         expect(p.type).to.be('drop');
       });
