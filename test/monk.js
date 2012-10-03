@@ -54,4 +54,18 @@ describe('monk', function () {
     });
   });
 
+  describe('ObjectID casting', function(){
+    var db = monk('127.0.0.1/monk-test');
+
+    it('Manager#id', function(){
+      var oid = db.id();
+      expect(oid.toHexString()).to.be.a('string');
+    });
+
+    it('Manager#oid', function(){
+      var oid = db.oid();
+      expect(oid.toHexString()).to.be.a('string');
+    });
+  });
+
 });
