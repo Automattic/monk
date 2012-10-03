@@ -414,6 +414,11 @@ describe('collection', function () {
         expect(p.type).to.be('drop');
       });
     });
+
+    it('options', function () {
+      var p = users.find({}, '-test');
+      expect(p.opts).to.eql({ fields: { test: 0 }, safe: true, multi: true });
+    });
   });
 
   after(function (done) {
