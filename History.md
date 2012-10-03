@@ -1,4 +1,12 @@
 
+0.4.0 / 2012-10-03
+==================
+
+  * added travis
+  * manager: added Manager#id and Manager#oid
+  * collection: introduced Collection#oid
+  * manager: added Manager#col
+
 0.3.0 / 2012-09-06
 ==================
 
