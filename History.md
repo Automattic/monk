@@ -1,4 +1,12 @@
 
+0.5.0 / 2012-10-03
+==================
+
+  * promise: added opts to constructor
+  * util: fix field negation
+  * test: added test for promise options
+  * collection: pass options to promises
+
 0.4.0 / 2012-10-03
 ==================
 
