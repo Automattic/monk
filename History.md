@@ -1,4 +1,11 @@
 
+0.6.0 / 2012-10-29
+==================
+
+  * collection: added cursor closing support
+  * promise: introduce #destroy
+  * test: added cursor destroy test
+
 0.5.0 / 2012-10-03
 ==================
 
