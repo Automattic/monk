@@ -168,6 +168,11 @@ users.find({}, { stream: true })
   .success(function(){});
 ```
 
+##### Destroying a cursor
+
+On the returned promise you can call `destroy()`. Upon the cursor
+closing the `success` event will be emitted.
+
 ### Global options
 
 ```js
