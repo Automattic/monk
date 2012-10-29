@@ -170,6 +170,29 @@ describe('collection', function () {
         });
       });
     });
+
+    it('should allow stream cursor destroy', function(done){
+      var query = { a: { $exists: true } }
+        , found = 0;
+      users.count(query, function (err, total) {
+        if (total <= 1) throw new Error('Bad test');
+        var cursor = users.find(query)
+          .each(function (doc) {
+            expect(doc.a).to.not.eql(null);
+            found++;
+            if (2 == found) cursor.destroy();
+          })
+          .error(function (err) {
+            done(err);
+          })
+          .success(function () {
+            setTimeout(function() {
+              expect(found).to.be(2);
+              done();
+            }, 100);
+          });
+      });
+    });
   });
 
   describe('counting', function () {
