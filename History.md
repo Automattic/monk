@@ -1,4 +1,9 @@
 
+0.7.0 / 2012-10-30
+==================
+
+  *: bumped `mongoskin` and therefore `node-mongodb-native`
+
 0.6.0 / 2012-10-29
 ==================
 
