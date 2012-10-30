@@ -5,7 +5,7 @@
   , "tags": ["mongodb", "mongo", "driver"]
   , "repository": { "type": "git", "url": "git://github.com/LearnBoost/monk.git" }
   , "dependencies": {
-        "mongoskin": "0.3.6"
+        "mongoskin": "0.4.4"
       , "debug": "*"
     }
   , "devDependencies": {
