@@ -442,6 +442,18 @@ describe('collection', function () {
       var p = users.find({}, '-test');
       expect(p.opts).to.eql({ fields: { test: 0 }, safe: true, multi: true });
     });
+
+    it('query', function(done){
+      var qry = { a: 'woot' };
+      var p  = users.find(qry);
+      expect(p.query).to.be(qry);
+      p.once('complete', function(){
+        setTimeout(function(){
+          expect(p.qry).to.be(undefined);
+          done();
+        }, 50);
+      });
+    });
   });
 
   after(function (done) {
