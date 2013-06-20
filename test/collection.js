@@ -1,6 +1,7 @@
 /*global expect*/
 
 var monk = require('../lib/monk')
+  , immediately = global.setImmediate || process.nextTick
   , db
   , users, indexes;
 
@@ -154,7 +155,7 @@ describe('collection', function () {
         , found = 0;
       users.count(query, function (err, total) {
         var promise = users.find(query, { stream: true });
-        process.nextTick(function () {
+        immediately(function () {
           promise
             .each(function (doc) {
               expect(doc.a).to.not.eql(null);
