@@ -12,4 +12,7 @@
         "mocha": "*"
       , "expect.js": "0.1.x"
     }
+  , "scripts": {
+        "test": "make test"
+  }
 }
