@@ -49,8 +49,7 @@ describe('promise', function () {
 
   it('Promise#then-chain', function () {
     var p = new Promise()
-      , firstRan = false
-      , secondRan = false;
+      , runCount = 0;
 
     p.then(function () {
       ++runCount;
