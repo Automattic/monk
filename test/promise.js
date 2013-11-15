@@ -34,4 +34,32 @@ describe('promise', function () {
     expect(p.listeners('each').length).to.be(1);
   });
 
+  it('Promise#then', function () {
+    var p = new Promise()
+      , runCount = 0;
+
+    p.then(function() {
+      ++runCount;
+    });
+
+    setTimeout(function () {
+      expect(runCount).to.be(1);
+    }, 10);
+  });
+
+  it('Promise#then-chain', function () {
+    var p = new Promise()
+      , runCount = 0;
+
+    p.then(function () {
+      ++runCount;
+      return new Promise();
+    }).then(function () {
+      ++runCount;
+    });
+
+    setTimeout(function () {
+      expect(runCount).to.be(2);
+    }, 10);
+  });
 });
