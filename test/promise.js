@@ -64,4 +64,61 @@ describe('promise', function () {
       expect(runCount).to.be(2);
     }, 10);
   });
+
+  it('Promise#reject', function (done) {
+    var p = new Promise()
+    p.error(function(err){
+      expect(err).to.be('foo');
+      done();
+    });
+    p.reject('foo');
+  });
+
+  it('Promise#fulfill', function (done) {
+    var p = new Promise()
+    p.success(function(data){
+      expect(data).to.be('bar');
+      done();
+    });
+    p.fulfill('bar');
+  });
+
+  it('Promise#resolve-err', function (done) {
+    var p = new Promise()
+    p.complete(function(err, data){
+      expect(err).to.be('foo');
+      done();
+    });
+    p.resolve('foo');
+  });
+
+  it('Promise#resolve-data', function (done) {
+    var p = new Promise()
+    p.complete(function(err, data){
+      expect(err).to.not.be.ok();
+      expect(data).to.be('bar');
+      done();
+    });
+    p.resolve(null, 'bar');
+  });
+
+  it('Promise#complete-err', function (done) {
+    var p = new Promise()
+    p.on('complete', function(err, data){
+      expect(err).to.be('foo');
+      done();
+    });
+    p.resolve('foo');
+  });
+
+  it('Promise#complete-data', function (done) {
+    var p = new Promise()
+    p.on('complete', function(err, data){
+      expect(err).to.not.be.ok();
+      expect(data).to.be('bar');
+      done();
+    });
+    p.resolve(null, 'bar');
+  });
+
 });
