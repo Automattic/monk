@@ -25,7 +25,9 @@ describe('promise', function () {
   it('Promise#complete', function () {
     var p = new Promise()
     p.complete(function(){});
-    expect(p.listeners('complete').length).to.be(1);
+    // 2 due to internal event listener
+    expect(p.listeners('error').length).to.be(2);
+    expect(p.listeners('success').length).to.be(2);
   });
 
   it('Promise#each', function () {
