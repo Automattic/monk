@@ -12,6 +12,7 @@
   , "devDependencies": {
         "mocha": "*"
       , "expect.js": "0.1.x"
+      , "promises-aplus-tests": "2.0.x"
     }
   , "scripts": {
         "test": "make test"
