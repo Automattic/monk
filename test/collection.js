@@ -214,6 +214,25 @@ describe('collection', function () {
     });
   });
 
+  describe('distinct', function(){
+    it('should work', function(done){
+      users.insert({ distinct: 'a' }, function(err){
+        expect(err).to.be(null);
+        users.insert({ distinct: 'a' }, function(err){
+          expect(err).to.be(null);
+          users.insert({ distinct: 'b' }, function(err){
+            expect(err).to.be(null);
+            users.distinct('distinct', function(err, docs){
+              expect(err).to.be(null);
+              expect(docs).to.eql(['a', 'b']);
+              done();
+            });
+          });
+        });
+      });
+    });
+  });
+
   describe('updating', function () {
     it('should update', function (done) {
       users.insert({ d: 'e' }, function (err, doc) {
@@ -331,7 +350,7 @@ describe('collection', function () {
           expect(found.find).to.be(rand);
           done();
         });
-      };
+      }
 
       var rand = 'now-' + Date.now();
 
