@@ -1,4 +1,10 @@
 
+0.8.1 / 2014-03-01
+==================
+
+ * fix for parameter handling in `findAndModify`
+ * check for `uri` parameter or throw
+
 0.8.0 / 2014-03-01
 ==================
 

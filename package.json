@@ -1,6 +1,6 @@
 {
     "name": "monk"
-  , "version": "0.8.0"
+  , "version": "0.8.1"
   , "main": "lib/monk.js"
   , "tags": ["mongodb", "mongo", "driver"]
   , "repository": { "type": "git", "url": "git://github.com/LearnBoost/monk.git" }
