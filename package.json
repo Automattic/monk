@@ -7,7 +7,7 @@
   , "dependencies": {
         "mongoskin": "0.4.4"
       , "debug": "*"
-      , "mpromise": "~0.5.0"
+      , "mpromise": "0.5.1"
     }
   , "devDependencies": {
         "mocha": "*"
