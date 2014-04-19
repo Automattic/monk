@@ -44,6 +44,8 @@ describe('promise', function () {
       ++runCount;
     });
 
+    p.fulfill();
+
     setTimeout(function () {
       expect(runCount).to.be(1);
     }, 10);
@@ -55,10 +57,12 @@ describe('promise', function () {
 
     p.then(function () {
       ++runCount;
-      return new Promise();
+      return (new Promise()).fulfill();
     }).then(function () {
       ++runCount;
     });
+
+    p.fulfill();
 
     setTimeout(function () {
       expect(runCount).to.be(2);

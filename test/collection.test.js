@@ -374,13 +374,13 @@ describe('collection', function () {
         users.options.multi = false;
         users.update({}, { $set: { g: 'h' } }, function (err, num) {
           expect(err).to.be(null);
-          expect(num).to.be(undefined);
+          expect(num).to.be(null);
 
           users.options.safe = true;
           users.options.multi = true;
           users.update({}, { $set: { g: 'h' } }, { safe: false, multi: false }, function (err, num) {
             expect(err).to.be(null);
-            expect(num).to.be(undefined);
+            expect(num).to.be(null);
             done();
           });
         });
