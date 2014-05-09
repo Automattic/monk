@@ -14,6 +14,8 @@ users.insert({ name: 'Tobi', bigdata: {} });
 users.find({ name: 'Loki' }, '-bigdata', function () {
   // exclude bigdata field
 });
+
+db.close()
 ```
 
 ## Features
@@ -43,6 +45,12 @@ var db = require('monk')('localhost/mydb')
 
 ```js
 var db = require('monk')('localhost/mydb,192.168.1.1')
+```
+
+### Disconnecting
+
+```js
+db.close()
 ```
 
 ### Collections
