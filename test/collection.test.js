@@ -292,6 +292,20 @@ describe('collection', function () {
         });
       });
     });
+    it('should remove a document by id', function (done) {
+      users.insert({ name: 'Tobi' }, function (err, doc) {
+        if (err) return done(err);
+        var id = doc._id;
+        users.removeById(id, function (err) {
+          if (err) return done(err);
+          users.findById(id, function (err, doc) {
+            if (err) return done(err);
+            expect(doc).to.be.null;
+            done();
+          });
+        });
+      });
+    });
   });
 
   describe('findAndModifying', function () {
