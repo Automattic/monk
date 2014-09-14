@@ -103,6 +103,14 @@ describe('collection', function () {
         done();
       });
     });
+
+    it('should return an array if an array was inserted', function (done) {
+      var p = users.insert([{ a: 'b' }, { b: 'a' }], function (err, docs) {
+        expect(docs).to.be.an('array');
+        expect(docs.length).to.be(2);
+        done();
+      });
+    });
   });
 
   describe('finding', function () {
