@@ -1,6 +1,6 @@
 # monk
 
-[![build status](https://secure.travis-ci.org/LearnBoost/monk.png?branch=master)](https://secure.travis-ci.org/LearnBoost/monk)
+[![build status](https://secure.travis-ci.org/Automattic/monk.png?branch=master)](https://secure.travis-ci.org/Automattic/monk)
 
 Monk is a tiny layer that provides simple yet substantial usability
 improvements for MongoDB usage within Node.JS.
