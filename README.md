@@ -16,7 +16,7 @@ users.find({ name: 'Loki' }, '-bigdata', function () {
 });
 users.remove({ name: 'Loki' });
 
-db.close()
+db.close();
 ```
 
 ## Features
