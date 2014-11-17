@@ -75,6 +75,7 @@ users.drop(fn);
     - `findOne({}, fn)`
     - `update({}, {}, fn)` `findAndModify({}, {}, fn)`
     - `findById('id', fn)`
+    - `remove({},{},fn)`
 - You can pass options in the middle: `data[, …], options, fn`
 - You can pass fields to select as an array: `data[, …], ['field', …], fn`
 - You can pass fields as a string delimited by spaces:
@@ -180,6 +181,13 @@ users.find({}, { stream: true })
 
 On the returned promise you can call `destroy()`. Upon the cursor
 closing the `success` event will be emitted.
+
+### Removing
+
+```js
+users.remove({}, {}, fn);
+```
+
 
 ### Global options
 
