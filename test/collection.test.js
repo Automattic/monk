@@ -248,6 +248,21 @@ describe('collection', function () {
         });
       });
     });
+    it('should update by id', function (done) {
+      users.insert({ d: 'e' }, function (err, doc) {
+        expect(err).to.be(null);
+        var id = doc._id;
+        var p = users.updateById(id, { $set: { d: 'f' } });
+        p.complete(function (err) {
+          expect(err).to.be(null);
+          users.findById(doc._id, function (err, doc) {
+            expect(err).to.be(null);
+            expect(doc.d).to.be('f');
+            done();
+          });
+        });
+      });
+    });
 
     it('should work with an objectid', function (done) {
       users.insert({ worked: false }, function (err, doc) {
@@ -287,6 +302,20 @@ describe('collection', function () {
           users.find({ name: 'Tobi' }, function (err, doc) {
             if (err) return done(err);
             expect(doc).to.eql([]);
+            done();
+          });
+        });
+      });
+    });
+    it('should remove a document by id', function (done) {
+      users.insert({ name: 'Tobi' }, function (err, doc) {
+        if (err) return done(err);
+        var id = doc._id;
+        users.removeById(id, function (err) {
+          if (err) return done(err);
+          users.findById(id, function (err, doc) {
+            if (err) return done(err);
+            expect(doc).to.be.null;
             done();
           });
         });
