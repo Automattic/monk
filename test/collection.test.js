@@ -113,6 +113,34 @@ describe('collection', function () {
     });
   });
 
+  describe('saving', function () {
+    it('should insert document', function (done) {
+      users.save({a: 'save'}, function (err, obj) {
+        expect(err).to.be(null);
+        expect(obj._id.toHexString).to.not.be(undefined);
+        done();
+      });
+    });
+
+    it('should update existing document', function (done) {
+      users.insert({a: 'save2'}, function (err, obj) {
+        expect(err).to.be(null);
+        expect(obj.a).to.equal('save2');
+
+        var orig = obj._id;
+
+        obj.a = 'save3';
+
+        users.save(obj, function (err, obj) {
+          expect(err).to.be(null);
+          expect(obj.a).to.equal('save3');
+          expect(orig).to.equal(obj._id);
+          done();
+        });
+      });
+    });
+  });
+
   describe('finding', function () {
     it('should find by id', function (done) {
       users.insert({ c: 'd' }, function (err, doc) {
