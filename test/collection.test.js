@@ -33,6 +33,33 @@ describe('collection', function () {
     });
   });
 
+  describe('cast', function () {
+    it('should cast oids inside $and', function () {
+      var cast = users.cast({
+        $and: [{_id: '4ee0fd75d6bd52107c000118'}]
+      });
+
+      var oid = users.id(cast.$and[0]._id);
+      expect(oid.toHexString()).to.equal('4ee0fd75d6bd52107c000118');
+    });
+
+    it('should cast oids inside $nor', function () {
+      var cast = users.cast({
+        $nor: [{_id: '4ee0fd75d6bd52107c000118'}]
+      });
+
+      var oid = users.id(cast.$nor[0]._id);
+      expect(oid.toHexString()).to.equal('4ee0fd75d6bd52107c000118');
+    });
+
+    it('should cast oids inside $not queries', function () {
+      var cast = users.cast({$not: {_id: '4ee0fd75d6bd52107c000118'}});
+
+      var oid = users.id(cast.$not._id);
+      expect(oid.toHexString()).to.equal('4ee0fd75d6bd52107c000118');
+    });
+  });
+
   describe('indexes', function () {
     it('should accept a field string', function (done) {
       users.index('name.first', function (err) {
