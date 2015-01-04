@@ -14,6 +14,9 @@ users.insert({ name: 'Tobi', bigdata: {} });
 users.find({ name: 'Loki' }, '-bigdata', function () {
   // exclude bigdata field
 });
+users.find({}, {sort: {name: 1}}, function () {
+  // sorted by name field
+});
 users.remove({ name: 'Loki' });
 
 db.close();
