@@ -1,19 +1,25 @@
 # monk
 
-[![build status](https://secure.travis-ci.org/LearnBoost/monk.png?branch=master)](https://secure.travis-ci.org/LearnBoost/monk)
+[![build status](https://secure.travis-ci.org/Automattic/monk.png?branch=master)](https://secure.travis-ci.org/Automattic/monk)
 
 Monk is a tiny layer that provides simple yet substantial usability
 improvements for MongoDB usage within Node.JS.
 
 ```js
-var db = require('monk')('localhost/mydb')
-  , users = db.get('users')
+var db = require('monk')('localhost/mydb');
+var users = db.get('users');
 
 users.index('name last');
 users.insert({ name: 'Tobi', bigdata: {} });
 users.find({ name: 'Loki' }, '-bigdata', function () {
   // exclude bigdata field
 });
+users.find({}, {sort: {name: 1}}, function () {
+  // sorted by name field
+});
+users.remove({ name: 'Loki' });
+
+db.close();
 ```
 
 ## Features
@@ -45,6 +51,12 @@ var db = require('monk')('localhost/mydb')
 var db = require('monk')('localhost/mydb,192.168.1.1')
 ```
 
+### Disconnecting
+
+```js
+db.close()
+```
+
 ### Collections
 
 #### Getting one
@@ -67,6 +79,7 @@ users.drop(fn);
     - `findOne({}, fn)`
     - `update({}, {}, fn)` `findAndModify({}, {}, fn)`
     - `findById('id', fn)`
+    - `remove({}, fn)`
 - You can pass options in the middle: `data[, …], options, fn`
 - You can pass fields to select as an array: `data[, …], ['field', …], fn`
 - You can pass fields as a string delimited by spaces:
@@ -172,6 +185,14 @@ users.find({}, { stream: true })
 
 On the returned promise you can call `destroy()`. Upon the cursor
 closing the `success` event will be emitted.
+
+### Removing
+
+```js
+users.remove({ a: 'b' }, function (err) {
+  if (err) throw err;
+});
+```
 
 ### Global options
 

@@ -31,7 +31,7 @@ describe('monk', function () {
     });
 
     it('to a replica set (string)', function (done) {
-      monk('127.0.0.1/monk-test, localhost', done);
+      monk('127.0.0.1,localhost/monk-test', done);
     });
 
     it('followed by disconnection', function (done) {

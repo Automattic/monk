@@ -34,6 +34,33 @@ describe('collection', function () {
     });
   });
 
+  describe('cast', function () {
+    it('should cast oids inside $and', function () {
+      var cast = users.cast({
+        $and: [{_id: '4ee0fd75d6bd52107c000118'}]
+      });
+
+      var oid = users.id(cast.$and[0]._id);
+      expect(oid.toHexString()).to.equal('4ee0fd75d6bd52107c000118');
+    });
+
+    it('should cast oids inside $nor', function () {
+      var cast = users.cast({
+        $nor: [{_id: '4ee0fd75d6bd52107c000118'}]
+      });
+
+      var oid = users.id(cast.$nor[0]._id);
+      expect(oid.toHexString()).to.equal('4ee0fd75d6bd52107c000118');
+    });
+
+    it('should cast oids inside $not queries', function () {
+      var cast = users.cast({$not: {_id: '4ee0fd75d6bd52107c000118'}});
+
+      var oid = users.id(cast.$not._id);
+      expect(oid.toHexString()).to.equal('4ee0fd75d6bd52107c000118');
+    });
+  });
+
   describe('indexes', function () {
     it('should accept a field string', function (done) {
       users.index('name.first', function (err) {
@@ -101,6 +128,14 @@ describe('collection', function () {
       var p = users.insert({ a: 'b' }, function (err, obj) {
         expect(obj._id).to.be.an('object');
         expect(obj._id.toHexString).to.not.be(undefined);
+        done();
+      });
+    });
+
+    it('should return an array if an array was inserted', function (done) {
+      var p = users.insert([{ a: 'b' }, { b: 'a' }], function (err, docs) {
+        expect(docs).to.be.an('array');
+        expect(docs.length).to.be(2);
         done();
       });
     });
@@ -215,11 +250,45 @@ describe('collection', function () {
     });
   });
 
+  describe('distinct', function(){
+    it('should work', function(done){
+      users.insert({ distinct: 'a' }, function(err){
+        expect(err).to.be(null);
+        users.insert({ distinct: 'a' }, function(err){
+          expect(err).to.be(null);
+          users.insert({ distinct: 'b' }, function(err){
+            expect(err).to.be(null);
+            users.distinct('distinct', function(err, docs){
+              expect(err).to.be(null);
+              expect(docs).to.eql(['a', 'b']);
+              done();
+            });
+          });
+        });
+      });
+    });
+  });
+
   describe('updating', function () {
     it('should update', function (done) {
       users.insert({ d: 'e' }, function (err, doc) {
         expect(err).to.be(null);
         var p = users.update({ _id: doc._id }, { $set: { d: 'f' } });
+        p.complete(function (err) {
+          expect(err).to.be(null);
+          users.findById(doc._id, function (err, doc) {
+            expect(err).to.be(null);
+            expect(doc.d).to.be('f');
+            done();
+          });
+        });
+      });
+    });
+    it('should update by id', function (done) {
+      users.insert({ d: 'e' }, function (err, doc) {
+        expect(err).to.be(null);
+        var id = doc._id;
+        var p = users.updateById(id, { $set: { d: 'f' } });
         p.complete(function (err) {
           expect(err).to.be(null);
           users.findById(doc._id, function (err, doc) {
@@ -269,6 +338,20 @@ describe('collection', function () {
           users.find({ name: 'Tobi' }, function (err, doc) {
             if (err) return done(err);
             expect(doc).to.eql([]);
+            done();
+          });
+        });
+      });
+    });
+    it('should remove a document by id', function (done) {
+      users.insert({ name: 'Tobi' }, function (err, doc) {
+        if (err) return done(err);
+        var id = doc._id;
+        users.removeById(id, function (err) {
+          if (err) return done(err);
+          users.findById(id, function (err, doc) {
+            if (err) return done(err);
+            expect(doc).to.be.null;
             done();
           });
         });
@@ -332,7 +415,7 @@ describe('collection', function () {
           expect(found.find).to.be(rand);
           done();
         });
-      };
+      }
 
       var rand = 'now-' + Date.now();
 
@@ -356,13 +439,13 @@ describe('collection', function () {
         users.options.multi = false;
         users.update({}, { $set: { g: 'h' } }, function (err, num) {
           expect(err).to.be(null);
-          expect(num).to.be(undefined);
+          expect(num).to.be(null);
 
           users.options.safe = true;
           users.options.multi = true;
           users.update({}, { $set: { g: 'h' } }, { safe: false, multi: false }, function (err, num) {
             expect(err).to.be(null);
-            expect(num).to.be(undefined);
+            expect(num).to.be(null);
             done();
           });
         });

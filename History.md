@@ -1,4 +1,31 @@
 
+0.9.1 / 2014-11-15
+==================
+
+ * update mongoskin to 1.4.4
+
+0.9.0 / 2014-05-09
+==================
+
+ * addition of `close()` method
+ * updaet mongoskin 1.4.1
+ * fixed URL parsing of replsets
+ * freezed mpromise version
+ * fixed collection distinct after rebase
+ * reimplemented Monk.Promise with MPromise.
+
+0.8.1 / 2014-03-01
+==================
+
+ * fix for parameter handling in `findAndModify`
+ * check for `uri` parameter or throw
+
+0.8.0 / 2014-03-01
+==================
+
+ * added `distinct` support (fixes #52)
+ * added `Promise#then`
+
 0.7.1 / 2013-03-03
 ==================
 
