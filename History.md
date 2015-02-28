@@ -1,4 +1,16 @@
 
+0.9.2 / 2015-02-28
+==================
+
+ * mongoskin: bump to 1.4.11
+ * Inserting an array returns an array
+ * Cast oids inside of $nor queries
+ * Cast object ids inside of $or and $and queries
+ * Cast object ids inside of $not queries
+ * Added a missing test for updateById
+ * Added removeById
+ * Use `setImmediate` on node 0.10.x
+
 0.9.1 / 2014-11-15
 ==================
 
