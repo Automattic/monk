@@ -219,6 +219,11 @@ To see all debugging output:
 DEBUG="monk:*"
 ```
 
+## Contributors
+
+- [Guillermo Rauch](http://github.com/rauchg)
+- [Travis Jeffery](http://github.com/travisjeffery)
+
 ## License
 
 (The MIT License)
