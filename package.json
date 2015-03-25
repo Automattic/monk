@@ -12,7 +12,7 @@
     "url": "git://github.com/LearnBoost/monk.git"
   },
   "dependencies": {
-    "mongoskin": "1.4.11",
+    "mongoskin": "1.4.13",
     "debug": "*",
     "mpromise": "0.5.1"
   },
