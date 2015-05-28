@@ -21,6 +21,7 @@
     "expect.js": "0.1.x",
     "promises-aplus-tests": "2.0.x"
   },
+  "license": "MIT",
   "scripts": {
     "test": "make test"
   }
