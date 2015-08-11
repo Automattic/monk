@@ -77,7 +77,8 @@ users.drop(fn);
 - All commands accept the simple `data[, …], fn`. For example
     - `find({}, fn)`
     - `findOne({}, fn)`
-    - `update({}, {}, fn)` `findAndModify({}, {}, fn)`
+    - `update({}, {}, fn)`
+    - `findAndModify({}, {}, fn)`
     - `findById('id', fn)`
     - `remove({}, fn)`
 - You can pass options in the middle: `data[, …], options, fn`
