@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "mongoskin": "1.4.13",
+    "mongodb": "~1.4",
     "debug": "*",
     "mpromise": "0.5.1"
   },
