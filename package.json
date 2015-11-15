@@ -9,7 +9,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git://github.com/LearnBoost/monk.git"
+    "url": "git://github.com/Automattic/monk.git"
   },
   "dependencies": {
     "mongoskin": "1.4.13",
