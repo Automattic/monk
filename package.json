@@ -15,7 +15,7 @@
     "debug": "*",
     "mongodb": "^2.1",
     "mongoskin": "~2.0.3",
-    "mpromise": "0.5.1"
+    "mpromise": "0.5.5"
   },
   "devDependencies": {
     "expect.js": "0.3.x",
