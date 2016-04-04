@@ -18,8 +18,8 @@
     "mpromise": "0.5.1"
   },
   "devDependencies": {
+    "chai": "^3.5.0",
     "mocha": "*",
-    "expect.js": "0.1.x",
     "promises-aplus-tests": "2.0.x"
   },
   "license": "MIT",

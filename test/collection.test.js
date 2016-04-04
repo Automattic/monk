@@ -64,10 +64,10 @@ describe('collection', function () {
   describe('indexes', function () {
     it('should accept a field string', function (done) {
       users.index('name.first', function (err) {
-        expect(err).to.be(null);
+        expect(err).to.be.null;
         users.indexes(function (err, indexes) {
-          expect(err).to.be(null);
-          expect(indexes['name.first_1']).to.not.be(undefined);
+          expect(err).to.be.null;
+          expect(indexes['name.first_1']).to.not.be.undefined;
           done();
         });
       });
@@ -75,10 +75,10 @@ describe('collection', function () {
 
     it('should accept space-delimited compound indexes', function (done) {
       users.index('name last', function (err) {
-        expect(err).to.be(null);
+        expect(err).to.be.null;
         users.indexes(function (err, indexes) {
-          expect(err).to.be(null);
-          expect(indexes.name_1_last_1).to.not.be(undefined);
+          expect(err).to.be.null;
+          expect(indexes.name_1_last_1).to.not.be.undefined;
           done();
         });
       });
@@ -86,10 +86,10 @@ describe('collection', function () {
 
     it('should accept array compound indexes', function (done) {
       users.index(['nombre', 'apellido'], function (err) {
-        expect(err).to.be(null);
+        expect(err).to.be.null;
         users.indexes(function (err, indexes) {
-          expect(err).to.be(null);
-          expect(indexes.nombre_1_apellido_1).to.not.be(undefined);
+          expect(err).to.be.null;
+          expect(indexes.nombre_1_apellido_1).to.not.be.undefined;
           done();
         });
       });
@@ -97,10 +97,10 @@ describe('collection', function () {
 
     it('should accept object compound indexes', function (done) {
       users.index({ up: 1, down: -1 }, function (err) {
-        expect(err).to.be(null);
+        expect(err).to.be.null;
         users.indexes(function (err, indexes) {
-          expect(err).to.be(null);
-          expect(indexes['up_1_down_-1']).to.not.be(undefined);
+          expect(err).to.be.null;
+          expect(indexes['up_1_down_-1']).to.not.be.undefined;
           done();
         });
       });
@@ -108,10 +108,10 @@ describe('collection', function () {
 
     it('should accept options', function (done) {
       indexes.index({ woot: 1 }, { unique: true }, function (err) {
-        expect(err).to.be(null);
+        expect(err).to.be.null;
         indexes.indexes(function (err, indexes) {
-          expect(err).to.be(null);
-          expect(indexes.woot_1).to.not.be(undefined);
+          expect(err).to.be.null;
+          expect(indexes.woot_1).to.not.be.undefined;
           done();
         });
       });
@@ -127,7 +127,7 @@ describe('collection', function () {
     it('should give you an object with the _id', function (done) {
       var p = users.insert({ a: 'b' }, function (err, obj) {
         expect(obj._id).to.be.an('object');
-        expect(obj._id.toHexString).to.not.be(undefined);
+        expect(obj._id.toHexString).to.not.be.undefined;
         done();
       });
     });
@@ -135,7 +135,7 @@ describe('collection', function () {
     it('should return an array if an array was inserted', function (done) {
       var p = users.insert([{ a: 'b' }, { b: 'a' }], function (err, docs) {
         expect(docs).to.be.an('array');
-        expect(docs.length).to.be(2);
+        expect(docs.length).to.equal(2);
         done();
       });
     });
@@ -144,10 +144,10 @@ describe('collection', function () {
   describe('finding', function () {
     it('should find by id', function (done) {
       users.insert({ c: 'd' }, function (err, doc) {
-        expect(err).to.be(null);
+        expect(err).to.be.null;
         users.findById(doc._id, function (err, doc) {
-          expect(err).to.be(null);
-          expect(doc.c).to.be('d');
+          expect(err).to.be.null;
+          expect(doc.c).to.equal('d');
           done();
         });
       });
@@ -155,12 +155,12 @@ describe('collection', function () {
 
     it('should only provide selected fields', function (done) {
       users.insert({ a: 'b', c: 'd', e: 'f' }, function (err, doc) {
-        expect(err).to.be(null);
+        expect(err).to.be.null;
         users.findOne(doc._id, 'a e', function (err, doc) {
-          expect(err).to.be(null);
-          expect(doc.a).to.be('b');
-          expect(doc.e).to.be('f');
-          expect(doc.c).to.be(undefined);
+          expect(err).to.be.null;
+          expect(doc.a).to.equal('b');
+          expect(doc.e).to.equal('f');
+          expect(doc.c).to.be.undefined;
           done();
         });
       });
@@ -172,14 +172,14 @@ describe('collection', function () {
       users.count(query, function (err, total) {
         users.find(query)
           .each(function (doc) {
-            expect(doc.a).to.not.eql(null);
+            expect(doc.a).to.not.be.null;
             found++;
           })
           .error(function (err) {
             done(err);
           })
           .success(function () {
-            expect(found).to.be(total);
+            expect(found).to.equal(total);
             done();
           });
       });
@@ -193,14 +193,14 @@ describe('collection', function () {
         immediately(function () {
           promise
             .each(function (doc) {
-              expect(doc.a).to.not.eql(null);
+              expect(doc.a).to.not.be.null;
               found++;
             })
             .error(function (err) {
               done(err);
             })
             .success(function () {
-              expect(found).to.be(total);
+              expect(found).to.equal(total);
               done();
             });
         });
@@ -214,7 +214,7 @@ describe('collection', function () {
         if (total <= 1) throw new Error('Bad test');
         var cursor = users.find(query)
           .each(function (doc) {
-            expect(doc.a).to.not.eql(null);
+            expect(doc.a).to.not.be.null;
             found++;
             if (2 == found) cursor.destroy();
           })
@@ -223,7 +223,7 @@ describe('collection', function () {
           })
           .success(function () {
             setTimeout(function() {
-              expect(found).to.be(2);
+              expect(found).to.equal(2);
               done();
             }, 100);
           });
@@ -234,15 +234,15 @@ describe('collection', function () {
   describe('counting', function () {
     it('should work', function (done) {
       users.count({ a: 'counting' }, function (err, count) {
-        expect(err).to.be(null);
-        expect(count).to.be(0);
+        expect(err).to.be.null;
+        expect(count).to.equal(0);
 
         users.insert({ a: 'counting' }, function (err) {
-          expect(err).to.be(null);
+          expect(err).to.be.null;
 
           users.count({ a: 'counting' }, function (err, count) {
-            expect(err).to.be(null);
-            expect(count).to.be(1);
+            expect(err).to.be.null;
+            expect(count).to.equal(1);
             done();
           });
         });
@@ -253,13 +253,13 @@ describe('collection', function () {
   describe('distinct', function(){
     it('should work', function(done){
       users.insert({ distinct: 'a' }, function(err){
-        expect(err).to.be(null);
+        expect(err).to.be.null;
         users.insert({ distinct: 'a' }, function(err){
-          expect(err).to.be(null);
+          expect(err).to.be.null;
           users.insert({ distinct: 'b' }, function(err){
-            expect(err).to.be(null);
+            expect(err).to.be.null;
             users.distinct('distinct', function(err, docs){
-              expect(err).to.be(null);
+              expect(err).to.be.null;
               expect(docs).to.eql(['a', 'b']);
               done();
             });
@@ -272,13 +272,13 @@ describe('collection', function () {
   describe('updating', function () {
     it('should update', function (done) {
       users.insert({ d: 'e' }, function (err, doc) {
-        expect(err).to.be(null);
+        expect(err).to.be.null;
         var p = users.update({ _id: doc._id }, { $set: { d: 'f' } });
         p.complete(function (err) {
-          expect(err).to.be(null);
+          expect(err).to.be.null;
           users.findById(doc._id, function (err, doc) {
-            expect(err).to.be(null);
-            expect(doc.d).to.be('f');
+            expect(err).to.be.null;
+            expect(doc.d).to.equal('f');
             done();
           });
         });
@@ -286,14 +286,14 @@ describe('collection', function () {
     });
     it('should update by id', function (done) {
       users.insert({ d: 'e' }, function (err, doc) {
-        expect(err).to.be(null);
+        expect(err).to.be.null;
         var id = doc._id;
         var p = users.updateById(id, { $set: { d: 'f' } });
         p.complete(function (err) {
-          expect(err).to.be(null);
+          expect(err).to.be.null;
           users.findById(doc._id, function (err, doc) {
-            expect(err).to.be(null);
-            expect(doc.d).to.be('f');
+            expect(err).to.be.null;
+            expect(doc.d).to.equal('f');
             done();
           });
         });
@@ -302,12 +302,12 @@ describe('collection', function () {
 
     it('should work with an objectid', function (done) {
       users.insert({ worked: false }, function (err, doc) {
-        expect(err).to.be(null);
+        expect(err).to.be.null;
         users.update(doc._id, { $set: { worked: true } }, function (err) {
-          expect(err).to.be(null);
+          expect(err).to.be.null;
           users.findOne(doc._id, function (err, doc) {
-            expect(err).to.be(null);
-            expect(doc.worked).to.be(true);
+            expect(err).to.be.null;
+            expect(doc.worked).to.equal(true);
             done();
           });
         });
@@ -316,12 +316,12 @@ describe('collection', function () {
 
     it('should work with an objectid (string)', function (done) {
       users.insert({ worked: false }, function (err, doc) {
-        expect(err).to.be(null);
+        expect(err).to.be.null;
         users.update(doc._id.toString(), { $set: { worked: true } }, function (err) {
-          expect(err).to.be(null);
+          expect(err).to.be.null;
           users.findOne(doc._id, function (err, doc) {
-            expect(err).to.be(null);
-            expect(doc.worked).to.be(true);
+            expect(err).to.be.null;
+            expect(doc.worked).to.equal(true);
             done();
           });
         });
@@ -363,14 +363,14 @@ describe('collection', function () {
     it('should alter an existing document', function (done) {
       var rand = 'now-' + Date.now();
       users.insert({ find: rand }, function (err, doc) {
-        expect(err).to.be(null);
+        expect(err).to.be.null;
         users.findAndModify({ find: rand }, { find: 'woot' }, { new: true }, function (err, doc) {
-          expect(err).to.be(null);
-          expect(doc.find).to.be('woot');
+          expect(err).to.be.null;
+          expect(doc.find).to.equal('woot');
           users.findById(doc._id, function (err, found) {
-            expect(err).to.be(null);
+            expect(err).to.be.null;
             expect(found._id.toString()).to.equal(doc._id.toString());
-            expect(found.find).to.be('woot');
+            expect(found.find).to.equal('woot');
             done();
           });
         });
@@ -379,12 +379,12 @@ describe('collection', function () {
 
     it('should accept an id as query param', function(done){
       users.insert({ locate: 'me' }, function(err, user){
-        expect(err).to.be(null);
+        expect(err).to.be.null;
         users.findAndModify(user._id, { $set: { locate: 'you' } }, function(err){
-          expect(err).to.be(null);
+          expect(err).to.be.null;
           users.findOne(user._id, function(err, user){
-            expect(err).to.be(null);
-            expect(user.locate).to.be('you');
+            expect(err).to.be.null;
+            expect(user.locate).to.equal('you');
             done();
           });
         });
@@ -393,12 +393,12 @@ describe('collection', function () {
 
     it('should accept an id as query param (mongo syntax)', function(done){
       users.insert({ locate: 'me' }, function(err, user){
-        expect(err).to.be(null);
+        expect(err).to.be.null;
         users.findAndModify({ query: user._id, update: { $set: { locate: 'you' } } }, function(err){
-          expect(err).to.be(null);
+          expect(err).to.be.null;
           users.findOne(user._id, function(err, user){
-            expect(err).to.be(null);
-            expect(user.locate).to.be('you');
+            expect(err).to.be.null;
+            expect(user.locate).to.equal('you');
             done();
           });
         });
@@ -408,11 +408,11 @@ describe('collection', function () {
     it('should upsert', function (done) {
       function callback (err, doc) {
         if (err) return done(err);
-        expect(doc.find).to.be(rand);
+        expect(doc.find).to.equal(rand);
         users.findOne({ find: rand }, function (err, found) {
-          expect(err).to.be(null);
-          expect(found._id.toString()).to.be(doc._id.toString());
-          expect(found.find).to.be(rand);
+          expect(err).to.be.null;
+          expect(found._id.toString()).to.equal(doc._id.toString());
+          expect(found.find).to.equal(rand);
           done();
         });
       }
@@ -432,20 +432,20 @@ describe('collection', function () {
     it('should allow defaults', function (done) {
       db.options.multi = true;
       users.update({}, { $set: { f: 'g' } }, function (err, num) {
-        expect(err).to.be(null);
+        expect(err).to.be.null;
         expect(num).to.be.a('number'); // only a number of multi=true
 
         users.options.safe = false;
         users.options.multi = false;
         users.update({}, { $set: { g: 'h' } }, function (err, num) {
-          expect(err).to.be(null);
-          expect(num).to.be(null);
+          expect(err).to.be.null;
+          expect(num).to.be.null;
 
           users.options.safe = true;
           users.options.multi = true;
           users.update({}, { $set: { g: 'h' } }, { safe: false, multi: false }, function (err, num) {
-            expect(err).to.be(null);
-            expect(num).to.be(null);
+            expect(err).to.be.null;
+            expect(num).to.be.null;
             done();
           });
         });
@@ -458,67 +458,67 @@ describe('collection', function () {
 
     it('insert', function () {
       var p = users.insert();
-      expect(p).to.be.a(Promise);
-      expect(p.col).to.be(users);
-      expect(p.type).to.be('insert');
+      expect(p).to.be.an.instanceof(Promise);
+      expect(p.col).to.equal(users);
+      expect(p.type).to.equal('insert');
     });
 
     it('findOne', function () {
       var p = users.findOne();
-      expect(p).to.be.a(Promise);
-      expect(p.col).to.be(users);
-      expect(p.type).to.be('findOne');
+      expect(p).to.be.an.instanceof(Promise);
+      expect(p.col).to.equal(users);
+      expect(p.type).to.equal('findOne');
     });
 
     it('find', function () {
       var p = users.findOne();
-      expect(p).to.be.a(Promise);
-      expect(p.col).to.be(users);
-      expect(p.type).to.be('findOne');
+      expect(p).to.be.an.instanceof(Promise);
+      expect(p.col).to.equal(users);
+      expect(p.type).to.equal('findOne');
     });
 
     it('update', function () {
       var p = users.findOne();
-      expect(p).to.be.a(Promise);
-      expect(p.col).to.be(users);
-      expect(p.type).to.be('findOne');
+      expect(p).to.be.an.instanceof(Promise);
+      expect(p.col).to.equal(users);
+      expect(p.type).to.equal('findOne');
     });
 
     it('findAndModify', function () {
       var p = users.findAndModify();
-      expect(p).to.be.a(Promise);
-      expect(p.col).to.be(users);
-      expect(p.type).to.be('findAndModify');
+      expect(p).to.be.an.instanceof(Promise);
+      expect(p.col).to.equal(users);
+      expect(p.type).to.equal('findAndModify');
     });
 
     it('remove', function () {
       var p = users.remove();
-      expect(p).to.be.a(Promise);
-      expect(p.col).to.be(users);
-      expect(p.type).to.be('remove');
+      expect(p).to.be.an.instanceof(Promise);
+      expect(p.col).to.equal(users);
+      expect(p.type).to.equal('remove');
     });
 
     it('index', function () {
       var p = users.index('eee');
-      expect(p).to.be.a(Promise);
-      expect(p.col).to.be(users);
-      expect(p.type).to.be('index');
+      expect(p).to.be.an.instanceof(Promise);
+      expect(p.col).to.equal(users);
+      expect(p.type).to.equal('index');
     });
 
     it('indexes', function () {
       var p = users.indexes();
-      expect(p).to.be.a(Promise);
-      expect(p.col).to.be(users);
-      expect(p.type).to.be('indexes');
+      expect(p).to.be.an.instanceof(Promise);
+      expect(p.col).to.equal(users);
+      expect(p.type).to.equal('indexes');
     });
 
     it('drop', function (done) {
       var col = db.get('drop-' + Date.now());
       col.insert({}, function (err) {
-        expect(err).to.be(null);
+        expect(err).to.be.null;
         var p = col.drop(done);
-        expect(p).to.be.a(Promise);
-        expect(p.type).to.be('drop');
+        expect(p).to.be.an.instanceof(Promise);
+        expect(p.type).to.equal('drop');
       });
     });
 
@@ -530,10 +530,10 @@ describe('collection', function () {
     it('query', function(done){
       var qry = { a: 'woot' };
       var p  = users.find(qry);
-      expect(p.query).to.be(qry);
+      expect(p.query).to.equal(qry);
       p.once('complete', function(){
         setTimeout(function(){
-          expect(p.qry).to.be(undefined);
+          expect(p.qry).to.be.undefined;
           done();
         }, 50);
       });
@@ -542,7 +542,7 @@ describe('collection', function () {
 
   after(function (done) {
     users.drop(function (err) {
-      expect(err).to.be(null);
+      expect(err).to.be.null;
       indexes.drop(done);
     });
   });
