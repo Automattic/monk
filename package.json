@@ -14,7 +14,7 @@
   "dependencies": {
     "debug": "*",
     "mongodb": "^2.1",
-    "mongoskin": "~2.0.3",
+    "mongoskin": "~2.1.0",
     "mpromise": "0.5.5"
   },
   "devDependencies": {
