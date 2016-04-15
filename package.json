@@ -12,15 +12,16 @@
     "url": "git://github.com/LearnBoost/monk.git"
   },
   "dependencies": {
-    "mongoskin": "1.4.13",
-    "mongodb": "~1.4",
     "debug": "*",
+    "mongodb": "^2.1",
+    "mongoskin": "~2.0.3",
     "mpromise": "0.5.1"
   },
   "devDependencies": {
+    "expect.js": "0.3.x",
     "mocha": "*",
-    "expect.js": "0.1.x",
-    "promises-aplus-tests": "2.0.x"
+    "mongodb": "^2.1",
+    "promises-aplus-tests": "2.1.x"
   },
   "license": "MIT",
   "scripts": {
