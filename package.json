@@ -31,7 +31,6 @@
   "license": "MIT",
   "scripts": {
     "test": "make test",
-    "coverage": "nyc report --reporter=text-lcov > coverage.lcov && codecov",
-    "prepublish": "make clean build"
+    "coverage": "nyc report --reporter=text-lcov > coverage.lcov && codecov"
   }
 }
