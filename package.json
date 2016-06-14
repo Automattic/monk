@@ -12,8 +12,8 @@
     "url": "git://github.com/Automattic/monk.git"
   },
   "dependencies": {
-    "mongoskin": "1.4.13",
-    "mongodb": "~1.4",
+    "mongoskin": "2.1.0",
+    "mongodb": "2.1.19",
     "debug": "*",
     "mpromise": "0.5.1"
   },
