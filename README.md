@@ -6,6 +6,8 @@
 Monk is a tiny layer that provides simple yet substantial usability
 improvements for MongoDB usage within Node.JS.
 
+*note*: monk 2.x drop the support for node < 0.12. If you are still using an earlier version, stick to monk 1.x
+
 ```js
 const db = require('monk')('localhost/mydb')
 const users = db.get('users')
