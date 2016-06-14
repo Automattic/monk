@@ -6,20 +6,20 @@ Monk is a tiny layer that provides simple yet substantial usability
 improvements for MongoDB usage within Node.JS.
 
 ```js
-var db = require('monk')('localhost/mydb');
-var users = db.get('users');
+const db = require('monk')('localhost/mydb')
+const users = db.get('users')
 
-users.index('name last');
-users.insert({ name: 'Tobi', bigdata: {} });
-users.find({ name: 'Loki' }, '-bigdata', function () {
+users.index('name last')
+users.insert({ name: 'Tobi', bigdata: {} })
+users.find({ name: 'Loki' }, '-bigdata').then(function () {
   // exclude bigdata field
-});
-users.find({}, {sort: {name: 1}}, function () {
+})
+users.find({}, {sort: {name: 1}}).then(function () {
   // sorted by name field
-});
-users.remove({ name: 'Loki' });
+})
+users.remove({ name: 'Loki' })
 
-db.close();
+db.close()
 ```
 
 ## Features
@@ -42,13 +42,13 @@ db.close();
 #### Single server
 
 ```js
-var db = require('monk')('localhost/mydb')
+const db = require('monk')('localhost/mydb', options)
 ```
 
 #### Replica set
 
 ```js
-var db = require('monk')('localhost/mydb,192.168.1.1')
+const db = require('monk')('localhost/mydb,192.168.1.1')
 ```
 
 ### Disconnecting
@@ -62,65 +62,62 @@ db.close()
 #### Getting one
 
 ```js
-var users = db.get('users')
+const users = db.get('users')
 // users.insert(), users.update() … (see below)
 ```
 
 #### Dropping
 
 ```js
-users.drop(fn);
+users.drop(fn)
 ```
 
 ### Signatures
 
-- All commands accept the simple `data[, …], fn`. For example
+- All commands accept the simple `data[, …][, callback]`. For example
     - `find({}, fn)`
     - `findOne({}, fn)`
     - `update({}, {}, fn)`
     - `findAndModify({}, {}, fn)`
     - `findById('id', fn)`
     - `remove({}, fn)`
-- You can pass options in the middle: `data[, …], options, fn`
-- You can pass fields to select as an array: `data[, …], ['field', …], fn`
+- You can pass options in the middle: `data[, …], options[, fn]`
+- You can pass fields to select as an array: `data[, …], ['field', …][, fn]`
 - You can pass fields as a string delimited by spaces:
-  `data[, …], 'field1 field2', fn`
+  `data[, …], 'field1 field2'[, fn]`
 - To exclude a field, prefix the field name with '-':
-  `data[, …], '-field1', fn`
+  `data[, …], '-field1'[, fn]`
+- You can pass sort option the same way as fields
 
 ### Promises
 
 All methods that perform an async action return a promise.
 
 ```js
-var promise = users.insert({});
-promise.type; // 'insert' in this case
-promise.error(function(err){});
-promise.on('error', function(err){});
-promise.on('success', function(doc){});
-promise.on('complete', function(err, doc){});
-promise.success(function(doc){});
+users.insert({}).then((doc) => {
+  // success
+}).catch((err) => {
+  // error
+})
 ```
 
 ### Indexes
 
 ```js
-users.index('name.first', fn);
-users.index('email', { unique: true }); // unique
+users.index('name.first')
+users.index('email', { unique: true }) // unique
 users.index('name.first name.last') // compound
-users.index({ 'email': 1, 'password': -1 }); // compound with sort
-users.index('email', { sparse: true }, fn); // with options
-users.indexes(fn); // get indexes
-users.dropIndex(name, fn); // drop an index
-users.dropIndexes(fn); // drop all indexes
+users.index({ 'email': 1, 'password': -1 }) // compound with sort
+users.index('email', { sparse: true }) // with options
+users.indexes() // get indexes
+users.dropIndex(name) // drop an index
+users.dropIndexes() // drop all indexes
 ```
 
 ### Inserting
 
 ```js
-users.insert({ a: 'b' }, function (err, doc) {
-  if (err) throw err;
-});
+users.insert({ a: 'b' })
 ```
 
 ### Casting
@@ -136,8 +133,8 @@ users.id(obj) // returns ObjectId
 ### Updating
 
 ```js
-users.update({}, {}, fn);
-users.updateById('id', {}, fn);
+users.update({}, {})
+users.updateById('id', {})
 ```
 
 ### Finding
@@ -145,14 +142,14 @@ users.updateById('id', {}, fn);
 #### Many
 
 ```js
-users.find({}, function (err, docs){});
+users.find({}).then((docs) => {})
 ```
 
 #### By ID
 
 ```js
-users.findById('hex representation', function(err, doc){});
-users.findById(oid, function(err, doc){});
+users.findById('hex representation').then((doc) => {})
+users.findById(oid).then((doc) => {})
 ```
 
 #### Single doc
@@ -160,14 +157,14 @@ users.findById(oid, function(err, doc){});
 `findOne` also provides the `findById` functionality.
 
 ```js
-users.findOne({ name: 'test' }).on('success', function (doc) {});
+users.findOne({ name: 'test' }).then((doc) => {})
 ```
 
 #### And modify
 
 ```js
-users.findAndModify({ query: {}, update: {} });
-users.findAndModify({ _id: '' }, { $set: {} });
+users.findAndModify({ query: {}, update: {} })
+users.findAndModify({ _id: '' }, { $set: {} })
 ```
 
 #### Streaming
@@ -177,30 +174,28 @@ same tick. In the following example I just include it for extra clarity.
 
 ```js
 users.find({}, { stream: true })
-  .each(function(doc){})
-  .error(function(err){})
-  .success(function(){});
+  .each((doc, destroy) => {})
+  .then(() => {})
+  .catch((err) => {})
 ```
 
 ##### Destroying a cursor
 
-On the returned promise you can call `destroy()`. Upon the cursor
-closing the `success` event will be emitted.
+You can call `destroy()` in the `each` handler to close the cursor. Upon the cursor
+closing the `then` handler will be called.
 
 ### Removing
 
 ```js
-users.remove({ a: 'b' }, function (err) {
-  if (err) throw err;
-});
+users.remove({ a: 'b' })
 ```
 
 ### Global options
 
 ```js
-var db = require('monk')('localhost/mydb')
-db.options.multi = true; // global multi-doc update
-db.get('users').options.multi = false; // collection-level
+const db = require('monk')('localhost/mydb')
+db.options.multi = true // global multi-doc update
+db.get('users').options.multi = false // collection-level
 ```
 
 Monk sets `safe` to `true` by default.
@@ -224,6 +219,7 @@ DEBUG="monk:*"
 
 - [Guillermo Rauch](http://github.com/rauchg)
 - [Travis Jeffery](http://github.com/travisjeffery)
+- [Mathieu Dutour](http://github.com/mathieudutour)
 
 ## License
 
