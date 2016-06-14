@@ -1,3 +1,14 @@
+2.0.0 / 2016-06-15
+==================
+complete rewrite of monk:
+ - return real promises (#104)
+ - update mongoskin and mongodb (#111)
+ - auto binding of the methods
+ - eslint
+ - test coverage
+ - Support $ne, $in, $nin for id casting
+ - Make the sort option behave like fields
+
 
 1.0.1 / 2015-03-25
 ==================
