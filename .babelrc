@@ -1,0 +1,9 @@
+{
+  "presets": ["modern-node/0.12"],
+  "ignore": "tests/*",
+  "env": {
+    "development": {
+      "sourceMaps": "inline"
+    }
+  }
+}

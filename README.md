@@ -1,20 +1,22 @@
 # monk
 
 [![build status](https://secure.travis-ci.org/Automattic/monk.png?branch=master)](https://secure.travis-ci.org/Automattic/monk)
+[![codecov](https://codecov.io/gh/Automattic/monk/branch/master/graph/badge.svg)](https://codecov.io/gh/Automattic/monk)
 
 Monk is a tiny layer that provides simple yet substantial usability
 improvements for MongoDB usage within Node.JS.
 
 ```js
-var db = require('monk')('localhost/mydb');
-var users = db.get('users');
+const Monk = require('monk')
+const db = new Monk('localhost/mydb')
+const users = db.get('users')
 
-users.index('name last');
-users.insert({ name: 'Tobi', bigdata: {} });
-users.find({ name: 'Loki' }, '-bigdata', function () {
+users.index('name last')
+users.insert({ name: 'Tobi', bigdata: {} })
+users.find({ name: 'Loki' }, '-bigdata').then(function () {
   // exclude bigdata field
 });
-users.find({}, {sort: {name: 1}}, function () {
+users.find({}, {sort: 'name' }).then(function () {
   // sorted by name field
 });
 users.remove({ name: 'Loki' });
@@ -31,7 +33,7 @@ db.close();
 - Improvements to the MongoDB APIs (eg: `findAndModify` supports the
   `update` signature style)
 - Auto-casting of `_id` in queries
-- Builds on top of [mongoskin](http://github.com/kissjs/node-mongoskin)
+- Builds on top of [mongoskin](https://github.com/kissjs/node-mongoskin)
 - Allows to set global options or collection-level options for queries. (eg:
   `safe` is `true` by default for all queries)
 
@@ -42,13 +44,13 @@ db.close();
 #### Single server
 
 ```js
-var db = require('monk')('localhost/mydb')
+const db = new Monk('localhost/mydb')
 ```
 
 #### Replica set
 
 ```js
-var db = require('monk')('localhost/mydb,192.168.1.1')
+const db = new Monk('localhost/mydb,192.168.1.1')
 ```
 
 ### Disconnecting
@@ -62,7 +64,7 @@ db.close()
 #### Getting one
 
 ```js
-var users = db.get('users')
+const users = db.get('users')
 // users.insert(), users.update() … (see below)
 ```
 
@@ -74,7 +76,7 @@ users.drop(fn);
 
 ### Signatures
 
-- All commands accept the simple `data[, …], fn`. For example
+- All commands accept the simple `data[, …][, callback]`. For example
     - `find({}, fn)`
     - `findOne({}, fn)`
     - `update({}, {}, fn)`
@@ -87,19 +89,16 @@ users.drop(fn);
   `data[, …], 'field1 field2', fn`
 - To exclude a field, prefix the field name with '-':
   `data[, …], '-field1', fn`
+- You can pass sort option the same way as fields
 
 ### Promises
 
 All methods that perform an async action return a promise.
 
 ```js
-var promise = users.insert({});
-promise.type; // 'insert' in this case
-promise.error(function(err){});
-promise.on('error', function(err){});
-promise.on('success', function(doc){});
-promise.on('complete', function(err, doc){});
-promise.success(function(doc){});
+users.insert({})
+  .then((doc) => {})
+  .catch((err) => {});
 ```
 
 ### Indexes
@@ -118,9 +117,7 @@ users.dropIndexes(fn); // drop all indexes
 ### Inserting
 
 ```js
-users.insert({ a: 'b' }, function (err, doc) {
-  if (err) throw err;
-});
+users.insert({ a: 'b' });
 ```
 
 ### Casting
@@ -136,8 +133,8 @@ users.id(obj) // returns ObjectId
 ### Updating
 
 ```js
-users.update({}, {}, fn);
-users.updateById('id', {}, fn);
+users.update({}, {});
+users.updateById('id', {});
 ```
 
 ### Finding
@@ -145,14 +142,14 @@ users.updateById('id', {}, fn);
 #### Many
 
 ```js
-users.find({}, function (err, docs){});
+users.find({});
 ```
 
 #### By ID
 
 ```js
-users.findById('hex representation', function(err, doc){});
-users.findById(oid, function(err, doc){});
+users.findById('hex representation');
+users.findById(oid);
 ```
 
 #### Single doc
@@ -160,7 +157,7 @@ users.findById(oid, function(err, doc){});
 `findOne` also provides the `findById` functionality.
 
 ```js
-users.findOne({ name: 'test' }).on('success', function (doc) {});
+users.findOne({ name: 'test' });
 ```
 
 #### And modify
@@ -177,28 +174,26 @@ same tick. In the following example I just include it for extra clarity.
 
 ```js
 users.find({}, { stream: true })
-  .each(function(doc){})
-  .error(function(err){})
-  .success(function(){});
+  .each((doc, destroy) => {})
+  .then(() => {})
+  .catch((err) => {});
 ```
 
 ##### Destroying a cursor
 
-On the returned promise you can call `destroy()`. Upon the cursor
-closing the `success` event will be emitted.
+You can call `destroy()` in the `each` handler to close the cursor. Upon the cursor
+closing the `then` handler will be called.
 
 ### Removing
 
 ```js
-users.remove({ a: 'b' }, function (err) {
-  if (err) throw err;
-});
+users.remove({ a: 'b' });
 ```
 
 ### Global options
 
 ```js
-var db = require('monk')('localhost/mydb')
+const db = new Monk('localhost/mydb')
 db.options.multi = true; // global multi-doc update
 db.get('users').options.multi = false; // collection-level
 ```
@@ -208,7 +203,7 @@ Monk sets `safe` to `true` by default.
 ### Query debugging
 
 If you wish to see what queries `monk` passes to the driver, simply leverage
-[debug](http://github.com/visionmedia/debug):
+[debug](https://github.com/visionmedia/debug):
 
 ```bash
 DEBUG="monk:queries"
@@ -222,30 +217,10 @@ DEBUG="monk:*"
 
 ## Contributors
 
-- [Guillermo Rauch](http://github.com/rauchg)
-- [Travis Jeffery](http://github.com/travisjeffery)
+- [Guillermo Rauch](https://github.com/rauchg)
+- [Travis Jeffery](https://github.com/travisjeffery)
+- [Mathieu Dutour](https://github.com/mathieudutour)
 
 ## License
 
-(The MIT License)
-
-Copyright (c) 2012 Guillermo Rauch &lt;guillermo@learnboost.com&gt;
-
-Permission is hereby granted, free of charge, to any person obtaining
-a copy of this software and associated documentation files (the
-'Software'), to deal in the Software without restriction, including
-without limitation the rights to use, copy, modify, merge, publish,
-distribute, sublicense, and/or sell copies of the Software, and to
-permit persons to whom the Software is furnished to do so, subject to
-the following conditions:
-
-The above copyright notice and this permission notice shall be
-included in all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED 'AS IS', WITHOUT WARRANTY OF ANY KIND,
-EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
-IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
-CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
-TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
-SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+MIT

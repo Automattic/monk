@@ -1,27 +1,24 @@
+BIN_DIR ?= node_modules/.bin
 
-TESTS = test/*.test.js
-REPORTER = dot
+SRC_DIR ?= src
+TEST_TARGET ?= tests/
 
-test:
-	@make --no-print-directory test-unit
-	@echo "testing promises-A+ implementation ..."
-	@make --no-print-directory test-promises-A
+clean:
+	rm -rf lib
 
-test-unit:
-	@DEBUG=$DEBUG,monk,monk:queries ./node_modules/.bin/mocha \
-		--require test/common.js \
-		--reporter $(REPORTER) \
-		--growl \
-		--bail \
-		--slow 1000 \
-		$(TESTS)
+build:
+	BABEL_ENV=production $(BIN_DIR)/babel $(SRC_DIR) --out-dir lib
 
-test-promises-A:
-	@./node_modules/.bin/mocha \
-		--reporter $(REPORTER) \
-		--growl \
-		--bail \
-		--slow 1000 \
-		test/promises-A.js
+lint:
+	echo "  $(P) Linting"
+	$(BIN_DIR)/eslint $(SRC_DIR) && $(BIN_DIR)/eslint $(TEST_TARGET)
 
-.PHONY: test test-unit test-promises-A
+test: lint
+	echo "  $(P) Testing"
+	NODE_ENV=test $(BIN_DIR)/nyc $(BIN_DIR)/ava $(TEST_TARGET) --require=babel-register
+
+test-watch:
+	echo "  $(P) Testing forever"
+	NODE_ENV=test $(BIN_DIR)/ava --watch $(TEST_TARGET) --require=babel-register
+
+.PHONY: test

@@ -1,0 +1,5 @@
+{
+  "extends": ["standard"],
+  "parser": "babel-eslint",
+  "ignorePath": ".gitignore",
+}
