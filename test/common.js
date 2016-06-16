@@ -1,6 +1,5 @@
-
 /**
- * Expose expect.js
+ * Expose chai's expect
  */
-
-expect = require('expect.js');
+var chai = require('chai');
+expect = chai.expect;

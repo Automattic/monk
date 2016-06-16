@@ -7,17 +7,17 @@ describe('monk', function () {
   describe('constructor', function () {
     it('Manager', function () {
       expect(monk).to.be.a('function');
-      expect(monk.name).to.be('Manager');
+      expect(monk.name).to.equal('Manager');
     });
 
     it('Collection', function () {
       expect(monk.Collection).to.be.a('function');
-      expect(monk.Collection.name).to.be('Collection');
+      expect(monk.Collection.name).to.equal('Collection');
     });
 
     it('Promise', function () {
       expect(monk.Promise).to.be.a('function');
-      expect(monk.Promise.name).to.be('Promise');
+      expect(monk.Promise.name).to.equal('Promise');
     });
   });
 
@@ -46,11 +46,11 @@ describe('monk', function () {
     var db = monk('127.0.0.1/monk-test');
 
     it('Manager#get', function () {
-      expect(db.get('users')).to.be.a(Collection);
+      expect(db.get('users')).to.be.an.instanceof(Collection);
     });
 
     it('Manager#col', function(){
-      expect(db.col('users')).to.be.a(Collection);
+      expect(db.col('users')).to.be.an.instanceof(Collection);
     });
   });
 
