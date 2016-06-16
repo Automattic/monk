@@ -166,6 +166,18 @@ describe('collection', function () {
       });
     });
 
+    it('should sort', function (done) {
+      users.insert([{ sort : true, a : 1, b : 2  }, { sort : true, a : 1, b : 1  }], function (err) {
+        expect(err).to.be(null);
+        users.find({ sort : true }, { sort : 'a b' }, function (err, docs) {
+          expect(err).to.be(null);
+          expect(docs[0].b).to.be(1);
+          expect(docs[1].b).to.be(2);
+          done();
+        });
+      });
+    });
+
     it('should work with streaming', function (done) {
       var query = { a: { $exists: true } }
         , found = 0;

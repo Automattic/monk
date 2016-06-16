@@ -14,7 +14,7 @@ users.insert({ name: 'Tobi', bigdata: {} });
 users.find({ name: 'Loki' }, '-bigdata', function () {
   // exclude bigdata field
 });
-users.find({}, {sort: {name: 1}}, function () {
+users.find({}, {sort: 'name' }, function () {
   // sorted by name field
 });
 users.remove({ name: 'Loki' });
@@ -87,6 +87,7 @@ users.drop(fn);
   `data[, …], 'field1 field2', fn`
 - To exclude a field, prefix the field name with '-':
   `data[, …], '-field1', fn`
+- You can pass sort option the same way as fields
 
 ### Promises
 
