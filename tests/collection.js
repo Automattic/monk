@@ -75,6 +75,15 @@ test('dropIndex > should accept object compound indexes', (t) => {
   })
 })
 
+test('dropIndexes > should drop all indexes', (t) => {
+  return users.index({ up2: 1, down: -1 }).then(users.indexes).then((indexes) => {
+    t.not(indexes['up2_1_down_-1'], undefined)
+  }).then(() => users.dropIndexes())
+  .then(users.indexes).then((indexes) => {
+    t.is(indexes['up2_1_down_'], undefined)
+  })
+})
+
 test('insert > should force callback in next tick', (t) => {
   return users.insert({ woot: 'a' }).then(() => t.pass())
 })
