@@ -233,6 +233,14 @@ test('update > should update with an objectid (string)', (t) => {
   })
 })
 
+test('update > should fail properly', (t) => {
+  return users.insert([{ woot: 'cb', d: 'e' }, { woot: 'ca' }]).then(([_, doc]) => {
+    return users.update(doc._id, { $set: { woot: 'cb' } })
+  }).catch(() => {
+    t.pass()
+  })
+})
+
 test('remove > should remove a document', (t) => {
   return users.insert({ woot: 'u', name: 'Tobi' }).then((doc) => {
     return users.remove({ name: 'Tobi' })
@@ -299,6 +307,26 @@ test('findAndModify > should upsert', (t) => {
       t.is(found._id.toString(), doc._id.toString())
       t.is(found.find, rand)
     })
+  })
+})
+
+test('aggregate > should fail properly', (t) => {
+  return users.aggregate().catch(() => {
+    t.pass()
+  })
+})
+
+test('aggregate > should work in normal case', (t) => {
+  return users.aggregate([{$group: {_id: null, maxWoot: { $max: '$woot' }}}]).then((res) => {
+    t.true(Array.isArray(res))
+    t.is(res.length, 1)
+  })
+})
+
+test('aggregate > should work with option', (t) => {
+  return users.aggregate([{$group: {_id: null, maxWoot: { $max: '$woot' }}}], { allowDiskUse: true }).then((res) => {
+    t.true(Array.isArray(res))
+    t.is(res.length, 1)
   })
 })
 
