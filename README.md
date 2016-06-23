@@ -167,7 +167,7 @@ users.findOne({ name: 'test' }).then((doc) => {})
 
 ```js
 users.findAndModify({ query: {}, update: {} })
-users.findAndModify({ _id: '' }, { $set: {} })
+users.findAndModify({ _id: '' }, { $set: {} }, { new: true })
 ```
 
 #### Streaming
