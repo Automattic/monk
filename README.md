@@ -193,6 +193,12 @@ closing the `then` handler will be called.
 users.remove({ a: 'b' })
 ```
 
+### Aggregate
+
+```js
+users.aggregate(stages, {})
+```
+
 ### Global options
 
 ```js
