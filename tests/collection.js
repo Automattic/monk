@@ -335,7 +335,7 @@ test('aggregate > should work in normal case', (t) => {
 })
 
 test('aggregate > should work with option', (t) => {
-  return users.aggregate([{$group: {_id: null, maxWoot: { $max: '$woot' }}}], { allowDiskUse: true }).then((res) => {
+  return users.aggregate([{$group: {_id: null, maxWoot: { $max: '$woot' }}}], { explain: true }).then((res) => {
     t.true(Array.isArray(res))
     t.is(res.length, 1)
   })
