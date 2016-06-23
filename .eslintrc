@@ -1,7 +1,4 @@
 {
   "extends": ["standard"],
-  "ignorePath": ".gitignore",
-  "rules": {
-    "no-proto": 0
-  }
+  "ignorePath": ".gitignore"
 }
