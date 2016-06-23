@@ -15,7 +15,6 @@ complete rewrite of monk:
  - Support $ne, $in, $nin for id casting
  - Make the sort option behave like fields
 
-
 1.0.1 / 2015-03-25
 ==================
 
