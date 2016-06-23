@@ -5,7 +5,6 @@ const monk = require('../lib/monk')
 const db = monk('127.0.0.1/monk')
 const users = db.get('users-' + Date.now())
 const indexCol = db.get('index-' + Date.now())
-const indexDropAllCol = db.get('indexDrop-' + Date.now())
 
 test.after(() => {
   return users.drop()
@@ -39,6 +38,10 @@ test('index > should accept options', (t) => {
   return indexCol.index({ woot: 1 }, { unique: true }).then(indexCol.indexes).then((indexes) => {
     t.not(indexes.woot_1, undefined)
   })
+})
+
+test.cb('index > callback', (t) => {
+  indexCol.index('name.third', t.end)
 })
 
 test('dropIndex > should accept a field string', (t) => {
@@ -77,13 +80,27 @@ test('dropIndex > should accept object compound indexes', (t) => {
   })
 })
 
+test.cb('dropIndex > callback', (t) => {
+  indexCol.index('name3.first').then(indexCol.indexes).then((indexes) => {
+    t.not(indexes['name3.first_1'], undefined)
+  }).then(() => indexCol.dropIndex('name3.first', t.end))
+})
+
 test('dropIndexes > should drop all indexes', (t) => {
-  return indexDropAllCol.index({ up2: 1, down: -1 }).then(indexDropAllCol.indexes).then((indexes) => {
+  const col = db.get('indexDrop-' + Date.now())
+  return col.index({ up2: 1, down: -1 }).then(col.indexes).then((indexes) => {
     t.not(indexes['up2_1_down_-1'], undefined)
-  }).then(() => indexDropAllCol.dropIndexes())
-  .then(indexDropAllCol.indexes).then((indexes) => {
+  }).then(() => col.dropIndexes())
+  .then(col.indexes).then((indexes) => {
     t.is(indexes['up2_1_down_'], undefined)
   })
+})
+
+test.cb('dropIndexes > callback', (t) => {
+  const col = db.get('indexDropCallback-' + Date.now())
+  col.index({ up2: 1, down: -1 }).then(col.indexes).then((indexes) => {
+    t.not(indexes['up2_1_down_-1'], undefined)
+  }).then(() => col.dropIndexes(t.end))
 })
 
 test('insert > should force callback in next tick', (t) => {
@@ -104,11 +121,21 @@ test('insert > should return an array if an array was inserted', (t) => {
   })
 })
 
+test.cb('insert > callback', (t) => {
+  users.insert({ woot: 'a' }, t.end)
+})
+
 test('findById > should find by id', (t) => {
   return users.insert({ woot: 'e' }).then((doc) => {
     return users.findById(doc._id).then((doc) => {
       t.is(doc.woot, 'e')
     })
+  })
+})
+
+test.cb('findById > callback', (t) => {
+  users.insert({ woot: 'e' }).then((doc) => {
+    return users.findById(doc._id, t.end)
   })
 })
 
@@ -127,6 +154,18 @@ test('find > should only provide selected fields', (t) => {
     t.is(doc.a, 'b')
     t.is(doc.e, 'f')
     t.is(doc.c, undefined)
+  })
+})
+
+test.cb('find > callback', (t) => {
+  users.insert({ woot: 'e' }).then((doc) => {
+    return users.find(doc._id, t.end)
+  })
+})
+
+test.cb('findOne > callback', (t) => {
+  users.insert({ woot: 'e' }).then((doc) => {
+    return users.findOne(doc._id, t.end)
   })
 })
 
@@ -204,12 +243,20 @@ test('count > should count', (t) => {
   })
 })
 
+test.cb('count > callback', (t) => {
+  users.count({ a: 'counting' }, t.end)
+})
+
 test('distinct', (t) => {
   return users.insert([{ distinct: 'a' }, { distinct: 'a' }, { distinct: 'b' }]).then(() => {
     return users.distinct('distinct')
   }).then((docs) => {
     t.deepEqual(docs, ['a', 'b'])
   })
+})
+
+test.cb('distinct > callback', (t) => {
+  users.distinct('distinct', t.end)
 })
 
 test('update > should update', (t) => {
@@ -222,6 +269,10 @@ test('update > should update', (t) => {
   })
 })
 
+test.cb('update > callback', (t) => {
+  users.update({ d: 'e' }, { $set: { d: 'f' } }, t.end)
+})
+
 test('updateById > should update by id', (t) => {
   return users.insert({ d: 'e' }).then((doc) => {
     return users.updateById(doc._id, { $set: { d: 'f' } }).then(() => {
@@ -230,6 +281,10 @@ test('updateById > should update by id', (t) => {
   }).then((doc) => {
     t.is(doc.d, 'f')
   })
+})
+
+test.cb('updateById > callback', (t) => {
+  users.updateById('xxxxxxxxxxxx', { $set: { d: 'f' } }, t.end)
 })
 
 test('update > should update with an objectid', (t) => {
@@ -262,6 +317,10 @@ test('remove > should remove a document', (t) => {
   })
 })
 
+test.cb('remove > callback', (t) => {
+  users.remove({ name: 'Mathieu' }, t.end)
+})
+
 test('removeById > should remove a document by id', (t) => {
   return users.insert({ name: 'Mathieu' }).then((doc) => {
     return users.removeById(doc._id)
@@ -270,6 +329,10 @@ test('removeById > should remove a document by id', (t) => {
   }).then((doc) => {
     t.deepEqual(doc, [])
   })
+})
+
+test.cb('removeById > callback', (t) => {
+  users.removeById('xxxxxxxxxxxx', t.end)
 })
 
 test('findAndModify > should alter an existing document', (t) => {
@@ -321,6 +384,14 @@ test('findAndModify > should upsert', (t) => {
   })
 })
 
+test.cb('findAndModify > callback', (t) => {
+  const rand = 'now-' + Date.now()
+  users.findAndModify(
+      { find: rand }
+    , { find: rand }
+    , { upsert: true }, t.end)
+})
+
 test('aggregate > should fail properly', (t) => {
   return users.aggregate().catch(() => {
     t.pass()
@@ -339,6 +410,10 @@ test('aggregate > should work with option', (t) => {
     t.true(Array.isArray(res))
     t.is(res.length, 2)
   })
+})
+
+test.cb('aggregate > callback', (t) => {
+  users.aggregate([{$group: {_id: null, maxWoot: { $max: '$woot' }}}], t.end)
 })
 
 test('should allow defaults', (t) => {
