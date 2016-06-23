@@ -132,7 +132,7 @@ test('find > should only provide selected fields', (t) => {
 
 test('find > should sort', (t) => {
   return users.insert([{ sort: true, a: 1, b: 2 }, { sort: true, a: 1, b: 1 }]).then(() => {
-    return users.find({ sort: true }, { sort: 'a b' })
+    return users.find({ sort: true }, { sort: '-a b' })
   }).then((docs) => {
     t.is(docs[0].b, 1)
     t.is(docs[1].b, 2)
