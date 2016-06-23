@@ -1,4 +1,10 @@
-2.0.0 / 2016-06-15
+2.1.0 / 2016-06-23
+==================
+ - add aggregate method (#56)
+ - add dropIndex and dropIndexes methods (#113)
+ - use `util.inherits` instead of `__proto__`
+
+2.0.0 / 2016-06-23
 ==================
 complete rewrite of monk:
  - return real promises (#104)
