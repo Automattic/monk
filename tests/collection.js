@@ -232,6 +232,16 @@ test('find > should allow stream cursor destroy', (t) => {
   })
 })
 
+test.cb('find > stream callback', (t) => {
+  const query = { stream: 3 }
+  users.insert([{ stream: 3 }, { stream: 3 }, { stream: 3 }, { stream: 3 }]).then(() => {
+    return users.find(query, t.end)
+      .each((doc) => {
+        t.not(doc.a, null)
+      })
+  })
+})
+
 test('count > should count', (t) => {
   return users.count({ a: 'counting' }).then((count) => {
     t.is(count, 0)
@@ -392,6 +402,11 @@ test.cb('findAndModify > callback', (t) => {
     , { upsert: true }, t.end)
 })
 
+test.cb('findAndModify > callback', (t) => {
+  const rand = 'now-' + Date.now()
+  users.findAndModify({ query: {find: rand}, update: { find: rand } }, t.end)
+})
+
 test('aggregate > should fail properly', (t) => {
   return users.aggregate().catch(() => {
     t.pass()
@@ -437,4 +452,12 @@ test('should allow defaults', (t) => {
   }).then(({n}) => {
     t.true(n && n <= 1)
   })
+})
+
+test('drop > should not throw when dropping an empty db', (t) => {
+  db.get('dropDB-' + Date.now()).drop().then(() => t.pass())
+})
+
+test.cb('drop > callback', (t) => {
+  db.get('dropDB2-' + Date.now()).drop(t.end)
 })
