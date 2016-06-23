@@ -39,6 +39,42 @@ test('index > should accept options', (t) => {
   })
 })
 
+test('dropIndex > should accept a field string', (t) => {
+  return users.index('name2.first').then(users.indexes).then((indexes) => {
+    t.not(indexes['name2.first_1'], undefined)
+  }).then(() => users.dropIndex('name2.first'))
+  .then(users.indexes).then((indexes) => {
+    t.is(indexes['name2.first_1'], undefined)
+  })
+})
+
+test('dropIndex > should accept space-delimited compound indexes', (t) => {
+  return users.index('name2 last').then(users.indexes).then((indexes) => {
+    t.not(indexes.name2_1_last_1, undefined)
+  }).then(() => users.dropIndex('name2 last'))
+  .then(users.indexes).then((indexes) => {
+    t.is(indexes.name2_1_last_1, undefined)
+  })
+})
+
+test('dropIndex > should accept array compound indexes', (t) => {
+  return users.index(['nombre2', 'apellido']).then(users.indexes).then((indexes) => {
+    t.not(indexes.nombre2_1_apellido_1, undefined)
+  }).then(() => users.dropIndex(['nombre2', 'apellido']))
+  .then(users.indexes).then((indexes) => {
+    t.is(indexes.nombre2_1_apellido_1, undefined)
+  })
+})
+
+test('dropIndex > should accept object compound indexes', (t) => {
+  return users.index({ up2: 1, down: -1 }).then(users.indexes).then((indexes) => {
+    t.not(indexes['up2_1_down_-1'], undefined)
+  }).then(() => users.dropIndex({ up2: 1, down: -1 }))
+  .then(users.indexes).then((indexes) => {
+    t.is(indexes['up2_1_down_'], undefined)
+  })
+})
+
 test('insert > should force callback in next tick', (t) => {
   return users.insert({ woot: 'a' }).then(() => t.pass())
 })
