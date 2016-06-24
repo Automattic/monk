@@ -1,9 +1,14 @@
-2.1.0 / 2016-06-23
+2.1.0 / 2016-06-24
 ==================
  - add aggregate method (#56)
  - add dropIndex and dropIndexes methods (#113)
  - use `util.inherits` instead of `__proto__`
  - Add `castIds` option to disable the automatic id casting (#1, #72)
+
+
+2.0.1 / 2016-06-24
+==================
+ - Safer insert (#137)
 
 2.0.0 / 2016-06-23
 ==================
