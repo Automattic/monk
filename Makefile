@@ -9,7 +9,7 @@ lint:
 
 test: lint
 	echo "  $(P) Testing"
-	NODE_ENV=test $(BIN_DIR)/nyc --all $(BIN_DIR)/ava $(TEST_TARGET)
+	NODE_ENV=test $(BIN_DIR)/nyc --all $(BIN_DIR)/ava
 
 test-watch:
 	echo "  $(P) Testing forever"
