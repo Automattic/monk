@@ -1,9 +1,8 @@
 # monk
 
-[![Join the chat at https://gitter.im/Automattic/monk](https://badges.gitter.im/Automattic/monk.svg)](https://gitter.im/Automattic/monk?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
-
 [![build status](https://secure.travis-ci.org/Automattic/monk.png?branch=master)](https://secure.travis-ci.org/Automattic/monk)
 [![codecov](https://codecov.io/gh/Automattic/monk/branch/master/graph/badge.svg)](https://codecov.io/gh/Automattic/monk)
+[![Join the chat at https://gitter.im/Automattic/monk](https://badges.gitter.im/Automattic/monk.svg)](https://gitter.im/Automattic/monk?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 Monk is a tiny layer that provides simple yet substantial usability
 improvements for MongoDB usage within Node.JS.
@@ -169,7 +168,7 @@ users.findOne({ name: 'test' }).then((doc) => {})
 
 ```js
 users.findAndModify({ query: {}, update: {} })
-users.findAndModify({ _id: '' }, { $set: {} })
+users.findAndModify({ _id: '' }, { $set: {} }, { new: true })
 ```
 
 #### Streaming
@@ -193,6 +192,12 @@ closing the `then` handler will be called.
 
 ```js
 users.remove({ a: 'b' })
+```
+
+### Aggregate
+
+```js
+users.aggregate(stages, {})
 ```
 
 ### Global options

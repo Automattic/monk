@@ -1,3 +1,11 @@
+2.1.0 / 2016-06-24
+==================
+ - add aggregate method (#56)
+ - add dropIndex and dropIndexes methods (#113)
+ - use `util.inherits` instead of `__proto__`
+ - Add `castIds` option to disable the automatic id casting (#1, #72)
+
+
 2.0.1 / 2016-06-24
 ==================
  - Safer insert (#137)
@@ -12,7 +20,6 @@ complete rewrite of monk:
  - test coverage
  - Support $ne, $in, $nin for id casting
  - Make the sort option behave like fields
-
 
 1.0.1 / 2015-03-25
 ==================
