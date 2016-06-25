@@ -88,10 +88,13 @@ test.cb('dropIndex > callback', (t) => {
 
 test('dropIndexes > should drop all indexes', (t) => {
   const col = db.get('indexDrop-' + Date.now())
-  return col.index({ up2: 1, down: -1 }).then(col.indexes).then((indexes) => {
+  return col.index({ up2: 1, down: -1 })
+  .then(col.indexes)
+  .then((indexes) => {
     t.not(indexes['up2_1_down_-1'], undefined)
   }).then(() => col.dropIndexes())
-  .then(col.indexes).then((indexes) => {
+  .then(col.indexes)
+  .then((indexes) => {
     t.is(indexes['up2_1_down_'], undefined)
   })
 })
@@ -455,7 +458,7 @@ test('should allow defaults', (t) => {
 })
 
 test('drop > should not throw when dropping an empty db', (t) => {
-  db.get('dropDB-' + Date.now()).drop().then(() => t.pass())
+  return db.get('dropDB-' + Date.now()).drop().then(() => t.pass()).catch(() => t.fail())
 })
 
 test.cb('drop > callback', (t) => {
