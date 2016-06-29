@@ -1,4 +1,7 @@
 {
-  "extends": ["standard"],
-  "ignorePath": ".gitignore"
+  "extends": ["standard", "plugin:ava/recommended"],
+  "ignorePath": ".gitignore",
+  "plugins": [
+    "ava"
+  ],
 }

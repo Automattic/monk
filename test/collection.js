@@ -399,14 +399,6 @@ test('findAndModify > should upsert', (t) => {
 
 test.cb('findAndModify > callback', (t) => {
   const rand = 'now-' + Date.now()
-  users.findAndModify(
-      { find: rand }
-    , { find: rand }
-    , { upsert: true }, t.end)
-})
-
-test.cb('findAndModify > callback', (t) => {
-  const rand = 'now-' + Date.now()
   users.findAndModify({ query: {find: rand}, update: { find: rand } }, t.end)
 })
 
