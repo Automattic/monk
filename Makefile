@@ -39,14 +39,14 @@ docs-watch: docs-prepare
 
 docs-publish: docs-build
 	echo "  $(P) Publishing gitbook"
-	cd _book
-	git init
-	git commit --allow-empty -m 'update book'
-	git checkout -b gh-pages
-	touch .nojekyll
-	git add .
-	git commit -am 'update book'
-	git push git@github.com:Automattic/monk gh-pages --force
+	cd _book && \
+	git init && \
+	git commit --allow-empty -m 'update book' && \
+	git checkout -b gh-pages && \
+	touch .nojekyll && \
+	git add . && \
+	git commit -am 'update book' && \
+	git push https://github.com/Automattic/monk gh-pages --force
 
 .PHONY: lint test-docs test test-watch docs-clean docs-prepare docs-build docs-watch docs-publish
 .SILENT: lint test-docs test test-watch docs-clean docs-prepare docs-build docs-watch docs-publish
