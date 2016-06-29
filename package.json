@@ -36,6 +36,11 @@
     "docs": "documentation readme -gs API",
     "coverage": "nyc report --reporter=text-lcov > coverage.lcov && codecov"
   },
+  "ava": {
+    "files": [
+      "test/**"
+    ]
+  },
   "nyc": {
     "exclude": [
       "test/**"
