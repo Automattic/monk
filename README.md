@@ -93,14 +93,21 @@ const db = require('monk')('localhost/mydb,192.168.1.1') // replica set
 
 Returns **[Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)** resolve when the connection is opened
 
+#### then
+
+Then
+
+**Parameters**
+
+-   `fn` **\[[Function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function)]** callback
+
 #### close
 
 Closes the connection.
 
 **Parameters**
 
--   `Function`  {fn} - callback
--   `fn`  
+-   `fn` **\[[Function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function)]** callback
 
 **Examples**
 

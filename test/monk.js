@@ -28,6 +28,10 @@ test.cb('to a regular server', (t) => {
   })
 })
 
+test('connect with promise', (t) => {
+  return monk('127.0.0.1/monk-test')
+})
+
 test.cb('to a replica set (array)', (t) => {
   t.plan(1)
   monk(['127.0.0.1/monk-test', 'localhost/monk-test'], () => {
