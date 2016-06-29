@@ -7,7 +7,7 @@
 Monk is a tiny layer that provides simple yet substantial usability
 improvements for MongoDB usage within Node.JS.
 
-*note*: monk 2.x drop the support for node < 0.12. If you are still using an earlier version, stick to monk 1.x
+_note_: monk 2.x drop the support for node &lt; 0.12. If you are still using an earlier version, stick to monk 1.x
 
 ```js
 const db = require('monk')('localhost/mydb')
@@ -28,70 +28,33 @@ db.close()
 
 ## Features
 
-- Command buffering. You can start querying right away.
-- Promises built-in for all queries. Easy interoperability with modules.
-- Easy connections / configuration
-- Well-designed signatures
-- Improvements to the MongoDB APIs (eg: `findAndModify` supports the
-  `update` signature style)
-- Auto-casting of `_id` in queries
-- Builds on top of [mongoskin](http://github.com/kissjs/node-mongoskin)
-- Allows to set global options or collection-level options for queries. (eg:
-  `safe` is `true` by default for all queries)
-
-## How to use
-
-### Connecting
-
-#### Single server
-
-```js
-const db = require('monk')('localhost/mydb', options)
-```
-
-#### Replica set
-
-```js
-const db = require('monk')('localhost/mydb,192.168.1.1')
-```
-
-### Disconnecting
-
-```js
-db.close()
-```
-
-### Collections
-
-#### Getting one
-
-```js
-const users = db.get('users')
-// users.insert(), users.update() … (see below)
-```
-
-#### Dropping
-
-```js
-users.drop(fn)
-```
+-   Command buffering. You can start querying right away.
+-   Promises built-in for all queries. Easy interoperability with modules.
+-   Easy connections / configuration
+-   Well-designed signatures
+-   Improvements to the MongoDB APIs (eg: `findAndModify` supports the
+    `update` signature style)
+-   Auto-casting of `_id` in queries
+-   Builds on top of [mongoskin](http://github.com/kissjs/node-mongoskin)
+-   Allows to set global options or collection-level options for queries. (eg:
+    `safe` is `true` by default for all queries)
 
 ### Signatures
 
-- All commands accept the simple `data[, …][, callback]`. For example
-    - `find({}, fn)`
-    - `findOne({}, fn)`
-    - `update({}, {}, fn)`
-    - `findAndModify({}, {}, fn)`
-    - `findById('id', fn)`
-    - `remove({}, fn)`
-- You can pass options in the middle: `data[, …], options[, fn]`
-- You can pass fields to select as an array: `data[, …], ['field', …][, fn]`
-- You can pass fields as a string delimited by spaces:
-  `data[, …], 'field1 field2'[, fn]`
-- To exclude a field, prefix the field name with '-':
-  `data[, …], '-field1'[, fn]`
-- You can pass sort option the same way as fields
+-   All commands accept the simple `data[, …][, callback]`. For example
+    -   `find({}, fn)`
+    -   `findOne({}, fn)`
+    -   `update({}, {}, fn)`
+    -   `findAndModify({}, {}, fn)`
+    -   `findById('id', fn)`
+    -   `remove({}, fn)`
+-   You can pass options in the middle: `data[, …], options[, fn]`
+-   You can pass fields to select as an array: `data[, …], ['field', …][, fn]`
+-   You can pass fields as a string delimited by spaces:
+    `data[, …], 'field1 field2'[, fn]`
+-   To exclude a field, prefix the field name with '-':
+    `data[, …], '-field1'[, fn]`
+-   You can pass sort option the same way as fields
 
 ### Promises
 
@@ -105,137 +68,459 @@ users.insert({}).then((doc) => {
 })
 ```
 
-### Indexes
+## API
 
-```js
+### Manager
+
+Monk constructor.
+
+**Parameters**
+
+-   `uri` **([Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array) \| [String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String))** replica sets can be an array or
+    comma-separated
+-   `opts` **([Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object) \| [Function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function))** or connect callback
+-   `fn` **[Function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function)** connect callback
+
+**Examples**
+
+```javascript
+const db = require('monk')('localhost/mydb', options)
+```
+
+```javascript
+const db = require('monk')('localhost/mydb,192.168.1.1') // replica set
+```
+
+Returns **[Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)** resolve when the connection is opened
+
+#### then
+
+Then
+
+**Parameters**
+
+-   `fn` **\[[Function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function)]** callback
+
+#### close
+
+Closes the connection.
+
+**Parameters**
+
+-   `fn` **\[[Function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function)]** callback
+
+**Examples**
+
+```javascript
+db.close()
+```
+
+Returns **Manager** for chaining
+
+#### get
+
+Gets a collection.
+
+**Parameters**
+
+-   `name` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** name of the mongo collection
+
+**Examples**
+
+```javascript
+const users = db.get('users')
+```
+
+Returns **Collection** collection to query against
+
+#### id
+
+Casts to objectid
+
+**Parameters**
+
+-   `str` **Mixed** hex id or ObjectId
+
+Returns **ObjectId** 
+
+### Collection
+
+Mongo Collection.
+
+**Parameters**
+
+-   `manager`  
+-   `name`  
+
+#### ensureIndex
+
+Creates indexes on collections.
+
+<https://docs.mongodb.com/manual/reference/method/db.collection.ensureIndex/>
+
+**Parameters**
+
+-   `fields` **([Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object) \| [String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String) \| [Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array))** 
+-   `opts` **\[[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)]** options
+-   `fn` **\[[Function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function)]** callback
+
+**Examples**
+
+```javascript
 users.index('name.first')
-users.index('email', { unique: true }) // unique
-users.index('name.first name.last') // compound
-users.index({ 'email': 1, 'password': -1 }) // compound with sort
-users.index('email', { sparse: true }) // with options
-users.indexes() // get indexes
-users.dropIndex(name) // drop an index
-users.dropIndexes() // drop all indexes
+users.index('name last')
+users.index(['nombre', 'apellido'])
+users.index({ up: 1, down: -1 })
+users.index({ woot: 1 }, { unique: true })
 ```
 
-### Inserting
+Returns **[Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)** 
 
-```js
-users.insert({ a: 'b' })
+#### dropIndex
+
+Drops or removes the specified index or indexes from a collection.
+
+<https://docs.mongodb.com/manual/reference/method/db.collection.dropIndex/>
+
+**Parameters**
+
+-   `fields` **([Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object) \| [String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String) \| [Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array))** 
+-   `opts` **\[[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)]** 
+-   `fn` **\[[Function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function)]** callback
+
+**Examples**
+
+```javascript
+users.dropIndex('name.first')
+users.dropIndex('name last')
+users.dropIndex(['nombre', 'apellido'])
+users.dropIndex({ up: 1, down: -1 })
 ```
 
-### Casting
+Returns **[Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)** 
 
-To cast to `ObjectId`:
+#### dropIndexes
 
-```js
-users.id() // returns new generated ObjectID
-users.id('hexstring') // returns ObjectId
-users.id(obj) // returns ObjectId
+Drops all indexes other than the required index on the \_id field.
+
+<https://docs.mongodb.com/manual/reference/method/db.collection.dropIndexes/>
+
+**Parameters**
+
+-   `fn` **\[[Function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function)]** callback
+
+**Examples**
+
+```javascript
+users.dropIndexes()
 ```
 
-### Updating
+Returns **[Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)** 
 
-```js
-users.update({}, {})
-users.updateById('id', {})
+#### indexes
+
+Returns an array that holds a list of documents that identify and describe the existing indexes on the collection.
+
+<https://docs.mongodb.com/manual/reference/method/db.collection.getIndexes/>
+
+**Parameters**
+
+-   `fn` **\[[Function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function)]** callback
+
+**Examples**
+
+```javascript
+users.indexes()
 ```
 
-### Finding
+Returns **[Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)** 
 
-#### Many
+#### update
 
-```js
+Modifies an existing document or documents in a collection. The method can modify specific fields of an existing document or documents or replace an existing document entirely, depending on the update parameter. By default, the update() method updates a single document. Set the `multi` option to update all documents that match the query criteria.
+
+<https://docs.mongodb.com/manual/reference/method/db.collection.update/>
+
+**Parameters**
+
+-   `search` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** query
+-   `update` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** obj
+-   `opts` **\[([Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object) \| [String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String) \| [Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array))]** , options or fields
+-   `fn` **\[[Function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function)]** callback
+
+**Examples**
+
+```javascript
+users.update({ name: 'Mathieu' }, { $set: { foo: 'bar' } })
+```
+
+Returns **[Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)** 
+
+#### updateById
+
+update by id helper
+
+**Parameters**
+
+-   `id` **([String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String) \| [Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object))** object id
+-   `update` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** update obj
+-   `opts` **\[([Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object) \| [String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String) \| [Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array))]** options or fields
+-   `fn` **\[[Function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function)]** callback
+
+**Examples**
+
+```javascript
+users.updateById(id, { $set: { foo: 'bar' } })
+```
+
+Returns **[Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)** 
+
+#### remove
+
+Removes documents from a collection.
+
+<https://docs.mongodb.com/manual/reference/method/db.collection.remove/>
+
+**Parameters**
+
+-   `search` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** query
+-   `opts` **\[[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)]** options
+-   `fn` **\[[Function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function)]** callback
+
+**Examples**
+
+```javascript
+users.remove({ name: 'Mathieu' })
+```
+
+Returns **[Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)** 
+
+#### removeById
+
+remove by ID helper
+
+**Parameters**
+
+-   `hex` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** id
+-   `id`  
+-   `opts` **\[[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)]** options
+-   `fn` **\[[Function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function)]** callback
+
+**Examples**
+
+```javascript
+users.removeById(id)
+```
+
+Returns **[Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)** 
+
+#### findAndModify
+
+Modifies and returns a single document. By default, the returned document does not include the modifications made on the update. To return the document with the modifications made on the update, use the `new` option.
+
+<https://docs.mongodb.com/manual/reference/method/db.collection.findAndModify/>
+
+**Parameters**
+
+-   `search` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** query, or { query, update } object
+-   `query`  
+-   `update` **\[[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)]** object
+-   `opts` **\[([Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object) \| [String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String) \| [Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array))]** options or fields
+-   `fn` **\[[Function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function)]** callback
+
+**Examples**
+
+```javascript
+users.findAndModify({ name: 'Mathieu' }, { $set: { foo: 'bar' } }, opts)
+users.findAndModify({ query: { name: 'Mathieu' }, update: { $set: { foo: 'bar' } }}, opts)
+```
+
+Returns **[Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)** 
+
+#### insert
+
+Inserts a document or documents into a collection.
+
+<https://docs.mongodb.com/manual/reference/method/db.collection.insert/>
+
+**Parameters**
+
+-   `data` **([Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object) \| [Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array))** 
+-   `opts` **\[[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)]** options
+-   `fn` **\[[Function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function)]** callback
+
+**Examples**
+
+```javascript
+users.insert({ woot: 'foo' })
+users.insert([{ woot: 'bar' }, { woot: 'baz' }])
+```
+
+Returns **[Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)** 
+
+#### find
+
+Selects documents in a collection and return them.
+
+<https://docs.mongodb.com/manual/reference/method/db.collection.find/>
+
+**Parameters**
+
+-   `query` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
+-   `opts` **\[([Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object) \| [String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String) \| [Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array))]** options or fields
+-   `fn` **\[[Function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function)]** completion callback
+
+**Examples**
+
+```javascript
 users.find({}).then((docs) => {})
 ```
 
-#### By ID
-
-```js
-users.findById('hex representation').then((doc) => {})
-users.findById(oid).then((doc) => {})
+```javascript
+users.find({}).each((user, destroy) => {
+  // the users are streaming here
+  // call `destroy()` to stop the stream
+}).then(() => {
+  // stream is over
+})
 ```
 
-#### Single doc
+Returns **[Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)** 
 
-`findOne` also provides the `findById` functionality.
+#### distinct
 
-```js
-users.findOne({ name: 'test' }).then((doc) => {})
+Finds the distinct values for a specified field across a single collection and returns the results in an array.
+
+<https://docs.mongodb.com/manual/reference/method/db.collection.distinct/>
+
+**Parameters**
+
+-   `field` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** The field for which to return distinct values.
+-   `query` **\[[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)]** A query that specifies the documents from which to retrieve the distinct values.
+-   `fn` **\[[Function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function)]** completion callback
+
+**Examples**
+
+```javascript
+users.distinct('name')
 ```
 
-#### And modify
+Returns **[Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)** 
 
-```js
-users.findAndModify({ query: {}, update: {} })
-users.findAndModify({ _id: '' }, { $set: {} }, { new: true })
+#### count
+
+Returns the count of documents that would match a find() query. The db.collection.count() method does not perform the find() operation but instead counts and returns the number of results that match a query.
+
+<https://docs.mongodb.com/manual/reference/method/db.collection.count/>
+
+**Parameters**
+
+-   `query` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** The query selection criteria.
+-   `opts` **\[[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)]** Extra options for modifying the count.
+-   `fn` **\[[Function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function)]** completion callback.
+
+**Examples**
+
+```javascript
+users.count({name: 'foo'})
 ```
 
-#### Streaming
+Returns **[Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)** 
 
-Note: `stream: true` is optional if you register an `each` handler in the
-same tick. In the following example I just include it for extra clarity.
+#### findOne
 
-```js
-users.find({}, { stream: true })
-  .each((doc, destroy) => {})
-  .then(() => {})
-  .catch((err) => {})
+Returns one document that satisfies the specified query criteria. If multiple documents satisfy the query, this method returns the first document according to the natural order which reflects the order of documents on the disk. In capped collections, natural order is the same as insertion order. If no document satisfies the query, the method returns null.
+
+<https://docs.mongodb.com/manual/reference/method/db.collection.findOne/>
+
+**Parameters**
+
+-   `query` **([String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String) | ObjectId | [Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object))** 
+-   `search`  
+-   `opts` **\[[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)]** options
+-   `fn` **\[[Function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function)]** completion callback
+
+**Examples**
+
+```javascript
+users.findOne({name: 'foo'}).then((doc) => {})
 ```
 
-##### Destroying a cursor
+Returns **[Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)** 
 
-You can call `destroy()` in the `each` handler to close the cursor. Upon the cursor
-closing the `then` handler will be called.
+#### findById
 
-### Removing
+findOne by ID helper
 
-```js
-users.remove({ a: 'b' })
+**Parameters**
+
+-   `hex` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** id
+-   `id`  
+-   `opts` **\[([Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object) \| [String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String) \| [Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array))]** options or fields
+-   `fn` **\[[Function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function)]** completion callback
+
+**Examples**
+
+```javascript
+users.findById(id).then((doc) => {})
 ```
 
-### Aggregate
+Returns **[Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)** 
 
-```js
-users.aggregate(stages, {})
+#### drop
+
+Removes a collection from the database. The method also removes any indexes associated with the dropped collection.
+
+<https://docs.mongodb.com/manual/reference/method/db.collection.drop/>
+
+**Parameters**
+
+-   `fn` **\[[Function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function)]** callback
+
+**Examples**
+
+```javascript
+users.drop()
 ```
 
-### Global options
+Returns **[Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)** 
 
-```js
-const db = require('monk')('localhost/mydb')
-db.options.multi = true // global multi-doc update
-db.get('users').options.multi = false // collection-level
-```
+#### aggregate
 
-Monk sets `safe` to `true` by default.
+Calculates aggregate values for the data in a collection.
 
-### Query debugging
+<https://docs.mongodb.com/manual/reference/method/db.collection.aggregate/>
 
-If you wish to see what queries `monk` passes to the driver, simply leverage
-[debug](http://github.com/visionmedia/debug):
+**Parameters**
 
-```bash
-DEBUG="monk:queries"
-```
+-   `pipeline` **[Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)** A sequence of data aggregation operations or stages.
+-   `stages`  
+-   `opts` **\[([Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object) \| [Function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function))]** 
+-   `fn` **\[[Function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function)]** 
 
-To see all debugging output:
+Returns **[Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)** 
 
-```bash
-DEBUG="monk:*"
-```
+#### id
+
+Casts to objectid
+
+**Parameters**
+
+-   `str` **Mixed** hex id or ObjectId
+
+Returns **ObjectId** 
 
 ## Contributors
 
-- [Guillermo Rauch](http://github.com/rauchg)
-- [Travis Jeffery](http://github.com/travisjeffery)
-- [Mathieu Dutour](http://github.com/mathieudutour)
+-   [Guillermo Rauch](http://github.com/rauchg)
+-   [Travis Jeffery](http://github.com/travisjeffery)
+-   [Mathieu Dutour](http://github.com/mathieudutour)
 
 ## License
 
 (The MIT License)
 
-Copyright (c) 2012 Guillermo Rauch &lt;guillermo@learnboost.com&gt;
+Copyright (c) 2012 Guillermo Rauch &lt;guillermo@learnboost.com>
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the
