@@ -8,12 +8,7 @@ lint:
 	echo "  $(P) Linting"
 	$(BIN_DIR)/eslint $(SRC_DIR) && $(BIN_DIR)/eslint $(TEST_TARGET)
 
-test-docs:
-	echo "  $(P) Testing doc"
-	DOC=$($(BIN_DIR)/documentation readme -dgs API)
-	if [ $($(DOC) | grep -vF 'up to date') ]; then echo 'Must run: npm run docs'; exit 1; fi;
-
-test: lint test-docs
+test: lint
 	echo "  $(P) Testing"
 	NODE_ENV=test $(BIN_DIR)/nyc --all $(BIN_DIR)/ava
 
@@ -48,5 +43,5 @@ docs-publish: docs-build
 	git commit -am 'update book' && \
 	git push https://github.com/Automattic/monk gh-pages --force
 
-.PHONY: lint test-docs test test-watch docs-clean docs-prepare docs-build docs-watch docs-publish
-.SILENT: lint test-docs test test-watch docs-clean docs-prepare docs-build docs-watch docs-publish
+.PHONY: lint test test-watch docs-clean docs-prepare docs-build docs-watch docs-publish
+.SILENT: lint test test-watch docs-clean docs-prepare docs-build docs-watch docs-publish

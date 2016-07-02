@@ -21,15 +21,33 @@ test('Should throw if no uri provided', (t) => {
 })
 
 test.cb('to a regular server', (t) => {
-  t.plan(1)
-  monk('127.0.0.1/monk-test', () => {
-    t.pass()
+  t.plan(2)
+  monk('127.0.0.1/monk-test', (err, db) => {
+    t.falsy(err)
+    t.true(db instanceof monk)
     t.end()
   })
 })
 
 test('connect with promise', (t) => {
-  return monk('127.0.0.1/monk-test')
+  return monk('127.0.0.1/monk-test').then((db) => {
+    t.true(db instanceof monk)
+  })
+})
+
+test.cb('should fail', (t) => {
+  t.plan(2)
+  monk('non-existent-db/monk-test', (err, db) => {
+    t.truthy(err)
+    t.true(db instanceof monk)
+    t.end()
+  })
+})
+
+test('should fail with promise', (t) => {
+  return monk('non-existent-db/monk-test').catch((err) => {
+    t.truthy(err)
+  })
 })
 
 test.cb('to a replica set (array)', (t) => {

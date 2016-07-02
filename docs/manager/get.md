@@ -6,6 +6,8 @@ Gets a collection.
 
 1. `name` *(string)*: name of the mongo collection
 
+2. [`options`] *(object)*: collection level options
+
 #### Returns
 
 A [Collection](/docs/collection/README.md) instance.
@@ -13,5 +15,5 @@ A [Collection](/docs/collection/README.md) instance.
 #### Example
 
 ```js
-const users = db.get('users')
+const users = db.get('users', options)
 ```

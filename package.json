@@ -16,8 +16,7 @@
   },
   "dependencies": {
     "debug": "*",
-    "mongodb": "^2.1.18",
-    "mongoskin": "^2.1.0"
+    "mongodb": "^2.1.18"
   },
   "devDependencies": {
     "ava": "^0.15.2",

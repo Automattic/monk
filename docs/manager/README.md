@@ -8,7 +8,7 @@ Monk constructor.
 
 2. [`options`] *(Object)*: You may optionally specify [options](http://mongodb.github.io/node-mongodb-native/2.1/reference/connecting/connection-settings/).
 
-3. [`callback`] *(Function)*: You may optionally specify a callback which will be called once the connection to the mongo database is opened.
+3. [`callback`] *(Function)*: You may optionally specify a callback which will be called once the connection to the mongo database is opened or throws an error.
 
 #### Returns
 
@@ -24,4 +24,21 @@ const db = require('monk')('localhost/mydb', options)
 
 ```js
 const db = require('monk')('localhost/mydb,192.168.1.1') // replica set
+```
+
+```js
+require('monk')('localhost/mydb,192.168.1.1').then((db) => {
+  // db is the connected instance of the Manager
+}).catch((err) => {
+  // error connecting to the database
+})
+```
+
+#### Options
+
+You can set options to pass to every queries. By default, monk set
+```js
+db.options = {
+  safe: true
+}
 ```

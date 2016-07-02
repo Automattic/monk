@@ -218,10 +218,10 @@ test('find > should allow stream cursor destroy', (t) => {
     return users.count(query).then((total) => {
       if (total <= 1) throw new Error('Bad test')
       return users.find(query)
-        .each((doc, destroy) => {
+        .each((doc, {close}) => {
           t.not(doc.cursor, null)
           found++
-          if (found === 2) destroy()
+          if (found === 2) close()
         })
         .then(() => {
           return new Promise((resolve) => {
@@ -297,7 +297,7 @@ test('updateById > should update by id', (t) => {
 })
 
 test.cb('updateById > callback', (t) => {
-  users.updateById('xxxxxxxxxxxx', { $set: { d: 'f' } }, t.end)
+  users.updateById('aaaaaaaaaaaaaaaaaaaaaaaa', { $set: { d: 'f' } }, t.end)
 })
 
 test('update > should update with an objectid', (t) => {
@@ -345,7 +345,7 @@ test('removeById > should remove a document by id', (t) => {
 })
 
 test.cb('removeById > callback', (t) => {
-  users.removeById('xxxxxxxxxxxx', t.end)
+  users.removeById('aaaaaaaaaaaaaaaaaaaaaaaa', t.end)
 })
 
 test('findAndModify > should alter an existing document', (t) => {
@@ -418,7 +418,7 @@ test('aggregate > should work in normal case', (t) => {
 test('aggregate > should work with option', (t) => {
   return users.aggregate([{$group: {_id: null, maxWoot: { $max: '$woot' }}}], { explain: true }).then((res) => {
     t.true(Array.isArray(res))
-    t.is(res.length, 2)
+    t.is(res.length, 1)
   })
 })
 

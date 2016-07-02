@@ -1,4 +1,4 @@
-# `manager.id` or `Manager.id`
+# `monk.id`
 
 Casts a string to (or create) an [ObjectId](https://docs.mongodb.com/manual/reference/method/ObjectId/).
 
@@ -8,11 +8,12 @@ Casts a string to (or create) an [ObjectId](https://docs.mongodb.com/manual/refe
 
 #### Returns
 
-A [ObjectId](https://docs.mongodb.com/manual/reference/method/ObjectId/).
+An [ObjectId](https://docs.mongodb.com/manual/reference/method/ObjectId/).
 
 #### Example
 
 ```js
-const id = db.id('4ee0fd75d6bd52107c000118')
+const monk = require('monk')
+const id = monk.id('4ee0fd75d6bd52107c000118')
 const newId = monk.id()
 ```
