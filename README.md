@@ -40,7 +40,7 @@ db.close()
 
 ## How to use
 
-[Documentaion](https://Automattic.github.io/monk)
+[Documentation](https://Automattic.github.io/monk)
 
 ## Contributors
 

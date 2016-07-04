@@ -1,6 +1,6 @@
 # `collection.distinct`
 
-[Mongo documentation](http://mongodb.github.io/node-mongodb-native/2.0/api/Collection.html#distinct)
+[Mongo documentation <i class="fa fa-external-link" style="position: relative; top: 2px;" />](http://mongodb.github.io/node-mongodb-native/2.0/api/Collection.html#distinct)
 
 Finds the distinct values for a specified field across a single collection and returns the results in an array.
 

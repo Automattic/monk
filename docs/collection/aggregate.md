@@ -1,6 +1,6 @@
 # `collection.aggregate`
 
-[Mongo documentation](http://mongodb.github.io/node-mongodb-native/2.0/api/Collection.html#aggregate)
+[Mongo documentation <i class="fa fa-external-link" style="position: relative; top: 2px;" />](http://mongodb.github.io/node-mongodb-native/2.0/api/Collection.html#aggregate)
 
 Calculates aggregate values for the data in a collection.
 
