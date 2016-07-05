@@ -113,12 +113,16 @@ test('close > closing an opening connection should close it once opened', (t) =>
 const Collection = monk.Collection
 const db = monk('127.0.0.1/monk-test')
 
+test('Manager#create', (t) => {
+  t.true(db.create('users') instanceof Collection)
+})
+
 test('Manager#get', (t) => {
-  t.true(db.get('users')instanceof Collection)
+  t.true(db.get('users') instanceof Collection)
 })
 
 test('Manager#col', (t) => {
-  t.true(db.col('users')instanceof Collection)
+  t.true(db.col('users') instanceof Collection)
 })
 
 test('Manager#id', (t) => {
