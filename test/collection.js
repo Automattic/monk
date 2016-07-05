@@ -131,6 +131,7 @@ test.cb('insert > callback', (t) => {
 test('findById > should find by id', (t) => {
   return users.insert({ woot: 'e' }).then((doc) => {
     return users.findById(doc._id).then((doc) => {
+      console.log(doc)
       t.is(doc.woot, 'e')
     })
   })
