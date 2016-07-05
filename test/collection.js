@@ -446,6 +446,48 @@ test.cb('findAndModify > callback', (t) => {
   users.findAndModify({ query: {find: rand}, update: { find: rand } }, t.end)
 })
 
+test('findOneAndDelete > should remove a document and return it', (t) => {
+  return users.insert({ name: 'Bob' }).then((doc) => {
+    return users.findOneAndDelete({ name: 'Bob' })
+  }).then((doc) => {
+    t.is(doc.name, 'Bob')
+    return users.find({ name: 'Bob' })
+  }).then((doc) => {
+    t.deepEqual(doc, [])
+  })
+})
+
+test.cb('findOneAndDelete > callback', (t) => {
+  users.insert({ name: 'Bob2' }).then((doc) => {
+    users.findOneAndDelete({ name: 'Bob2' }, (err, doc) => {
+      t.is(err, null)
+      t.is(doc.name, 'Bob2')
+      users.find({ name: 'Bob2' }).then((doc) => {
+        t.deepEqual(doc, [])
+        t.end()
+      })
+    })
+  })
+})
+
+test('findOneAndUpdate > should update a document and return it', (t) => {
+  return users.insert({ name: 'Jack' }).then((doc) => {
+    return users.findOneAndUpdate({ name: 'Jack' }, { name: 'Jack4' })
+  }).then((doc) => {
+    t.is(doc.name, 'Jack4')
+  })
+})
+
+test.cb('findOneAndUpdate > callback', (t) => {
+  users.insert({ name: 'Jack2' }).then((doc) => {
+    users.findOneAndUpdate({ name: 'Jack2' }, { name: 'Jack3' }, (err, doc) => {
+      t.is(err, null)
+      t.is(doc.name, 'Jack3')
+      t.end()
+    })
+  })
+})
+
 test('aggregate > should fail properly', (t) => {
   return users.aggregate().catch(() => {
     t.pass()
