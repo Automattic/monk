@@ -76,6 +76,35 @@ test.cb('followed by disconnection', (t) => {
   })
 })
 
+test('executeWhenOpened > should reopen the connection if closed', (t) => {
+  const db = monk('127.0.0.1/monk')
+  return db
+    .then(() => t.is(db._state, 'open'))
+    .then(() => db.close(true))
+    .then(() => t.is(db._state, 'closed'))
+    .then(() => db.executeWhenOpened())
+    .then(() => t.is(db._state, 'open'))
+    .then(() => db.close())
+})
+
+test('close > closing a closed connection should work', (t) => {
+  const db = monk('127.0.0.1/monk')
+  return db
+    .then(() => t.is(db._state, 'open'))
+    .then(() => db.close())
+    .then(() => t.is(db._state, 'closed'))
+    .then(() => db.close())
+})
+
+test.cb('close > closing a closed connection should work with callback', (t) => {
+  const db = monk('127.0.0.1/monk')
+  db.then(() => t.is(db._state, 'open'))
+    .then(() => db.close(() => {
+      t.is(db._state, 'closed')
+      db.close(() => t.end())
+    }))
+})
+
 const Collection = monk.Collection
 const db = monk('127.0.0.1/monk-test')
 
