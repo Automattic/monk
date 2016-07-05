@@ -2,7 +2,7 @@
 
 * [Read Me](/README.md)
 * [Getting Started](/docs/GETTING_STARTED.md)
-* [API Reference](/docs/api.md)
+* API Reference
   * [Manager](/docs/manager/README.md)
     * [close](/docs/manager/close.md)
     * [create](/docs/manager/create.md)
