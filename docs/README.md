@@ -5,6 +5,7 @@
 * [API Reference](/docs/api.md)
   * [Manager](/docs/manager/README.md)
     * [close](/docs/manager/close.md)
+    * [create](/docs/manager/create.md)
     * [get](/docs/manager/get.md)
   * [Collection](/docs/collection/README.md)
     * [aggregate](/docs/collection/aggregate.md)
