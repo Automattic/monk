@@ -494,6 +494,13 @@ test('aggregate > should fail properly', (t) => {
   })
 })
 
+test.cb('aggregate > should fail properly with callback', (t) => {
+  users.aggregate(undefined, function (err) {
+    t.truthy(err)
+    t.end()
+  })
+})
+
 test('aggregate > should work in normal case', (t) => {
   return users.aggregate([{$group: {_id: null, maxWoot: { $max: '$woot' }}}]).then((res) => {
     t.true(Array.isArray(res))
@@ -541,4 +548,9 @@ test('drop > should not throw when dropping an empty db', (t) => {
 
 test.cb('drop > callback', (t) => {
   db.get('dropDB2-' + Date.now()).drop(t.end)
+})
+
+test('Collection#id', (t) => {
+  const oid = users.id()
+  t.is(typeof oid.toHexString(), 'string')
 })
