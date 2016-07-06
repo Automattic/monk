@@ -237,10 +237,32 @@ test('find > should allow stream cursor destroy', (t) => {
   return users.insert([{ cursor: true }, { cursor: true }, { cursor: true }, { cursor: true }]).then(() => {
     return users.find(query)
       .each((doc, {close}) => {
-        console.log(found)
         t.not(doc.cursor, null)
         found++
         if (found === 2) close()
+      })
+      .then(() => {
+        return new Promise((resolve) => {
+          setTimeout(() => {
+            t.is(found, 2)
+            resolve()
+          }, 100)
+        })
+      })
+  })
+})
+
+test('find > should allow stream cursor destroy even when paused', (t) => {
+  const query = { cursor: { $exists: true } }
+  let found = 0
+  return users.insert([{ cursor: true }, { cursor: true }, { cursor: true }, { cursor: true }]).then(() => {
+    return users.find(query)
+      .each((doc, {close, pause, resume}) => {
+        pause()
+        t.not(doc.cursor, null)
+        found++
+        if (found === 2) return close()
+        resume()
       })
       .then(() => {
         return new Promise((resolve) => {
