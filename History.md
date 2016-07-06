@@ -1,3 +1,7 @@
+3.0.1 / 2016-07-06
+==================
+  - Fix find cursor pause and resume
+
 3.0.0 / 2016-07-06
 ==================
   - remove Mongoskin dependency

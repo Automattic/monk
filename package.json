@@ -1,6 +1,6 @@
 {
   "name": "monk",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "main": "lib/monk.js",
   "tags": [
     "mongodb",

@@ -235,23 +235,41 @@ test('find > should allow stream cursor destroy', (t) => {
   const query = { cursor: { $exists: true } }
   let found = 0
   return users.insert([{ cursor: true }, { cursor: true }, { cursor: true }, { cursor: true }]).then(() => {
-    return users.count(query).then((total) => {
-      if (total <= 1) throw new Error('Bad test')
-      return users.find(query)
-        .each((doc, {close}) => {
-          t.not(doc.cursor, null)
-          found++
-          if (found === 2) close()
+    return users.find(query)
+      .each((doc, {close}) => {
+        console.log(found)
+        t.not(doc.cursor, null)
+        found++
+        if (found === 2) close()
+      })
+      .then(() => {
+        return new Promise((resolve) => {
+          setTimeout(() => {
+            t.is(found, 2)
+            resolve()
+          }, 100)
         })
-        .then(() => {
-          return new Promise((resolve) => {
-            setTimeout(() => {
-              t.is(found, 2)
-              resolve()
-            }, 100)
-          })
-        })
-    })
+      })
+  })
+})
+
+test('find > stream pause and continue', (t) => {
+  const query = { stream: 4 }
+  return users.insert([{ stream: 4 }, { stream: 4 }, { stream: 4 }, { stream: 4 }]).then(() => {
+    const start = Date.now()
+    let index = 0
+    return users.find(query)
+      .each((doc, {pause, resume}) => {
+        pause()
+        const duration = Date.now() - start
+        t.true(duration > index * 1000)
+        index += 1
+        setTimeout(resume, 1000)
+      })
+      .then(() => {
+        const duration = Date.now() - start
+        t.true(duration > 3000)
+      })
   })
 })
 
