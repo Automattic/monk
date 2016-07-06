@@ -10,7 +10,7 @@ Gets a collection.
 
 #### Returns
 
-A [Collection](/docs/collection/README.md) instance.
+A [Collection](../collection/README.md) instance.
 
 #### Example
 

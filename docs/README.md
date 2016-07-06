@@ -26,3 +26,4 @@
   * [id](/docs/id.md)
 * [Debugging](/docs/Debugging.md)
 * [Change Log](/History.md)
+* [Contributors](https://github.com/Automattic/monk/graphs/contributors)

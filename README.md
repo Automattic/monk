@@ -42,12 +42,6 @@ db.close()
 
 [Documentation](https://Automattic.github.io/monk)
 
-## Contributors
-
-- [Guillermo Rauch](http://github.com/rauchg)
-- [Travis Jeffery](http://github.com/travisjeffery)
-- [Mathieu Dutour](http://github.com/mathieudutour)
-
 ## License
 
 (The MIT License)
