@@ -142,6 +142,13 @@ test.cb('findById > callback', (t) => {
   })
 })
 
+test('findOne > should return null if no document', (t) => {
+  return users.findOne({nonExistingField: true})
+    .then((doc) => {
+      t.is(doc, null)
+    })
+})
+
 test('findOne > findOne(undefined) should not work', (t) => {
   return users.insert({ a: 'b', c: 'd', e: 'f' }).then((doc) => {
     return users.findOne()
@@ -150,7 +157,7 @@ test('findOne > findOne(undefined) should not work', (t) => {
   })
 })
 
-test('find > should only provide selected fields', (t) => {
+test('findOne > should only provide selected fields', (t) => {
   return users.insert({ a: 'b', c: 'd', e: 'f' }).then((doc) => {
     return users.findOne(doc._id, 'a e')
   }).then((doc) => {
@@ -178,6 +185,19 @@ test('find > should sort', (t) => {
   }).then((docs) => {
     t.is(docs[0].b, 1)
     t.is(docs[1].b, 2)
+  })
+})
+
+test('find > should return the raw cursor', (t) => {
+  const query = { stream: 3 }
+  return users.insert([{ stream: 3 }, { stream: 3 }, { stream: 3 }, { stream: 3 }]).then(() => {
+    return users.find(query, {rawCursor: true})
+      .then((cursor) => {
+        t.truthy(cursor.close)
+        t.truthy(cursor.pause)
+        t.truthy(cursor.resume)
+        cursor.close()
+      })
   })
 })
 
@@ -218,10 +238,10 @@ test('find > should allow stream cursor destroy', (t) => {
     return users.count(query).then((total) => {
       if (total <= 1) throw new Error('Bad test')
       return users.find(query)
-        .each((doc, destroy) => {
+        .each((doc, {close}) => {
           t.not(doc.cursor, null)
           found++
-          if (found === 2) destroy()
+          if (found === 2) close()
         })
         .then(() => {
           return new Promise((resolve) => {
@@ -268,6 +288,18 @@ test('distinct', (t) => {
   })
 })
 
+test('distinct with options', (t) => {
+  return users.insert([{ distinct2: 'a' }, { distinct2: 'a' }, { distinct2: 'b' }]).then(() => {
+    return users.distinct('distinct2', {})
+  }).then((docs) => {
+    t.deepEqual(docs, ['a', 'b'])
+  })
+})
+
+test.cb('distinct > with options callback', (t) => {
+  users.distinct('distinct', {}, t.end)
+})
+
 test.cb('distinct > callback', (t) => {
   users.distinct('distinct', t.end)
 })
@@ -275,7 +307,7 @@ test.cb('distinct > callback', (t) => {
 test('update > should update', (t) => {
   return users.insert({ d: 'e' }).then((doc) => {
     return users.update({ _id: doc._id }, { $set: { d: 'f' } }).then(() => {
-      return users.findById(doc._id)
+      return users.findOne(doc._id)
     })
   }).then((doc) => {
     t.is(doc.d, 'f')
@@ -289,7 +321,7 @@ test.cb('update > callback', (t) => {
 test('updateById > should update by id', (t) => {
   return users.insert({ d: 'e' }).then((doc) => {
     return users.updateById(doc._id, { $set: { d: 'f' } }).then(() => {
-      return users.findById(doc._id)
+      return users.findOne(doc._id)
     })
   }).then((doc) => {
     t.is(doc.d, 'f')
@@ -297,13 +329,13 @@ test('updateById > should update by id', (t) => {
 })
 
 test.cb('updateById > callback', (t) => {
-  users.updateById('xxxxxxxxxxxx', { $set: { d: 'f' } }, t.end)
+  users.updateById('aaaaaaaaaaaaaaaaaaaaaaaa', { $set: { d: 'f' } }, t.end)
 })
 
 test('update > should update with an objectid', (t) => {
   return users.insert({ d: 'e' }).then((doc) => {
     return users.update(doc._id, { $set: { d: 'f' } }).then(() => {
-      return users.findById(doc._id)
+      return users.findOne(doc._id)
     })
   }).then((doc) => {
     t.is(doc.d, 'f')
@@ -313,7 +345,7 @@ test('update > should update with an objectid', (t) => {
 test('update > should update with an objectid (string)', (t) => {
   return users.insert({ d: 'e' }).then((doc) => {
     return users.update(doc._id.toString(), { $set: { d: 'f' } }).then(() => {
-      return users.findById(doc._id)
+      return users.findOne(doc._id)
     })
   }).then((doc) => {
     t.is(doc.d, 'f')
@@ -345,7 +377,7 @@ test('removeById > should remove a document by id', (t) => {
 })
 
 test.cb('removeById > callback', (t) => {
-  users.removeById('xxxxxxxxxxxx', t.end)
+  users.removeById('aaaaaaaaaaaaaaaaaaaaaaaa', t.end)
 })
 
 test('findAndModify > should alter an existing document', (t) => {
@@ -357,6 +389,18 @@ test('findAndModify > should alter an existing document', (t) => {
     return users.findById(doc._id).then((found) => {
       t.is(found._id.toString(), doc._id.toString())
       t.is(found.find, 'woot')
+    })
+  })
+})
+
+test('findAndModify > should remove an existing document', (t) => {
+  const rand = 'now2-' + Date.now()
+  return users.insert({ find: rand }).then(() => {
+    return users.findAndModify({ find: rand }, {}, { remove: true })
+  }).then((doc) => {
+    t.is(doc.find, rand)
+    return users.findOne(doc._id).then((found) => {
+      t.is(found, null)
     })
   })
 })
@@ -402,9 +446,58 @@ test.cb('findAndModify > callback', (t) => {
   users.findAndModify({ query: {find: rand}, update: { find: rand } }, t.end)
 })
 
+test('findOneAndDelete > should remove a document and return it', (t) => {
+  return users.insert({ name: 'Bob' }).then((doc) => {
+    return users.findOneAndDelete({ name: 'Bob' })
+  }).then((doc) => {
+    t.is(doc.name, 'Bob')
+    return users.find({ name: 'Bob' })
+  }).then((doc) => {
+    t.deepEqual(doc, [])
+  })
+})
+
+test.cb('findOneAndDelete > callback', (t) => {
+  users.insert({ name: 'Bob2' }).then((doc) => {
+    users.findOneAndDelete({ name: 'Bob2' }, (err, doc) => {
+      t.is(err, null)
+      t.is(doc.name, 'Bob2')
+      users.find({ name: 'Bob2' }).then((doc) => {
+        t.deepEqual(doc, [])
+        t.end()
+      })
+    })
+  })
+})
+
+test('findOneAndUpdate > should update a document and return it', (t) => {
+  return users.insert({ name: 'Jack' }).then((doc) => {
+    return users.findOneAndUpdate({ name: 'Jack' }, { name: 'Jack4' })
+  }).then((doc) => {
+    t.is(doc.name, 'Jack4')
+  })
+})
+
+test.cb('findOneAndUpdate > callback', (t) => {
+  users.insert({ name: 'Jack2' }).then((doc) => {
+    users.findOneAndUpdate({ name: 'Jack2' }, { name: 'Jack3' }, (err, doc) => {
+      t.is(err, null)
+      t.is(doc.name, 'Jack3')
+      t.end()
+    })
+  })
+})
+
 test('aggregate > should fail properly', (t) => {
   return users.aggregate().catch(() => {
     t.pass()
+  })
+})
+
+test.cb('aggregate > should fail properly with callback', (t) => {
+  users.aggregate(undefined, function (err) {
+    t.truthy(err)
+    t.end()
   })
 })
 
@@ -418,7 +511,7 @@ test('aggregate > should work in normal case', (t) => {
 test('aggregate > should work with option', (t) => {
   return users.aggregate([{$group: {_id: null, maxWoot: { $max: '$woot' }}}], { explain: true }).then((res) => {
     t.true(Array.isArray(res))
-    t.is(res.length, 2)
+    t.is(res.length, 1)
   })
 })
 
@@ -455,4 +548,9 @@ test('drop > should not throw when dropping an empty db', (t) => {
 
 test.cb('drop > callback', (t) => {
   db.get('dropDB2-' + Date.now()).drop(t.end)
+})
+
+test('Collection#id', (t) => {
+  const oid = users.id()
+  t.is(typeof oid.toHexString(), 'string')
 })

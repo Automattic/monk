@@ -21,10 +21,32 @@ test('Should throw if no uri provided', (t) => {
 })
 
 test.cb('to a regular server', (t) => {
-  t.plan(1)
-  monk('127.0.0.1/monk-test', () => {
-    t.pass()
+  t.plan(2)
+  monk('127.0.0.1/monk-test', (err, db) => {
+    t.falsy(err)
+    t.true(db instanceof monk)
     t.end()
+  })
+})
+
+test('connect with promise', (t) => {
+  return monk('127.0.0.1/monk-test').then((db) => {
+    t.true(db instanceof monk)
+  })
+})
+
+test.cb('should fail', (t) => {
+  t.plan(2)
+  monk('non-existent-db/monk-test', (err, db) => {
+    t.truthy(err)
+    t.true(db instanceof monk)
+    t.end()
+  })
+})
+
+test('should fail with promise', (t) => {
+  return monk('non-existent-db/monk-test').catch((err) => {
+    t.truthy(err)
   })
 })
 
@@ -54,15 +76,53 @@ test.cb('followed by disconnection', (t) => {
   })
 })
 
+test('executeWhenOpened > should reopen the connection if closed', (t) => {
+  const db = monk('127.0.0.1/monk')
+  return db
+    .then(() => t.is(db._state, 'open'))
+    .then(() => db.close(true))
+    .then(() => t.is(db._state, 'closed'))
+    .then(() => db.executeWhenOpened())
+    .then(() => t.is(db._state, 'open'))
+    .then(() => db.close())
+})
+
+test('close > closing a closed connection should work', (t) => {
+  const db = monk('127.0.0.1/monk')
+  return db
+    .then(() => t.is(db._state, 'open'))
+    .then(() => db.close())
+    .then(() => t.is(db._state, 'closed'))
+    .then(() => db.close())
+})
+
+test.cb('close > closing a closed connection should work with callback', (t) => {
+  const db = monk('127.0.0.1/monk')
+  db.then(() => t.is(db._state, 'open'))
+    .then(() => db.close(() => {
+      t.is(db._state, 'closed')
+      db.close(() => t.end())
+    }))
+})
+
+test('close > closing an opening connection should close it once opened', (t) => {
+  const db = monk('127.0.0.1/monk')
+  return db.close()
+})
+
 const Collection = monk.Collection
 const db = monk('127.0.0.1/monk-test')
 
+test('Manager#create', (t) => {
+  t.true(db.create('users') instanceof Collection)
+})
+
 test('Manager#get', (t) => {
-  t.true(db.get('users')instanceof Collection)
+  t.true(db.get('users') instanceof Collection)
 })
 
 test('Manager#col', (t) => {
-  t.true(db.col('users')instanceof Collection)
+  t.true(db.col('users') instanceof Collection)
 })
 
 test('Manager#id', (t) => {

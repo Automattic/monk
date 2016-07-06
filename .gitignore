@@ -16,3 +16,5 @@ npm-debug.log
 
 coverage
 .nyc_output
+
+_book

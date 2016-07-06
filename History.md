@@ -1,3 +1,15 @@
+3.0.0 / 2016-07-06
+==================
+  - remove Mongoskin dependency
+  - new documentation using gitbook
+  - add `opts` arg to `Collection.count` and `collection.distinct`
+  - deprecate `Collection.removeById`, `Collection.findById`, `Collection.updateById` in favor of using `remove`, `findOne` and `update` directly
+  - deprecate `collection.id` and `manager.id` in favor of `monk.id`
+  - `monk('localhost')` can be used as a promise which resolves when the connection opens and rejects when it throws an error (fix #24, fix #10)
+  - deprecate `Collection.findAndModify` in favor of `Collection.findOneAndDelete` and `Collection.findOneAndUpdate` (fix #74)
+  - add `Manager.create` (fix #50)
+  - add option `rawCursor` to `Collection.find` to return the raw cursor (fix #103)
+
 2.1.0 / 2016-06-24
 ==================
  - add aggregate method (#56)
