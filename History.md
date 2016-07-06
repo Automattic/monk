@@ -1,3 +1,7 @@
+3.0.3 / 2016-07-06
+==================
+  - Cast `_id` recursively (fix #3)
+
 3.0.2 / 2016-07-06
 ==================
   - Fix find cursor close when already paused

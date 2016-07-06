@@ -78,3 +78,12 @@ test('should cast ids inside $or', (t) => {
   const oid = monk.id(cast.$or[0]._id)
   t.is(oid.toHexString(), '4ee0fd75d6bd52107c000118')
 })
+
+test('should cast nested ids', (t) => {
+  const cast = monk.util.cast({
+    $pull: { items: [{ _id: '4ee0fd75d6bd52107c000118' }] }
+  })
+
+  const oid = monk.id(cast.$pull.items[0]._id)
+  t.is(oid.toHexString(), '4ee0fd75d6bd52107c000118')
+})
