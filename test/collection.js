@@ -124,6 +124,13 @@ test('insert > should return an array if an array was inserted', (t) => {
   })
 })
 
+test('insert > should not fail when inserting an empty array', (t) => {
+  return users.insert([]).then((docs) => {
+    t.true(Array.isArray(docs))
+    t.is(docs.length, 0)
+  })
+})
+
 test.cb('insert > callback', (t) => {
   users.insert({ woot: 'a' }, t.end)
 })
@@ -228,6 +235,22 @@ test('find > should work with streaming option', (t) => {
       .then(() => {
         t.is(found, 4)
       })
+  })
+})
+
+test('find > should work with streaming option without each', (t) => {
+  const query = { stream: 5 }
+  let found = 0
+  return users.insert([{ stream: 5 }, { stream: 5 }, { stream: 5 }, { stream: 5 }]).then(() => {
+    return users.find(query, {
+      stream (doc) {
+        t.not(doc.a, null)
+        found++
+      }
+    })
+    .then(() => {
+      t.is(found, 4)
+    })
   })
 })
 
