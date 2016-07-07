@@ -38,14 +38,9 @@
     "test": "make test",
     "coverage": "nyc report --reporter=text-lcov > coverage.lcov && codecov"
   },
-  "ava": {
-    "files": [
-      "test/**"
-    ]
-  },
   "nyc": {
-    "exclude": [
-      "test/**"
+    "include": [
+      "lib/**"
     ]
   }
 }
