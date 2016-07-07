@@ -1,3 +1,7 @@
+3.0.4 / 2016-07-07
+==================
+  - Do not fail when inserting empty array
+
 3.0.3 / 2016-07-06
 ==================
   - Cast `_id` recursively (fix #3)
