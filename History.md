@@ -1,3 +1,7 @@
+3.0.5 / 2016-07-11
+==================
+  - Fix when updating with `0`
+
 3.0.4 / 2016-07-07
 ==================
   - Do not fail when inserting empty array
