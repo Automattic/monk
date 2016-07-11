@@ -377,6 +377,16 @@ test('update > should update', (t) => {
   })
 })
 
+test('update > should update with 0', (t) => {
+  return users.insert({ d: 'e' }).then((doc) => {
+    return users.update({ _id: doc._id }, { $set: { d: 0 } }).then(() => {
+      return users.findOne(doc._id)
+    })
+  }).then((doc) => {
+    t.is(doc.d, 0)
+  })
+})
+
 test.cb('update > callback', (t) => {
   users.update({ d: 'e' }, { $set: { d: 'f' } }, t.end)
 })
