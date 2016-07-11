@@ -87,3 +87,15 @@ test('should cast nested ids', (t) => {
   const oid = monk.id(cast.$pull.items[0]._id)
   t.is(oid.toHexString(), '4ee0fd75d6bd52107c000118')
 })
+
+test('should not fail when casting 0', (t) => {
+  const cast = monk.util.cast(0)
+
+  t.is(cast, 0)
+})
+
+test('should not fail when casting null', (t) => {
+  const cast = monk.util.cast(null)
+
+  t.is(cast, null)
+})
