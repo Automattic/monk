@@ -308,12 +308,15 @@ test('find > stream pause and continue', (t) => {
         pause()
         const duration = Date.now() - start
         t.true(duration > index * 1000)
-        index += 1
-        setTimeout(resume, 1000)
+        setTimeout(() => {
+          index += 1
+          resume()
+        }, 1000)
       })
       .then(() => {
+        t.is(index, 4)
         const duration = Date.now() - start
-        t.true(duration > 3000)
+        t.true(duration > 4000)
       })
   })
 })

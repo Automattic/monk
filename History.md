@@ -1,3 +1,7 @@
+3.0.7 / 2016-07-14
+==================
+  - Wait for the last 'each' (in `find`) to `resume` or `close` before resolving the promise
+
 3.0.6 / 2016-07-11
 ==================
   - Fix when casting `null`
