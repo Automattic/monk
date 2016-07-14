@@ -60,6 +60,15 @@ complete rewrite of monk:
  - test coverage
  - Support $ne, $in, $nin for id casting
  - Make the sort option behave like fields
+ - `Collection.update` now return an object:
+ 
+    ```
+    {
+      n: number of matched documents,
+      nModified: number of modified documents,
+      nUpserted: number of upserted documents
+    }
+    ```
 
 1.0.1 / 2015-03-25
 ==================
