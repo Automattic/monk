@@ -626,6 +626,20 @@ test.cb('aggregate > callback', (t) => {
   users.aggregate([{$group: {_id: null, maxWoot: { $max: '$woot' }}}], t.end)
 })
 
+test('bulkWrite', (t) => {
+  return users.bulkWrite([
+      { insertOne: { document: { bulkWrite: 1 } } }
+  ]).then((r) => {
+    t.is(r.nInserted, 1)
+  })
+})
+
+test.cb('bulkWrite > callback', (t) => {
+  users.bulkWrite([
+      { insertOne: { document: { bulkWrite: 2 } } }
+  ], t.end)
+})
+
 test('should allow defaults', (t) => {
   db.options.multi = true
   return users.insert([{ f: true }, { f: true }, { g: true }, { g: true }]).then(() => {
