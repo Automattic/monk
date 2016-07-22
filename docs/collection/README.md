@@ -4,6 +4,7 @@ Object representing a mongo collection. Create it using [`manager.get`](../manag
 
 A Collection instance has the following methods:
   * [aggregate](/aggregate.md)
+  * [bulkWrite](/bulkWrite.md)
   * [count](/count.md)
   * [distinct](/distinct.md)
   * [drop](/drop.md)
@@ -14,6 +15,7 @@ A Collection instance has the following methods:
   * [findOne](/findOne.md)
   * [findOneAndDelete](/findOneAndDelete.md)
   * [findOneAndUpdate](/findOneAndUpdate.md)
+  * [group](/group.md)
   * [indexes](/indexes.md)
   * [insert](/insert.md)
   * [remove](/remove.md)
