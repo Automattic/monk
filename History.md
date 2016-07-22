@@ -1,3 +1,9 @@
+3.1.0 / 2016-07-22
+==================
+  - Add `Collection.group` (fix #63)
+  - Add `Collection.bulkWrite` (fix #85)
+  - Pipe `mongodb.Logger` to `debug` (fix #143)
+
 3.0.7 / 2016-07-14
 ==================
   - Wait for the last 'each' (in `find`) to `resume` or `close` before resolving the promise
@@ -61,7 +67,7 @@ complete rewrite of monk:
  - Support $ne, $in, $nin for id casting
  - Make the sort option behave like fields
  - `Collection.update` now return an object:
- 
+
     ```
     {
       n: number of matched documents,
