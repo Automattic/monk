@@ -331,6 +331,37 @@ test.cb('find > stream callback', (t) => {
   })
 })
 
+test('group > should work', (t) => {
+  return users.insert([{ group: true }, { group: true }]).then(() => {
+    return users.group(
+      { group: true },
+      {},
+      { count: 0 },
+      (obj, prev) => {
+        prev.count++
+      }
+    )
+  }).then(([group1, group2]) => {
+    t.is(group1.group, null)
+    t.true(group2.group)
+    t.is(group2.count, 2)
+  })
+})
+
+test.cb('group > callback', (t) => {
+  users.group(
+    { group: true },
+    {},
+    { count: 0 },
+    (obj, prev) => {
+      prev.count++
+    },
+    (x) => x,
+    true,
+    t.end
+  )
+})
+
 test('count > should count', (t) => {
   return users.count({ a: 'counting' }).then((count) => {
     t.is(count, 0)
