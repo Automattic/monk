@@ -12,6 +12,8 @@ Find a document and update it in one atomic operation, requires a write lock for
 
 3. [`options`] *(Object|String|Array)*: If the `options` is a string, it will be parsed as the fields to select.
 
+`options.returnOriginal` is default to `false`, while `mongodb` set it to `true` for `undefined`.
+
 4. [`callback`] *(function)*
 
 #### Returns
