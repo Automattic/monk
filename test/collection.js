@@ -675,3 +675,13 @@ test('Collection#id', (t) => {
   const oid = users.id()
   t.is(typeof oid.toHexString(), 'string')
 })
+
+test('caching collections', (t) => {
+  const collectionName = 'cached-' + Date.now()
+  t.is(db.get(collectionName), db.get(collectionName))
+})
+
+test('not caching collections', (t) => {
+  const collectionName = 'cached-' + Date.now()
+  t.not(db.get(collectionName, {cache: false}), db.get(collectionName, {cache: false}))
+})
