@@ -1,3 +1,7 @@
+3.1.1 / 2016-07-29
+==================
+  - Provide option to not cache collections (fix #21)
+
 3.1.0 / 2016-07-22
 ==================
   - Add `Collection.group` (fix #63)
