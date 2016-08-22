@@ -373,6 +373,17 @@ test('count > should count', (t) => {
   })
 })
 
+test('count > should not ignore options', (t) => {
+  return users.count({ b: 'counting' }).then((count) => {
+    t.is(count, 0)
+    return users.insert([{ b: 'counting' }, { b: 'counting' }, { b: 'counting' }, { b: 'counting' }])
+  }).then(() => {
+    return users.count({ b: 'counting' }, {limit: 2})
+  }).then((count) => {
+    t.is(count, 2)
+  })
+})
+
 test.cb('count > callback', (t) => {
   users.count({ a: 'counting' }, t.end)
 })
