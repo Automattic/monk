@@ -1,3 +1,7 @@
+3.1.2 / 2016-08-22
+==================
+  - Fix `collection.count` and `collection.distinct` are ignoring options (fix #159)
+
 3.1.1 / 2016-07-29
 ==================
   - Provide option to not cache collections (fix #21)
