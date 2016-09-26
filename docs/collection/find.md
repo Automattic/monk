@@ -37,7 +37,7 @@ users.find({}, { fields: { name: 1 } }) // equivalent
 users.find({}, '-name').then((docs) => {
   // all the fields except the name field will be selected
 })
-users.find({}, { fields: { name: -1 } }) // equivalent
+users.find({}, { fields: { name: 0 } }) // equivalent
 ```
 ```js
 users.find({}, { rawCursor: true }).then((cursor) => {
