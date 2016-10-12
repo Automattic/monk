@@ -1,3 +1,7 @@
+3.1.3 / 2016-10-12
+==================
+  - Added a check to ensure no crash in `cast()`` when `_id` is undefined (fix #165) Thanks @JoelParke
+
 3.1.2 / 2016-08-22
 ==================
   - Fix `collection.count` and `collection.distinct` are ignoring options (fix #159)
