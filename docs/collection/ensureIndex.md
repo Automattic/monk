@@ -24,4 +24,10 @@ users.index('name last')
 users.index(['nombre', 'apellido'])
 users.index({ up: 1, down: -1 })
 users.index({ woot: 1 }, { unique: true })
+
+users.ensureIndex('name.first')
+users.ensureIndex('name last')
+users.ensureIndex(['nombre', 'apellido'])
+users.ensureIndex({ up: 1, down: -1 })
+users.ensureIndex({ woot: 1 }, { unique: true })
 ```
