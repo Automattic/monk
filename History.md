@@ -1,3 +1,7 @@
+3.1.4 / 2017-01-30
+==================
+  - delete wrong options for ensureIndex (fix #174) Thanks @kos984
+
 3.1.3 / 2016-10-12
 ==================
   - Added a check to ensure no crash in `cast()`` when `_id` is undefined (fix #165) Thanks @JoelParke
