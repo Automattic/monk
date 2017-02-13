@@ -1,3 +1,7 @@
+4.0.0 / 2017-02-13
+==================
+  - Remove default `safe` option (fix #180)
+
 3.1.4 / 2017-01-30
 ==================
   - delete wrong options for ensureIndex (fix #174) Thanks @kos984
