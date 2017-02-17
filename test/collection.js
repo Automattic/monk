@@ -682,6 +682,46 @@ test.cb('drop > callback', (t) => {
   db.get('dropDB2-' + Date.now()).drop(t.end)
 })
 
+test.cb('mapReduce > should work', (t) => {
+    // output table
+    var table = db.get('mapReduce-' + Date.now());
+
+    // generate examples to collapse
+    
+});
+
+test.cb('mapReduce > should provide a default collection name', (t) => {
+
+});
+
+test.cb('mapReduce > should handle out object', (t) => {
+
+});
+
+test.cb('mapReduce > should handle projection arguments', (t) => {
+
+});
+
+test.cb('mapReduce > should handle query projection', (t) => {
+
+});
+
+test.cb('mapReduce > should handle sort projecttion', (t) => {
+
+});
+
+test.cb('mapReduce > should handle limit projection', (t) => {
+
+});
+
+test.cb('mapReduceAndReturnResults > should work', (t) => {
+
+});
+
+test.cb('mapReduceAndReturnResults > should obey the query argument', (t) => {
+
+});
+
 test('Collection#id', (t) => {
   const oid = users.id()
   t.is(typeof oid.toHexString(), 'string')
