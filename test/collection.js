@@ -693,7 +693,7 @@ test('mapReduce > should work', (t) => {
     {'key': 'abc', 'value': 1}, {'key': 'abc', 'value': 3}, {'key': 'bcd', 'value': 10}, {'key': 'cde', 'value': 5}
   ]
   table.insert(data).then((res) => {
-    table.mapReduce(newCol, "function(){ emit(this.key, {'sum': this.value, 'count': 1})}",
+    table.mapReduce(newCol, "function() { emit(this.key, {'sum': this.value, 'count': 1}) }",
     (key, values) => {
       var sum = values.reduce((a, b) => a.sum + b.sum)
       var count = values.reduce((a, b) => a.count + b.count)
@@ -703,7 +703,9 @@ test('mapReduce > should work', (t) => {
         'mean': (value.sum / value.count).toFixed(2)
       }
     }).then((stats) => {
-      t.is(stats.ok, 1.0)
+      console.log('Here')
+      t.not(stats, undefined)
+      t.not(stats, null)
       db.get(newCol).find({}).then((res) => {
         t.true(res.length > 0)
         var correct = 0
@@ -732,9 +734,7 @@ test('mapReduce > should work', (t) => {
   })
 })
 
-
-
-test.cb('mapReduce > should handle out object', (t) => {
+test('mapReduce > should handle out object', (t) => {
   // output table
   var d = Date.now()
   var table = db.get('mapReduceData-' + d)
@@ -754,61 +754,44 @@ test.cb('mapReduce > should handle out object', (t) => {
       return {
         'mean': (value.sum / value.count).toFixed(2)
       }
-    }).then((stats) => {
-      t.is(stats.ok, 1.0)
-      db.get(newCol).find({}).then((res) => {
-        t.true(res.length > 0)
-        var correct = 0
-        for (var i = 0; i < res.length; i++) {
-          if (res[i]._id === 'abc') {
-            t.is(res[i].value, 2.00)
-            correct++
-          } else if (res[i]._id === 'bcd') {
-            t.is(res[i].value, 10.00)
-            correct++
-          } else if (res[i]._id === 'cde') {
-            t.is(res[i].value, 5.00)
-            correct++
-          } else {
-            t.fail('Unknown data')
-          }
-        }
-        t.is(correct, 3)
-        db.get(newCol).drop()
-        db.get('mapReduceData-' + d).drop()
-      }).catch((err) => {
-        console.log('here3')
-        t.fail(err)
+    }, {'verbose': true, 'query': {'key': 'abc'}}).then((stats) => {
+      t.not(stats.stats, undefined)
+      t.not(stats.stats, null)
+      db.get(newCol).count({}).then((count) => {
+        t.is(count, 1)
       })
     })
   })
-});
+})
 
-/*
-test.cb('mapReduce > should handle projection arguments', (t) => {
+test('mapReduce > should handle remove', (t) => {
+  // output table
+  var d = Date.now()
+  var table = db.get('mapReduceData-' + d)
+  var newCol = 'mapReduce-' + d
 
-});
+  // generate examples to collapse
+  var data = [
+    {'key': 'abc', 'value': 1}, {'key': 'abc', 'value': 3}, {'key': 'bcd', 'value': 10}, {'key': 'cde', 'value': 5}
+  ]
+  table.insert(data).then((res) => {
+    table.mapReduce(newCol, "function(){ emit(this.key, {'sum': this.value, 'count': 1})}",
+    (key, values) => {
+      var sum = values.reduce((a, b) => a.sum + b.sum)
+      var count = values.reduce((a, b) => a.count + b.count)
+      return {'sum': sum, 'count': count}
+    }, (key, value) => {
+      return {
+        'mean': (value.sum / value.count).toFixed(2)
+      }
+    }, {}, true).then((stats) => {
+      db.get(newCol).count({}).then((count) => {
+        t.is(count, 0)
+      })
+    })
+  })
+})
 
-test.cb('mapReduce > should handle query projection', (t) => {
-
-});
-
-test.cb('mapReduce > should handle sort projecttion', (t) => {
-
-});
-
-test.cb('mapReduce > should handle limit projection', (t) => {
-
-});
-
-test.cb('mapReduceAndReturnResults > should work', (t) => {
-
-});
-
-test.cb('mapReduceAndReturnResults > should obey the query argument', (t) => {
-
-});
-*/
 test('Collection#id', (t) => {
   const oid = users.id()
   t.is(typeof oid.toHexString(), 'string')
