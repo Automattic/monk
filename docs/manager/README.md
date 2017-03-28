@@ -37,9 +37,12 @@ require('monk')('localhost/mydb,192.168.1.1').then((db) => {
 
 #### Options
 
-You can set options to pass to every queries. By default, monk set
+You can set options to pass to every query. By default, monk doesn't set any options.
+
+Set options like this:
+
 ```js
 db.options = {
-  safe: true
+  poolSize: 7
 }
 ```
