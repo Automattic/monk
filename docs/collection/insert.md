@@ -10,6 +10,8 @@ Inserts a single document or a an array of documents into MongoDB.
 
 2. [`options`] *(Object)*
 
+Use `castIds: false` to disable autocasting of '_id' properties to ObjectIds objects.
+
 3. [`callback`] *(function)*
 
 #### Returns
