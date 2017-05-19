@@ -156,10 +156,10 @@ test('findOne > should return null if no document', (t) => {
     })
 })
 
-test('findOne > findOne(undefined) should not work', (t) => {
+test('findOne > findOne(undefined) should work', (t) => {
   return users.insert({ a: 'b', c: 'd', e: 'f' }).then((doc) => {
     return users.findOne()
-  }).catch(() => {
+  }).then(() => {
     t.pass()
   })
 })
