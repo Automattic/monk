@@ -1,9 +1,7 @@
 {
-  "gitbook": "2.5.2",
+  "gitbook": ">=3.2.2",
   "title": "Monk",
-  "structure": {
-    "summary": "docs/README.md"
-  },
+  "description": "The wise MongoDB API",
   "plugins": ["prism", "-highlight", "github", "anker-enable"],
   "pluginsConfig": {
     "github": {

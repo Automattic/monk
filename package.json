@@ -17,6 +17,7 @@
   },
   "dependencies": {
     "debug": "*",
+    "gitbook-plugin-github": "2.0.0",
     "mongodb": "^2.1.18"
   },
   "devDependencies": {
@@ -29,7 +30,7 @@
     "eslint-plugin-node": "4.2.2",
     "eslint-plugin-promise": "^3.5.0",
     "eslint-plugin-standard": "^3.0.1",
-    "gitbook-cli": "2.3.0",
+    "gitbook-cli": "^2.3.0",
     "gitbook-plugin-anker-enable": "^0.0.4",
     "gitbook-plugin-edit-link": "^2.0.2",
     "gitbook-plugin-github": "^3.0.0",
