@@ -2,7 +2,7 @@
 
 Casts a string to (or create) an [ObjectId](https://docs.mongodb.com/manual/reference/method/ObjectId/).
 
-In order to use custom id, castIds needs to be explicitly set to false as an option in collection operations.
+In order to use custom id, `castIds` needs to be explicitly set to false as an option in collection operations.
 
 #### Arguments
 

@@ -371,8 +371,8 @@ test('group > should work', (t) => {
       { group: true },
       {},
       { count: 0 },
-      (obj, prev) => {
-        prev.count++
+      function (obj, prev) {
+        return prev.count++
       }
     )
   }).then(([group1, group2]) => {
@@ -387,10 +387,10 @@ test.cb('group > callback', (t) => {
     { group: true },
     {},
     { count: 0 },
-    (obj, prev) => {
+    function (obj, prev) {
       prev.count++
     },
-    (x) => x,
+    function (x) { return x },
     true,
     t.end
   )
