@@ -10,6 +10,40 @@ test.after(() => {
   return users.drop()
 })
 
+test('createIndex > should accept a field string', (t) => {
+  return indexCol.createIndex('name.first').then(indexCol.indexes).then((indexes) => {
+    t.not(indexes['name.first_1'], undefined)
+  })
+})
+
+test('createIndex > should accept space-delimited compound indexes', (t) => {
+  return indexCol.createIndex('name last').then(indexCol.indexes).then((indexes) => {
+    t.not(indexes.name_1_last_1, undefined)
+  })
+})
+
+test('createIndex > should accept array compound indexes', (t) => {
+  return indexCol.createIndex(['nombre', 'apellido']).then(indexCol.indexes).then((indexes) => {
+    t.not(indexes.nombre_1_apellido_1, undefined)
+  })
+})
+
+test('createIndex > should accept object compound indexes', (t) => {
+  return indexCol.createIndex({ up: 1, down: -1 }).then(indexCol.indexes).then((indexes) => {
+    t.not(indexes['up_1_down_-1'], undefined)
+  })
+})
+
+test('createIndex > should accept options', (t) => {
+  return indexCol.createIndex({ woot: 1 }, { unique: true }).then(indexCol.indexes).then((indexes) => {
+    t.not(indexes.woot_1, undefined)
+  })
+})
+
+test.cb('createIndex > callback', (t) => {
+  indexCol.createIndex('name.third', t.end)
+})
+
 test('index > should accept a field string', (t) => {
   return indexCol.index('name.first').then(indexCol.indexes).then((indexes) => {
     t.not(indexes['name.first_1'], undefined)

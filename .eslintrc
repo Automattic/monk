@@ -4,4 +4,7 @@
   "plugins": [
     "ava"
   ],
+  "rules": {
+    "ava/prefer-async-await": 0
+  }
 }

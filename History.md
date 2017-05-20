@@ -1,3 +1,8 @@
+4.1.0 / 2017-05-20
+==================
+  - Update dev dependencies - Thanks @ratson(◕ᴥ◕)
+  - Add `collection.createIndex` and deprecate `collection.index` and `collection.ensureIndex`
+
 4.0.0 / 2017-02-13
 ==================
   - Remove default `safe` option (fix #180)
