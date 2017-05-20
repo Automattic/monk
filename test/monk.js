@@ -107,7 +107,7 @@ test.cb('close > closing a closed connection should work with callback', (t) => 
 
 test('close > closing an opening connection should close it once opened', (t) => {
   const db = monk('127.0.0.1/monk')
-  return db.close()
+  return db.close().then(() => t.pass())
 })
 
 const Collection = monk.Collection

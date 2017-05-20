@@ -20,7 +20,7 @@
     "mongodb": "^2.1.18"
   },
   "devDependencies": {
-    "ava": "^0.15.2",
+    "ava": "^0.19.1",
     "codecov": "^1.0.1",
     "eslint": "^2.11.1",
     "eslint-config-standard": "^5.3.1",
