@@ -6,7 +6,7 @@ TEST_TARGET ?= test/
 
 lint:
 	echo "  $(P) Linting"
-	$(BIN_DIR)/eslint $(SRC_DIR) && $(BIN_DIR)/eslint $(TEST_TARGET)
+	$(BIN_DIR)/eslint lib && $(BIN_DIR)/eslint test && $(BIN_DIR)/eslint plugins
 
 test: lint
 	echo "  $(P) Testing"

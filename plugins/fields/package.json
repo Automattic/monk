@@ -1,0 +1,16 @@
+{
+  "name": "monk-plugin-fields",
+  "description": "A monk plugin to parse the fields",
+  "version": "0.1.0",
+  "main": "index.js",
+  "keywords": [
+    "monk",
+    "plugin",
+    "fields"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/Automattic/monk.git"
+  },
+  "license": "MIT"
+}

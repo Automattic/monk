@@ -1,0 +1,16 @@
+{
+  "name": "monk-plugin-query",
+  "description": "A monk plugin to parse the query",
+  "version": "0.1.2",
+  "main": "index.js",
+  "keywords": [
+    "monk",
+    "plugin",
+    "query"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/Automattic/monk.git"
+  },
+  "license": "MIT"
+}

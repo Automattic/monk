@@ -3,7 +3,8 @@
   "description": "The wise MongoDB API",
   "version": "4.1.0",
   "main": "lib/monk.js",
-  "tags": [
+  "keywords": [
+    "monk",
     "mongodb",
     "mongo",
     "driver"
@@ -18,7 +19,12 @@
   "dependencies": {
     "debug": "*",
     "gitbook-plugin-github": "2.0.0",
-    "mongodb": "^2.1.18"
+    "mongodb": "^2.1.18",
+    "monk-plugin-cast-ids": "^0.1.0",
+    "monk-plugin-fields": "^0.1.0",
+    "monk-plugin-options": "^0.1.0",
+    "monk-plugin-query": "^0.1.2",
+    "object-assign": "^4.1.1"
   },
   "devDependencies": {
     "ava": "^0.19.1",
