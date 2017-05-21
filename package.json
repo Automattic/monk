@@ -22,8 +22,10 @@
     "mongodb": "^2.1.18",
     "monk-plugin-cast-ids": "^0.2.0",
     "monk-plugin-fields": "^0.2.0",
+    "monk-plugin-handle-callback": "^0.2.0",
     "monk-plugin-options": "^0.2.0",
     "monk-plugin-query": "^0.2.0",
+    "monk-plugin-wait-for-connection": "^0.2.0",
     "object-assign": "^4.1.1"
   },
   "devDependencies": {
