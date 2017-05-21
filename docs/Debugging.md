@@ -7,7 +7,7 @@ npm install --save monk-middleware-debug
 ```
 
 ```js
-db.addMiddleware(require('monk-middleware-debug))
+db.addMiddleware(require('monk-middleware-debug'))
 ```
 
 * If you wish to see what queries `monk` passes to the driver, simply leverage
