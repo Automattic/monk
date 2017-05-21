@@ -1,6 +1,6 @@
 # Middleware
 
-*If you are familiar with [Redux](http://redux.js.org/) and Redux middlewares, you are familiar with Monk middlewares. They uses a very similar signature and architecture.*
+*If you are familiar with [Redux](http://redux.js.org/) and Redux middlewares, you are familiar with Monk middlewares. They use a very similar signature and architecture.*
 
 If you've used server-side libraries like [Express](http://expressjs.com/) and [Koa](http://koajs.com/), you were also probably already familiar with the concept of *middleware*. In these frameworks, middleware is some code you can put between the framework receiving a request, and the framework generating a response. For example, Express or Koa middleware may add CORS headers, logging, compression, and more. The best feature of middleware is that it's composable in a chain. You can use multiple independent third-party middleware in a single project.
 
