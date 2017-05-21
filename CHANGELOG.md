@@ -1,3 +1,8 @@
+5.0.0 / 2017-05-21
+==================
+  - Remove deprecated methods
+  - Middleware architecture! See https://automattic.github.io/monk/docs/middlewares.html for more information
+
 4.1.0 / 2017-05-20
 ==================
   - Update dev dependencies - Thanks @ratson(◕ᴥ◕)
