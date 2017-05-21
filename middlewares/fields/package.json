@@ -1,11 +1,11 @@
 {
-  "name": "monk-plugin-fields",
-  "description": "A monk plugin to parse the fields",
+  "name": "monk-middleware-fields",
+  "description": "A monk middleware to parse the fields",
   "version": "0.2.0",
   "main": "index.js",
   "keywords": [
     "monk",
-    "plugin",
+    "middleware",
     "fields"
   ],
   "repository": {

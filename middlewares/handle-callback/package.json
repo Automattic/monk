@@ -1,11 +1,11 @@
 {
-  "name": "monk-plugin-handle-callback",
-  "description": "A monk plugin to handle callback",
+  "name": "monk-middleware-handle-callback",
+  "description": "A monk middleware to handle callback",
   "version": "0.2.0",
   "main": "index.js",
   "keywords": [
     "monk",
-    "plugin",
+    "middleware",
     "callback"
   ],
   "repository": {

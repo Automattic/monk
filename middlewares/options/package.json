@@ -1,11 +1,11 @@
 {
-  "name": "monk-plugin-options",
-  "description": "A monk plugin to parse the options",
+  "name": "monk-middleware-options",
+  "description": "A monk middleware to parse the options",
   "version": "0.2.0",
   "main": "index.js",
   "keywords": [
     "monk",
-    "plugin",
+    "middleware",
     "options"
   ],
   "repository": {

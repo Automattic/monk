@@ -1,11 +1,11 @@
 {
-  "name": "monk-plugin-cast-ids",
-  "description": "A monk plugin to parse the ids",
+  "name": "monk-middleware-cast-ids",
+  "description": "A monk middleware to parse the ids",
   "version": "0.2.0",
   "main": "index.js",
   "keywords": [
     "monk",
-    "plugin",
+    "middleware",
     "ids"
   ],
   "repository": {

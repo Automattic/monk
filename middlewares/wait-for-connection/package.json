@@ -1,11 +1,11 @@
 {
-  "name": "monk-plugin-wait-for-connection",
-  "description": "A monk plugin to wait for the connection",
+  "name": "monk-middleware-wait-for-connection",
+  "description": "A monk middleware to wait for the connection",
   "version": "0.2.0",
   "main": "index.js",
   "keywords": [
     "monk",
-    "plugin",
+    "middleware",
     "wait",
     "connection"
   ],
