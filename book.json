@@ -2,7 +2,7 @@
   "gitbook": ">=3.2.2",
   "title": "Monk",
   "description": "The wise MongoDB API",
-  "plugins": ["edit-link", "prism", "-highlight", "github", "anker-enable"],
+  "plugins": ["edit-link", "prism", "-highlight", "github", "anker-enable", "custom-favicon"],
   "pluginsConfig": {
     "github": {
       "url": "https://github.com/Automattic/monk/"
@@ -10,6 +10,9 @@
     "edit-link": {
       "base": "https://github.com/Automattic/monk/redux/tree/master",
       "label": "Edit This Page"
+    },
+    "pluginsConfig" : {
+        "favicon": "assets/favicon.ico"
     }
   }
 }
