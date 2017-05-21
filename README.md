@@ -45,7 +45,7 @@ db.close()
 
 ## Middlewares
 
-Most of the Monk's features are implemented as middleware.
+Most of the Monk's features are implemented as [middleware](https://automattic.github.io/monk/docs/middlewares.html).
 
 There are a bunch of third-parties middlewares that add even more functionalities to Monk:
 - [monk-middleware-wrap-non-dollar-update](https://github.com/monk-middlewares/monk-middleware-wrap-non-dollar-update)
