@@ -1,13 +1,19 @@
 ## Monk
 
-* [Read Me](/README.md)
+* [Introduction](/README.md)
 * [Getting Started](/docs/GETTING_STARTED.md)
+
+## Guides
+* [Middlewares](/docs/middlewares.md)
+* [Debugging](/docs/Debugging.md)
+* [Writing a middleware](/docs/writing-middleware.md)
 
 ## API Reference
 * [Manager](/docs/manager/README.md)
   * [close](/docs/manager/close.md)
   * [create](/docs/manager/create.md)
   * [get](/docs/manager/get.md)
+  * [addMiddleware](/docs/manager/addMiddleware.md)
 * [Collection](/docs/collection/README.md)
   * [aggregate](/docs/collection/aggregate.md)
   * [bulkWrite](/docs/collection/bulkWrite.md)
@@ -27,9 +33,6 @@
   * [remove](/docs/collection/remove.md)
   * [update](/docs/collection/update.md)
 * [id](/docs/id.md)
-
-## Guides
-* [Debugging](/docs/Debugging.md)
 
 ---
 

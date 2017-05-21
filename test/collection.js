@@ -50,34 +50,6 @@ test('index > should accept a field string', (t) => {
   })
 })
 
-test('index > should accept space-delimited compound indexes', (t) => {
-  return indexCol.index('name last').then(indexCol.indexes).then((indexes) => {
-    t.not(indexes.name_1_last_1, undefined)
-  })
-})
-
-test('index > should accept array compound indexes', (t) => {
-  return indexCol.index(['nombre', 'apellido']).then(indexCol.indexes).then((indexes) => {
-    t.not(indexes.nombre_1_apellido_1, undefined)
-  })
-})
-
-test('index > should accept object compound indexes', (t) => {
-  return indexCol.index({ up: 1, down: -1 }).then(indexCol.indexes).then((indexes) => {
-    t.not(indexes['up_1_down_-1'], undefined)
-  })
-})
-
-test('index > should accept options', (t) => {
-  return indexCol.index({ woot: 1 }, { unique: true }).then(indexCol.indexes).then((indexes) => {
-    t.not(indexes.woot_1, undefined)
-  })
-})
-
-test.cb('index > callback', (t) => {
-  indexCol.index('name.third', t.end)
-})
-
 test('dropIndex > should accept a field string', (t) => {
   return indexCol.index('name2.first').then(indexCol.indexes).then((indexes) => {
     t.not(indexes['name2.first_1'], undefined)
@@ -167,20 +139,6 @@ test('insert > should not fail when inserting an empty array', (t) => {
 
 test.cb('insert > callback', (t) => {
   users.insert({ woot: 'a' }, t.end)
-})
-
-test('findById > should find by id', (t) => {
-  return users.insert({ woot: 'e' }).then((doc) => {
-    return users.findById(doc._id).then((doc) => {
-      t.is(doc.woot, 'e')
-    })
-  })
-})
-
-test.cb('findById > callback', (t) => {
-  users.insert({ woot: 'e' }).then((doc) => {
-    return users.findById(doc._id, t.end)
-  })
 })
 
 test('findOne > should return null if no document', (t) => {
@@ -470,20 +428,6 @@ test.cb('update > callback', (t) => {
   users.update({ d: 'e' }, { $set: { d: 'f' } }, t.end)
 })
 
-test('updateById > should update by id', (t) => {
-  return users.insert({ d: 'e' }).then((doc) => {
-    return users.updateById(doc._id, { $set: { d: 'f' } }).then(() => {
-      return users.findOne(doc._id)
-    })
-  }).then((doc) => {
-    t.is(doc.d, 'f')
-  })
-})
-
-test.cb('updateById > callback', (t) => {
-  users.updateById('aaaaaaaaaaaaaaaaaaaaaaaa', { $set: { d: 'f' } }, t.end)
-})
-
 test('update > should update with an objectid', (t) => {
   return users.insert({ d: 'e' }).then((doc) => {
     return users.update(doc._id, { $set: { d: 'f' } }).then(() => {
@@ -516,86 +460,6 @@ test('remove > should remove a document', (t) => {
 
 test.cb('remove > callback', (t) => {
   users.remove({ name: 'Mathieu' }, t.end)
-})
-
-test('removeById > should remove a document by id', (t) => {
-  return users.insert({ name: 'Mathieu' }).then((doc) => {
-    return users.removeById(doc._id)
-  }).then(() => {
-    return users.find({ name: 'Mathieu' })
-  }).then((doc) => {
-    t.deepEqual(doc, [])
-  })
-})
-
-test.cb('removeById > callback', (t) => {
-  users.removeById('aaaaaaaaaaaaaaaaaaaaaaaa', t.end)
-})
-
-test('findAndModify > should alter an existing document', (t) => {
-  const rand = 'now-' + Date.now()
-  return users.insert({ find: rand }).then(() => {
-    return users.findAndModify({ find: rand }, { find: 'woot' }, { new: true })
-  }).then((doc) => {
-    t.is(doc.find, 'woot')
-    return users.findById(doc._id).then((found) => {
-      t.is(found._id.toString(), doc._id.toString())
-      t.is(found.find, 'woot')
-    })
-  })
-})
-
-test('findAndModify > should remove an existing document', (t) => {
-  const rand = 'now2-' + Date.now()
-  return users.insert({ find: rand }).then(() => {
-    return users.findAndModify({ find: rand }, {}, { remove: true })
-  }).then((doc) => {
-    t.is(doc.find, rand)
-    return users.findOne(doc._id).then((found) => {
-      t.is(found, null)
-    })
-  })
-})
-
-test('findAndModify > should accept an id as query param', (t) => {
-  return users.insert({ locate: 'me' }).then((user) => {
-    return users.findAndModify(user._id, { $set: { locate: 'you' } }).then(() => {
-      return users.findOne(user._id)
-    })
-  }).then((user) => {
-    t.is(user.locate, 'you')
-  })
-})
-
-test('findAndModify > should accept an id as query param (mongo syntax)', (t) => {
-  return users.insert({ locate: 'me' }).then((user) => {
-    return users.findAndModify({ query: user._id, update: { $set: { locate: 'you' } } }).then(() => {
-      return users.findOne(user._id)
-    })
-  }).then((user) => {
-    t.is(user.locate, 'you')
-  })
-})
-
-test('findAndModify > should upsert', (t) => {
-  const rand = 'now-' + Date.now()
-
-  return users.findAndModify(
-      { find: rand }
-    , { find: rand }
-    , { upsert: true }
-  ).then((doc) => {
-    t.is(doc.find, rand)
-    return users.findOne({ find: rand }).then((found) => {
-      t.is(found._id.toString(), doc._id.toString())
-      t.is(found.find, rand)
-    })
-  })
-})
-
-test.cb('findAndModify > callback', (t) => {
-  const rand = 'now-' + Date.now()
-  users.findAndModify({ query: {find: rand}, update: { find: rand } }, t.end)
 })
 
 test('findOneAndDelete > should remove a document and return it', (t) => {
@@ -686,13 +550,8 @@ test.cb('bulkWrite > callback', (t) => {
 })
 
 test('should allow defaults', (t) => {
-  db.options.multi = true
   return users.insert([{ f: true }, { f: true }, { g: true }, { g: true }]).then(() => {
     return users.update({}, { $set: { f: 'g' } })
-  }).then((num) => {
-    t.is(typeof num, 'object')
-    t.is(typeof num.n, 'number')
-    t.true(num.n > 1)
   }).then(() => {
     users.options.safe = false
     users.options.multi = false
@@ -714,11 +573,6 @@ test('drop > should not throw when dropping an empty db', (t) => {
 
 test.cb('drop > callback', (t) => {
   db.get('dropDB2-' + Date.now()).drop(t.end)
-})
-
-test('Collection#id', (t) => {
-  const oid = users.id()
-  t.is(typeof oid.toHexString(), 'string')
 })
 
 test('caching collections', (t) => {
