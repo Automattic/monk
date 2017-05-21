@@ -550,13 +550,8 @@ test.cb('bulkWrite > callback', (t) => {
 })
 
 test('should allow defaults', (t) => {
-  db.options.multi = true
   return users.insert([{ f: true }, { f: true }, { g: true }, { g: true }]).then(() => {
     return users.update({}, { $set: { f: 'g' } })
-  }).then((num) => {
-    t.is(typeof num, 'object')
-    t.is(typeof num.n, 'number')
-    t.true(num.n > 1)
   }).then(() => {
     users.options.safe = false
     users.options.multi = false
@@ -578,11 +573,6 @@ test('drop > should not throw when dropping an empty db', (t) => {
 
 test.cb('drop > callback', (t) => {
   db.get('dropDB2-' + Date.now()).drop(t.end)
-})
-
-test('Collection#id', (t) => {
-  const oid = users.id()
-  t.is(typeof oid.toHexString(), 'string')
 })
 
 test('caching collections', (t) => {

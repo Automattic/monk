@@ -17,31 +17,24 @@ function fields (obj, numberWhenMinus) {
   return fields
 }
 
-module.exports = function (args) {
-  var options = args.options
-  var manager = args.manager
-  var collection = args.collection
-  if (typeof options === 'string' || Array.isArray(options)) {
-    return {
-      options: { fields: fields(options) }
-    }
-  }
-  options = options || {}
-  options.fields = fields(options.fields, 0)
-  options.sort = fields(options.sort, -1)
+module.exports = function optionsMiddleware (context) {
+  return function (next) {
+    return function (args, method) {
+      var collection = context.collection
+      if (typeof args.options === 'string' || Array.isArray(args.options)) {
+        args.options = { fields: fields(args.options) }
+        return next(args, method)
+      }
+      args.options = args.options || {}
+      args.options.fields = fields(args.options.fields, 0)
+      args.options.sort = fields(args.options.sort, -1)
 
-  for (var i in manager.options) {
-    if (!(i in options) && !(i in collection.options)) {
-      options[i] = manager.options[i]
+      for (var j in collection.options) {
+        if (!(j in args.options)) {
+          args.options[j] = collection.options[j]
+        }
+      }
+      return next(args, method)
     }
-  }
-
-  for (var j in collection.options) {
-    if (!(j in options)) {
-      options[j] = collection.options[j]
-    }
-  }
-  return {
-    options: options
   }
 }
