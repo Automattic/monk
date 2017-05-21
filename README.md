@@ -50,6 +50,7 @@ Most of the Monk's features are implemented as [middleware](https://automattic.g
 There are a bunch of third-parties middlewares that add even more functionalities to Monk:
 - [monk-middleware-wrap-non-dollar-update](https://github.com/monk-middlewares/monk-middleware-wrap-non-dollar-update)
 - [monk-middleware-debug](https://github.com/monk-middlewares/monk-middleware-debug)
+- [monk-middleware-dereference](https://github.com/monk-middlewares/monk-middleware-dereference)
 
 *Created an nice middleware? Send a PR to add to the list!*
 
