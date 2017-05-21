@@ -11,8 +11,6 @@
       "base": "https://github.com/Automattic/monk/redux/tree/master",
       "label": "Edit This Page"
     },
-    "pluginsConfig" : {
-        "favicon": "assets/favicon.ico"
-    }
+    "favicon": "assets/favicon.ico"
   }
 }
