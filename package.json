@@ -24,8 +24,7 @@
     "monk-middleware-handle-callback": "^0.2.0",
     "monk-middleware-options": "^0.2.0",
     "monk-middleware-query": "^0.2.0",
-    "monk-middleware-wait-for-connection": "^0.2.0",
-    "object-assign": "^4.1.1"
+    "monk-middleware-wait-for-connection": "^0.2.0"
   },
   "devDependencies": {
     "ava": "^0.19.1",
