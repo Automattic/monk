@@ -1,7 +1,7 @@
 {
   "name": "monk-plugin-cast-ids",
   "description": "A monk plugin to parse the ids",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "main": "index.js",
   "keywords": [
     "monk",

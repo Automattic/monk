@@ -1,12 +1,12 @@
 {
-  "name": "monk-plugin-query",
-  "description": "A monk plugin to parse the query",
-  "version": "0.1.2",
+  "name": "monk-plugin-options",
+  "description": "A monk plugin to parse the options",
+  "version": "0.2.0",
   "main": "index.js",
   "keywords": [
     "monk",
     "plugin",
-    "query"
+    "options"
   ],
   "repository": {
     "type": "git",

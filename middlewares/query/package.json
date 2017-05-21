@@ -1,12 +1,12 @@
 {
-  "name": "monk-plugin-fields",
-  "description": "A monk plugin to parse the fields",
-  "version": "0.1.0",
+  "name": "monk-plugin-query",
+  "description": "A monk plugin to parse the query",
+  "version": "0.2.0",
   "main": "index.js",
   "keywords": [
     "monk",
     "plugin",
-    "fields"
+    "query"
   ],
   "repository": {
     "type": "git",

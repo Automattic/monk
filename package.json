@@ -20,10 +20,10 @@
     "debug": "*",
     "gitbook-plugin-github": "2.0.0",
     "mongodb": "^2.1.18",
-    "monk-plugin-cast-ids": "^0.1.0",
-    "monk-plugin-fields": "^0.1.0",
-    "monk-plugin-options": "^0.1.0",
-    "monk-plugin-query": "^0.1.2",
+    "monk-plugin-cast-ids": "^0.2.0",
+    "monk-plugin-fields": "^0.2.0",
+    "monk-plugin-options": "^0.2.0",
+    "monk-plugin-query": "^0.2.2",
     "object-assign": "^4.1.1"
   },
   "devDependencies": {

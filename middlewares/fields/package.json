@@ -1,12 +1,12 @@
 {
-  "name": "monk-plugin-options",
-  "description": "A monk plugin to parse the options",
-  "version": "0.1.0",
+  "name": "monk-plugin-fields",
+  "description": "A monk plugin to parse the fields",
+  "version": "0.2.0",
   "main": "index.js",
   "keywords": [
     "monk",
     "plugin",
-    "options"
+    "fields"
   ],
   "repository": {
     "type": "git",
