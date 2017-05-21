@@ -28,15 +28,23 @@ db.close()
 
 ## Features
 
-- Well-designed signatures
+- Well-designed API signatures
 - Easy connections / configuration
-- Command buffering. You can start querying right away.
-- Promises built-in for all queries. Easy interoperability with modules.
-- Improvements to the MongoDB APIs (eg: `findAndModify` supports the
-  `update` signature style)
+- Command buffering. You can start querying right away
+- Promises built-in for all queries. Easy interoperability with modules
 - Auto-casting of `_id` in queries
 - Allows to set global options or collection-level options for queries. (eg:
   `safe` is `true` by default for all queries)
+
+## Middlewares
+
+Most of the Monk's features are implemented as middleware.
+
+There are a bunch of third-parties middlewares that add even more functionalities to Monk:
+- [monk-middleware-wrap-non-dollar-update](https://github.com/monk-middlewares/monk-middleware-wrap-non-dollar-update)
+- [monk-middleware-debug](https://github.com/monk-middlewares/monk-middleware-debug)
+
+*Created an nice middleware? Send a PR to add to the list!*
 
 ## How to use
 
