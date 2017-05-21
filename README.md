@@ -1,11 +1,17 @@
-# monk
+<h1 align="center">Monk</h1>
+
+<div align="center">
+  <img src="https://avatars2.githubusercontent.com/u/28830676?v=3&s=200" />
+</div>
+<br />
+<div align="center">
+  <strong>A tiny layer that provides simple yet substantial usability
+improvements for MongoDB usage within Node.JS.</strong>
+</div>
 
 [![build status](https://secure.travis-ci.org/Automattic/monk.svg?branch=master)](https://secure.travis-ci.org/Automattic/monk)
 [![codecov](https://codecov.io/gh/Automattic/monk/branch/master/graph/badge.svg)](https://codecov.io/gh/Automattic/monk)
 [![Join the chat at https://gitter.im/Automattic/monk](https://badges.gitter.im/Automattic/monk.svg)](https://gitter.im/Automattic/monk?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
-
-Monk is a tiny layer that provides simple yet substantial usability
-improvements for MongoDB usage within Node.JS.
 
 *note*: monk 2.x drop the support for node < 0.12. If you are still using an earlier version, stick to monk 1.x
 
