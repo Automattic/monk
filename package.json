@@ -39,8 +39,8 @@
     "eslint-plugin-standard": "^3.0.1",
     "gitbook-cli": "^2.3.0",
     "gitbook-plugin-anker-enable": "^0.0.4",
-    "gitbook-plugin-edit-link": "^2.0.2",
-    "gitbook-plugin-github": "^3.0.0",
+    "gitbook-plugin-edit-link": "2.0.2",
+    "gitbook-plugin-github": "^2.0.0",
     "gitbook-plugin-prism": "^2.2.0",
     "nyc": "^10.3.2"
   },
