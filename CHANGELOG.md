@@ -1,3 +1,11 @@
+5.0.2 / 2017-05-22
+==================
+  - Emit event from the manager from the underlying db emits an event (fix #189)
+
+5.0.1 / 2017-05-21
+==================
+  - Fix typo on requesting middlewares
+
 5.0.0 / 2017-05-21
 ==================
   - Remove deprecated methods
