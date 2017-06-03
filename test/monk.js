@@ -96,6 +96,12 @@ test('close > closing a closed connection should work', (t) => {
     .then(() => db.close())
 })
 
+test.cb('close > closing should emit an event', (t) => {
+  const db = monk('127.0.0.1/monk')
+  db.on('close', () => t.end())
+  db.close()
+})
+
 test.cb('close > closing a closed connection should work with callback', (t) => {
   const db = monk('127.0.0.1/monk')
   db.then(() => t.is(db._state, 'open'))

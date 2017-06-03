@@ -3,6 +3,7 @@
   "description": "The wise MongoDB API",
   "version": "5.0.2",
   "main": "lib/monk.js",
+  "types": "./index.d.ts",
   "keywords": [
     "monk",
     "mongodb",
