@@ -11,7 +11,8 @@
     "driver"
   ],
   "files": [
-    "lib"
+    "lib",
+    "index.d.ts"
   ],
   "repository": {
     "type": "git",
