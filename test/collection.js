@@ -3,6 +3,7 @@ import test from 'ava'
 const monk = require('../lib/monk')
 
 const db = monk('127.0.0.1/monk')
+db.addMiddleware(require('monk-middleware-debug'))
 const users = db.get('users-' + Date.now())
 const indexCol = db.get('index-' + Date.now())
 
