@@ -26,8 +26,12 @@ module.exports = function optionsMiddleware (context) {
         return next(args, method)
       }
       args.options = args.options || {}
-      args.options.fields = fields(args.options.fields, 0)
-      args.options.sort = fields(args.options.sort, -1)
+      if (args.options.fields) {
+        args.options.fields = fields(args.options.fields, 0)
+      }
+      if (args.options.sort) {
+        args.options.sort = fields(args.options.sort, -1)
+      }
 
       for (var j in collection.options) {
         if (!(j in args.options)) {
