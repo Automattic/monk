@@ -16,6 +16,12 @@ test('createIndex > should accept a field string', (t) => {
   })
 })
 
+test('createIndex > should accept an object argument', (t) => {
+  return indexCol.createIndex({location: '2dsphere'}).then(indexCol.indexes).then((indexes) => {
+    t.not(indexes.location_2dsphere, undefined)
+  })
+})
+
 test('createIndex > should accept space-delimited compound indexes', (t) => {
   return indexCol.createIndex('name last').then(indexCol.indexes).then((indexes) => {
     t.not(indexes.name_1_last_1, undefined)
