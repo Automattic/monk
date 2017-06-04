@@ -492,12 +492,26 @@ test.cb('findOneAndDelete > callback', (t) => {
   })
 })
 
+test('findOneAndDelete > should return null if found nothing', (t) => {
+  return users.findOneAndDelete({ name: 'Bob3' })
+    .then((doc) => {
+      t.is(doc, null)
+    })
+})
+
 test('findOneAndUpdate > should update a document and return it', (t) => {
   return users.insert({ name: 'Jack' }).then((doc) => {
     return users.findOneAndUpdate({ name: 'Jack' }, { name: 'Jack4' })
   }).then((doc) => {
     t.is(doc.name, 'Jack4')
   })
+})
+
+test('findOneAndUpdate > should return null if found nothing', (t) => {
+  return users.findOneAndUpdate({ name: 'Jack5' }, { name: 'Jack6' })
+    .then((doc) => {
+      t.is(doc, null)
+    })
 })
 
 test.cb('findOneAndUpdate > callback', (t) => {
