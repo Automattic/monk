@@ -604,7 +604,7 @@ test('geoHaystackSearch', (t) => {
 test.cb('geoHaystackSearch > callback', (t) => {
   users.ensureIndex({loc: 'geoHaystack', type: 1}, {bucketSize: 1})
     .then(() => users.insert([{a: 1, loc: [50, 30]}, {a: 1, loc: [30, 50]}]))
-    .then(() => users.geoHaystackSearch(50, 50, t.end))
+    .then(() => users.geoHaystackSearch(50, 50, {search: {a: 1}, maxDistance: 100}, t.end))
 })
 
 test('geoNear', (t) => {
@@ -640,7 +640,7 @@ test.cb('mapReduce > callback', (t) => {
   const map = function () { emit(this.user_id, 1) } // eslint-disable-line
   // Reduce function
   const reduce = function (k, vals) { return 1 }
-  users.mapReduce(map, reduce, t.end)
+  users.mapReduce(map, reduce, {out: {replace: 'tempCollection'}}, t.end)
 })
 
 test('stats', (t) => {

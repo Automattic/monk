@@ -10,7 +10,7 @@ Execute a geo search using a geo haystack index on a collection.
 
 1. `y` *(number)* - Point to search on the y axis, ensure the indexes are ordered in the same order.
 
-1. [`options`] *(Object)*
+1. `options` *(Object)* - Need to specify at least the `maxDistance` and `search` options.
 
 1. [`callback`] *(function)*
 

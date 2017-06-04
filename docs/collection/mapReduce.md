@@ -10,7 +10,7 @@ Run Map Reduce across a collection. Be aware that the inline option for out will
 
 1. `reduce` *(function | string)* - The reduce function.
 
-2. [`options`] *(Object)*
+2. `options` *(Object)* - Need to specify at least the `out` option.
 
 3. [`callback`] *(function)*
 
