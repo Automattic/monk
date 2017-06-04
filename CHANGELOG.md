@@ -1,3 +1,16 @@
+6.0.0 / 2017-06-04
+==================
+  - Add typescript definition (fix #204)
+  - return null when findOneAnd... find nothing (fix #175)
+  - `remove` now uses `deleteOne` or `deleteMany` under the hood (fix #178)
+  - Add `mapReduce` method (fix #167)
+  - Add `geoHaystackSearch` method
+  - Add `geoNear` method
+  - Add `stats` method (fix #191)
+  - Remove monk specific options used by middleware (fix #203)
+  - The only option set globally is `castIds`. `safe` is not `true` by default anymore.
+  - Return the cursor in a promise (when using the `rawCursor` on the `find` method) so that the entire API has the same return type (a promise)
+
 5.0.2 / 2017-05-22
 ==================
   - Emit event from the manager from the underlying db emits an event (fix #189)
