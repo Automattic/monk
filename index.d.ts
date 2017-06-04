@@ -18,7 +18,7 @@ declare namespace Monk {
     readonly addMiddleware: (middleware: TMiddleware) => void
   }
 
-  export type TMiddleware = ({ collection: ICollection, monkInstance: IMonkManager }) => (next: (args: Object, method: string) => Promise<any>) => (args: Object, method: string) => Promise <any>
+  export type TMiddleware = ({ collection: ICollection, monkInstance: IMonkManager }) => (next: (args: Object, method: string) => Promise<any>) => (args: Object, method: string) => Promise<any>
 
   type TQuery = string | Object
   type TFields = string | Array<string>
@@ -26,32 +26,36 @@ declare namespace Monk {
   export interface ICollection {
     readonly manager: IMonkManager
     readonly name: string
-    readonly options: Object
+    options: Object
     readonly middlewares: Array<TMiddleware>
 
-    readonly aggregate: (stages: Array, options?: Object) => Promise<Any>
-    readonly bulkWrite: (operations: Array, options?: Object) => Promise<Any>
+    readonly aggregate: (stages: Array<any>, options?: Object) => Promise<any>
+    readonly bulkWrite: (operations: Array<any>, options?: Object) => Promise<any>
     readonly count: (query?: TQuery, options?: Object) => Promise<number>
-    readonly createIndex: (fields?: TFields, options?: Object) => Promise<Any>
+    readonly createIndex: (fields?: TFields, options?: Object) => Promise<any>
     readonly distinct: (field: string, query?: TQuery, options?: Object) => Promise<number>
-    readonly drop: () => Promise<Any>
-    readonly dropIndex: (fields?: TFields, options?: Object) => Promise<Any>
-    readonly dropIndexes: () => Promise<Any>
-    readonly find: (query?: TQuery, options?: Object) => Promise<Any> | Promise<void> & {
+    readonly drop: () => Promise<any>
+    readonly dropIndex: (fields?: TFields, options?: Object) => Promise<any>
+    readonly dropIndexes: () => Promise<any>
+    readonly find: (query?: TQuery, options?: Object) => Promise<any> | Promise<void> & {
       readonly each: (record: Object, cursor: {
         readonly close: () => void,
         readonly resume: () => void,
         readonly pause: () => void
       }) => any
     }
-    readonly findOne: (query?: TQuery, options?: Object) => Promise<Any>
-    readonly findOneAndDelete: (query?: TQuery, options?: Object) => Promise<Any>
-    readonly findOneAndUpdate: (query: TQuery, update: Object, options?: Object) => Promise<Any>
-    readonly group: (keys: Any, condition: Any, initial: Any, reduce: Any, finalize: Any, command: Any, options?: Object) => Promise<Any>
-    readonly indexes: () => Promise<Any>
-    readonly insert: (data: Object | Array<Object>, options?: Object) => Promise<Any>
-    readonly remove: (query?: TQuery, options?: Object) => Promise<Any>
-    readonly update: (query: TQuery, update: Object, options?: Object) => Promise<Any>
+    readonly findOne: (query?: TQuery, options?: Object) => Promise<any>
+    readonly findOneAndDelete: (query?: TQuery, options?: Object) => Promise<any>
+    readonly findOneAndUpdate: (query: TQuery, update: Object, options?: Object) => Promise<any>
+    readonly geoHaystackSearch: (x: number, y: number, options: Object) => Promise<any>
+    readonly geoNear: (x: number, y: number, options?: Object) => Promise<any>
+    readonly group: (keys: any, condition: any, initial: any, reduce: any, finalize: any, command: any, options?: Object) => Promise<any>
+    readonly indexes: () => Promise<any>
+    readonly insert: (data: Object | Array<Object>, options?: Object) => Promise<any>
+    readonly mapReduce: (map: () => any, reduce: (key: string, values: Array<any>) => any, options: Object) => Promise<any>
+    readonly remove: (query?: TQuery, options?: Object) => Promise<any>
+    readonly stats: (options?: Object) => Promise<any>
+    readonly update: (query: TQuery, update: Object, options?: Object) => Promise<any>
   }
 
   export interface IObjectID {
@@ -64,7 +68,7 @@ declare namespace Monk {
   export function id(): IObjectID // returns new generated ObjectId
   export function cast(obj?: Object | Array<any> | any): any
 
-  export default function(database: string | Array<string>, options?: {
+  export default function (database: string | Array<string>, options?: {
     collectionOptions?: Object,
     poolSize?: number,
     ssl?: boolean,
@@ -100,6 +104,6 @@ declare namespace Monk {
     pkFactory?: Object | null,
     promiseLibrary?: Object | null,
     readConcern?: Object | null
-  }): Promise<IMonkManager>
+  }): Promise<IMonkManager> & IMonkManager
 
 }
