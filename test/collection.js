@@ -544,7 +544,7 @@ test.cb('aggregate > callback', (t) => {
 
 test('bulkWrite', (t) => {
   return users.bulkWrite([
-      { insertOne: { document: { bulkWrite: 1 } } }
+    { insertOne: { document: { bulkWrite: 1 } } }
   ]).then((r) => {
     t.is(r.nInserted, 1)
   })
@@ -552,7 +552,7 @@ test('bulkWrite', (t) => {
 
 test.cb('bulkWrite > callback', (t) => {
   users.bulkWrite([
-      { insertOne: { document: { bulkWrite: 2 } } }
+    { insertOne: { document: { bulkWrite: 2 } } }
   ], t.end)
 })
 
@@ -590,4 +590,41 @@ test('caching collections', (t) => {
 test('not caching collections', (t) => {
   const collectionName = 'cached-' + Date.now()
   t.not(db.get(collectionName, {cache: false}), db.get(collectionName, {cache: false}))
+})
+
+test('geoHaystackSearch', (t) => {
+  return users.ensureIndex({loc: 'geoHaystack', type: 1}, {bucketSize: 1})
+    .then(() => users.insert([{a: 1, loc: [50, 30]}, {a: 1, loc: [30, 50]}]))
+    .then(() => users.geoHaystackSearch(50, 50, {search: {a: 1}, limit: 1, maxDistance: 100}))
+    .then((r) => {
+      t.is(r.length, 1)
+    })
+})
+
+test('geoNear', (t) => {
+  return users.ensureIndex({loc2: '2d'})
+    .then(() => users.insert([{a: 1, loc2: [50, 30]}, {a: 1, loc2: [30, 50]}]))
+    .then(() => users.geoNear(50, 50, {quert: {a: 1}, num: 1}))
+    .then((r) => {
+      t.is(r.length, 1)
+    })
+})
+
+test('mapReduce', (t) => {
+  // Map function
+  const map = function () { emit(this.user_id, 1) } // eslint-disable-line
+  // Reduce function
+  const reduce = function (k, vals) { return 1 }
+  return users.insert([{user_id: 1}, {user_id: 2}])
+    .then(() => users.mapReduce(map, reduce, {out: {replace: 'tempCollection'}}))
+    .then((collection) => collection.findOne({'_id': 1}))
+    .then((r) => {
+      t.is(r.value, 1)
+    })
+})
+
+test('stats', (t) => {
+  return users.stats().then((res) => {
+    t.is(res.capped, false)
+  })
 })
