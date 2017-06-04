@@ -41,7 +41,7 @@ db.close()
 - Promises built-in for all queries. Easy interoperability with modules
 - Auto-casting of `_id` in queries
 - Allows to set global options or collection-level options for queries. (eg:
-  `safe` is `true` by default for all queries)
+  `castIds` is `true` by default for all queries)
 
 ## Middlewares
 

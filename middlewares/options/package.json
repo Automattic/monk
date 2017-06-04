@@ -1,7 +1,7 @@
 {
   "name": "monk-middleware-options",
   "description": "A monk middleware to parse the options",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "main": "index.js",
   "keywords": [
     "monk",

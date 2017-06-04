@@ -1,7 +1,7 @@
 {
   "name": "monk",
   "description": "The wise MongoDB API",
-  "version": "5.0.2",
+  "version": "5.1.0",
   "main": "lib/monk.js",
   "keywords": [
     "monk",
@@ -19,10 +19,10 @@
   "dependencies": {
     "debug": "*",
     "mongodb": "^2.1.18",
-    "monk-middleware-cast-ids": "^0.2.0",
+    "monk-middleware-cast-ids": "^0.2.1",
     "monk-middleware-fields": "^0.2.0",
     "monk-middleware-handle-callback": "^0.2.0",
-    "monk-middleware-options": "^0.2.0",
+    "monk-middleware-options": "^0.2.1",
     "monk-middleware-query": "^0.2.0",
     "monk-middleware-wait-for-connection": "^0.2.0",
     "object-assign": "^4.1.1"
@@ -43,6 +43,7 @@
     "gitbook-plugin-edit-link": "2.0.2",
     "gitbook-plugin-github": "^2.0.0",
     "gitbook-plugin-prism": "^2.2.0",
+    "monk-middleware-debug": "^0.2.0",
     "nyc": "^10.3.2"
   },
   "license": "MIT",
