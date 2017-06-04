@@ -625,6 +625,6 @@ test('mapReduce', (t) => {
 
 test('stats', (t) => {
   return users.stats().then((res) => {
-    t.is(res.capped, false)
+    t.truthy(res)
   })
 })
