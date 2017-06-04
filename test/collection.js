@@ -593,7 +593,7 @@ test('not caching collections', (t) => {
 })
 
 test('geoHaystackSearch', (t) => {
-  return users.createIndex({loc: 'geoHaystack', type: 1}, {bucketSize: 1})
+  return users.ensureIndex({loc: 'geoHaystack', type: 1}, {bucketSize: 1})
     .then(() => users.insert([{a: 1, loc: [50, 30]}, {a: 1, loc: [30, 50]}]))
     .then(() => users.geoHaystackSearch(50, 50, {search: {a: 1}, limit: 1, maxDistance: 100}))
     .then((r) => {
@@ -602,13 +602,13 @@ test('geoHaystackSearch', (t) => {
 })
 
 test.cb('geoHaystackSearch > callback', (t) => {
-  users.createIndex({loc3: 'geoHaystack', type: 1}, {bucketSize: 1})
-    .then(() => users.insert([{a: 1, loc3: [50, 30]}, {a: 1, loc3: [30, 50]}]))
+  users.ensureIndex({loc: 'geoHaystack', type: 1}, {bucketSize: 1})
+    .then(() => users.insert([{a: 1, loc: [50, 30]}, {a: 1, loc: [30, 50]}]))
     .then(() => users.geoHaystackSearch(50, 50, t.end))
 })
 
 test('geoNear', (t) => {
-  return users.createIndex({loc2: '2d'})
+  return users.ensureIndex({loc2: '2d'})
     .then(() => users.insert([{a: 1, loc2: [50, 30]}, {a: 1, loc2: [30, 50]}]))
     .then(() => users.geoNear(50, 50, {query: {a: 1}, num: 1}))
     .then((r) => {
@@ -617,8 +617,8 @@ test('geoNear', (t) => {
 })
 
 test.cb('geoNear > callback', (t) => {
-  users.createIndex({loc4: '2d'})
-    .then(() => users.insert([{a: 1, loc4: [50, 30]}, {a: 1, loc4: [30, 50]}]))
+  users.ensureIndex({loc2: '2d'})
+    .then(() => users.insert([{a: 1, loc2: [50, 30]}, {a: 1, loc2: [30, 50]}]))
     .then(() => users.geoNear(50, 50, t.end))
 })
 
@@ -640,7 +640,7 @@ test.cb('mapReduce > callback', (t) => {
   const map = function () { emit(this.user_id, 1) } // eslint-disable-line
   // Reduce function
   const reduce = function (k, vals) { return 1 }
-  return users.mapReduce(map, reduce, t.end)
+  users.mapReduce(map, reduce, t.end)
 })
 
 test('stats', (t) => {
@@ -650,5 +650,5 @@ test('stats', (t) => {
 })
 
 test.cb('stats > callback', (t) => {
-  return users.stats(t.end)
+  users.stats(t.end)
 })
