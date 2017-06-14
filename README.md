@@ -18,6 +18,9 @@ improvements for MongoDB usage within Node.JS.</strong>
 
 ```js
 const db = require('monk')('localhost/mydb')
+// or
+// const db = require('monk')('user:pass@localhost:port/mydb')
+
 const users = db.get('users')
 
 users.index('name last')
