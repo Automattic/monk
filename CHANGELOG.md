@@ -1,3 +1,7 @@
+6.0.1 / 2017-06-22
+=================
+  - Fix typo in `update` method name
+
 6.0.0 / 2017-06-04
 ==================
   - Add typescript definition (fix #204)
