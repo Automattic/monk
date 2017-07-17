@@ -173,15 +173,27 @@ test('findOne > should only provide selected fields', (t) => {
   })
 })
 
-test.cb('find > callback', (t) => {
-  users.insert({ woot: 'e' }).then((doc) => {
-    return users.find(doc._id, t.end)
-  })
-})
-
 test.cb('findOne > callback', (t) => {
   users.insert({ woot: 'e' }).then((doc) => {
     return users.findOne(doc._id, t.end)
+  })
+})
+
+test('find > should find with nested query', (t) => {
+  return users.insert([{ nested: { a: 1 } }, { nested: { a: 2 } }]).then(() => {
+    return users.find({ 'nested.a': 1 })
+  }).then((docs) => {
+    t.is(docs.length, 1)
+    t.is(docs[0].nested.a, 1)
+  })
+})
+
+test('find > should find with nested array query', (t) => {
+  return users.insert([{ nestedArray: [{ a: 1 }] }, { nestedArray: [{ a: 2 }] }]).then(() => {
+    return users.find({ 'nestedArray.a': 1 })
+  }).then((docs) => {
+    t.is(docs.length, 1)
+    t.is(docs[0].nestedArray[0].a, 1)
   })
 })
 
@@ -327,6 +339,12 @@ test.cb('find > stream callback', (t) => {
       .each((doc) => {
         t.not(doc.a, null)
       })
+  })
+})
+
+test.cb('find > callback', (t) => {
+  users.insert({ woot: 'e' }).then((doc) => {
+    return users.find(doc._id, t.end)
   })
 })
 
