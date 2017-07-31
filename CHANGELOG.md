@@ -1,3 +1,7 @@
+6.0.3 / 2017-07-31
+=================
+  - Really export Manager as `default` as well
+
 6.0.2 / 2017-07-31
 =================
   - Fix typescript types
