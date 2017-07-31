@@ -1,3 +1,8 @@
+6.0.2 / 2017-07-31
+=================
+  - Fix typescript types
+  - Export Manager as `default` as well
+
 6.0.1 / 2017-06-22
 =================
   - Fix typo in `update` method name
