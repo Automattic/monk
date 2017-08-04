@@ -18,7 +18,7 @@ declare namespace Monk {
     readonly addMiddleware: (middleware: TMiddleware) => void
   }
 
-  export type TMiddleware = ({ collection: ICollection, monkInstance: IMonkManager }) => (next: (args: Object, method: string) => Promise<any>) => (args: Object, method: string) => Promise<any>
+  export type TMiddleware = ({ collection, monkInstance }: { collection: ICollection, monkInstance: IMonkManager }) => (next: (args: Object, method: string) => Promise<any>) => (args: Object, method: string) => Promise<any>
 
   type TQuery = string | Object
   type TFields = string | Array<string>
@@ -105,5 +105,4 @@ declare namespace Monk {
     promiseLibrary?: Object | null,
     readConcern?: Object | null
   }): Promise<IMonkManager> & IMonkManager
-
 }
