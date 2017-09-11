@@ -10,7 +10,8 @@ function thenFn (fn) {
 function catchFn (fn) {
   return function (err) {
     if (fn && typeof fn === 'function') {
-      return fn(err) // do not throw if there is a callback
+      fn(err) // do not throw if there is a callback
+      return
     }
     throw err
   }
