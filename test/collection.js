@@ -225,7 +225,7 @@ test('find > should work with streaming', (t) => {
   return users.insert([{ stream: 1 }, { stream: 1 }, { stream: 1 }, { stream: 1 }]).then(() => {
     return users.find(query)
       .each((doc) => {
-        t.not(doc.a, null)
+        t.is(doc.stream, 1)
         found++
       })
       .then(() => {
@@ -240,7 +240,7 @@ test('find > should work with streaming option', (t) => {
   return users.insert([{ stream: 2 }, { stream: 2 }, { stream: 2 }, { stream: 2 }]).then(() => {
     return users.find(query, { stream: true })
       .each((doc) => {
-        t.not(doc.a, null)
+        t.is(doc.stream, 2)
         found++
       })
       .then(() => {
@@ -255,7 +255,7 @@ test('find > should work with streaming option without each', (t) => {
   return users.insert([{ stream: 5 }, { stream: 5 }, { stream: 5 }, { stream: 5 }]).then(() => {
     return users.find(query, {
       stream (doc) {
-        t.not(doc.a, null)
+        t.is(doc.stream, 5)
         found++
       }
     })

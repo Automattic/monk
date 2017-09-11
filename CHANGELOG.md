@@ -1,3 +1,7 @@
+6.0.4 / 2017-09-11
+=================
+  - Fix typescript types for `find` (fix #224)
+
 6.0.3 / 2017-07-31
 =================
   - Really export Manager as `default` as well

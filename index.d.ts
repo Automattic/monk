@@ -37,8 +37,8 @@ declare namespace Monk {
     readonly drop: () => Promise<any>
     readonly dropIndex: (fields?: TFields, options?: Object) => Promise<any>
     readonly dropIndexes: () => Promise<any>
-    readonly find: (query?: TQuery, options?: Object) => Promise<any> | Promise<void> & {
-      readonly each: (record: Object, cursor: {
+    readonly find: (query?: TQuery, options?: Object) => Promise<any[]> & {
+      readonly each: (record: any, cursor: {
         readonly close: () => void,
         readonly resume: () => void,
         readonly pause: () => void
