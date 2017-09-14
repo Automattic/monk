@@ -1,7 +1,7 @@
 function thenFn (fn) {
   return function (res) {
     if (fn && typeof fn === 'function') {
-      fn(null, res)
+      setTimeout(fn, 0, null, res)
     }
     return res
   }
@@ -10,7 +10,7 @@ function thenFn (fn) {
 function catchFn (fn) {
   return function (err) {
     if (fn && typeof fn === 'function') {
-      fn(err) // do not throw if there is a callback
+      setTimeout(fn, 0, err)
       return
     }
     throw err

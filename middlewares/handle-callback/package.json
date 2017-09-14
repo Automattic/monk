@@ -1,7 +1,7 @@
 {
   "name": "monk-middleware-handle-callback",
   "description": "A monk middleware to handle callback",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "main": "index.js",
   "keywords": [
     "monk",
