@@ -18,10 +18,17 @@ declare namespace Monk {
     readonly addMiddleware: (middleware: TMiddleware) => void
   }
 
-  export type TMiddleware = ({ collection, monkInstance }: { collection: ICollection, monkInstance: IMonkManager }) => (next: (args: Object, method: string) => Promise<any>) => (args: Object, method: string) => Promise<any>
+  export type TMiddleware = <T =any>(middleware: { collection: ICollection, monkInstance: IMonkManager }) => (next: <N =any>(args: Object, method: string) => Promise<N>) => (args: Object, method: string) => Promise<T>
 
   type TQuery = string | Object
   type TFields = string | Array<string>
+
+  type IResultMixin = {
+    _id: IObjectID
+  }
+  type IResult<T> = IResultMixin & {
+    [K in keyof T]: T[K]
+  }
 
   export interface ICollection {
     readonly manager: IMonkManager
@@ -29,33 +36,33 @@ declare namespace Monk {
     options: Object
     readonly middlewares: Array<TMiddleware>
 
-    readonly aggregate: (stages: Array<any>, options?: Object) => Promise<any>
-    readonly bulkWrite: (operations: Array<any>, options?: Object) => Promise<any>
+    readonly aggregate: <T =any>(stages: Array<any>, options?: Object) => Promise<T>
+    readonly bulkWrite: <T =any>(operations: Array<any>, options?: Object) => Promise<T>
     readonly count: (query?: TQuery, options?: Object) => Promise<number>
-    readonly createIndex: (fields?: TFields, options?: Object) => Promise<any>
+    readonly createIndex: <T =any>(fields?: TFields, options?: Object) => Promise<T>
     readonly distinct: (field: string, query?: TQuery, options?: Object) => Promise<number>
-    readonly drop: () => Promise<any>
-    readonly dropIndex: (fields?: TFields, options?: Object) => Promise<any>
-    readonly dropIndexes: () => Promise<any>
-    readonly find: (query?: TQuery, options?: Object) => Promise<any[]> & {
+    readonly drop: <T =any>() => Promise<T>
+    readonly dropIndex: <T =any>(fields?: TFields, options?: Object) => Promise<T>
+    readonly dropIndexes: <T =any>() => Promise<T>
+    readonly find: <T =any>(query?: TQuery, options?: Object) => Promise<IResult<T>[]> & {
       readonly each: (record: any, cursor: {
         readonly close: () => void,
         readonly resume: () => void,
         readonly pause: () => void
-      }) => any
+      }) => IResult<T>
     }
-    readonly findOne: (query?: TQuery, options?: Object) => Promise<any>
-    readonly findOneAndDelete: (query?: TQuery, options?: Object) => Promise<any>
-    readonly findOneAndUpdate: (query: TQuery, update: Object, options?: Object) => Promise<any>
-    readonly geoHaystackSearch: (x: number, y: number, options: Object) => Promise<any>
-    readonly geoNear: (x: number, y: number, options?: Object) => Promise<any>
-    readonly group: (keys: any, condition: any, initial: any, reduce: any, finalize: any, command: any, options?: Object) => Promise<any>
-    readonly indexes: () => Promise<any>
-    readonly insert: (data: Object | Array<Object>, options?: Object) => Promise<any>
-    readonly mapReduce: (map: () => any, reduce: (key: string, values: Array<any>) => any, options: Object) => Promise<any>
-    readonly remove: (query?: TQuery, options?: Object) => Promise<any>
-    readonly stats: (options?: Object) => Promise<any>
-    readonly update: (query: TQuery, update: Object, options?: Object) => Promise<any>
+    readonly findOne: <T =any>(query?: TQuery, options?: Object) => Promise<IResult<T>>
+    readonly findOneAndDelete: <T =any>(query?: TQuery, options?: Object) => Promise<IResult<T>>
+    readonly findOneAndUpdate: <T =any>(query: TQuery, update: Object, options?: Object) => Promise<T>
+    readonly geoHaystackSearch: <T =any>(x: number, y: number, options: Object) => Promise<T>
+    readonly geoNear: <T =any>(x: number, y: number, options?: Object) => Promise<T>
+    readonly group: <T =any>(keys: any, condition: any, initial: any, reduce: any, finalize: any, command: any, options?: Object) => Promise<T>
+    readonly indexes: <T =any>() => Promise<T>
+    readonly insert: <T =any>(data: Object | Array<Object>, options?: Object) => Promise<T>
+    readonly mapReduce: <T =any>(map: () => any, reduce: (key: string, values: Array<any>) => any, options: Object) => Promise<T>
+    readonly remove: <T =any>(query?: TQuery, options?: Object) => Promise<T>
+    readonly stats: <T =any>(options?: Object) => Promise<T>
+    readonly update: <T =any>(query: TQuery, update: Object, options?: Object) => Promise<T>
   }
 
   export interface IObjectID {
@@ -66,8 +73,8 @@ declare namespace Monk {
   export function id(hexstring: string): IObjectID // returns ObjectId
   export function id(obj: IObjectID): IObjectID // returns ObjectId
   export function id(): IObjectID // returns new generated ObjectId
-  export function cast(obj?: Object | Array<any> | any): any
-
+  export function cast<T =any>(obj?: Object | Array<any> | any): T
+  
   export default function (database: string | Array<string>, options?: {
     collectionOptions?: Object,
     poolSize?: number,
