@@ -1,3 +1,8 @@
+6.0.5 / 2017-10-06
+=================
+  - Make `monk.get('collection')` a typescript template so that every methods have more specific types
+  - Make some types more specifics (`createIndex`, `drop`, `dropIndex`, `dropIndexes`, `indexes`, `remove`, `stats`, `update`)
+
 6.0.4 / 2017-09-11
 =================
   - Fix typescript types for `find` (fix #224)
