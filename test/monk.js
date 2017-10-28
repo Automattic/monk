@@ -127,6 +127,10 @@ test('Manager#get', (t) => {
   t.true(db.get('users') instanceof Collection)
 })
 
+test('Manager#listCollections', (t) => {
+  t.true(db.listCollections() instanceof Array)
+})
+
 test('Manager#col', (t) => {
   t.true(db.col('users') instanceof Collection)
 })
