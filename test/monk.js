@@ -128,7 +128,7 @@ test('Manager#get', (t) => {
 })
 
 test('Manager#listCollections', (t) => {
-  t.true(db.listCollections() instanceof Array)
+  return db.listCollections().then(collections => t.true(collections instanceof Array))
 })
 
 test('Manager#col', (t) => {
