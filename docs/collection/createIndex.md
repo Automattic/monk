@@ -1,8 +1,8 @@
-# `collection.ensureIndex`
+# `collection.createIndex`
 
-[Mongo documentation <i class="fa fa-external-link" style="position: relative; top: 2px;" />](http://mongodb.github.io/node-mongodb-native/2.0/api/Collection.html#ensureIndex)
+[Mongo documentation <i class="fa fa-external-link" style="position: relative; top: 2px;" />](http://mongodb.github.io/node-mongodb-native/2.0/api/Collection.html#createIndex)
 
-Ensures that indexes exist, if it does not it creates it
+Creates an index on the db and collection (will not create if already exists)
 
 #### Arguments
 
@@ -19,15 +19,10 @@ A promise
 #### Example
 
 ```js
-users.index('name.first')
-users.index('name last')
-users.index(['nombre', 'apellido'])
-users.index({ up: 1, down: -1 })
-users.index({ woot: 1 }, { unique: true })
 
-users.ensureIndex('name.first')
-users.ensureIndex('name last')
-users.ensureIndex(['nombre', 'apellido'])
-users.ensureIndex({ up: 1, down: -1 })
-users.ensureIndex({ woot: 1 }, { unique: true })
+users.createIndex('name.first')
+users.createIndex('name last')
+users.createIndex(['nombre', 'apellido'])
+users.createIndex({ up: 1, down: -1 })
+users.createIndex({ woot: 1 }, { unique: true })
 ```
