@@ -29,7 +29,7 @@ A promise.
 #### Example
 
 ```js
-users..bulkWrite([
+users.bulkWrite([
     { insertOne: { document: { a: 1 } } }
   , { updateOne: { filter: {a:2}, update: {$set: {a:2}}, upsert:true } }
   , { updateMany: { filter: {a:2}, update: {$set: {a:2}}, upsert:true } }
