@@ -107,19 +107,19 @@ declare module 'monk' {
       }[]
     >
     insert<U = T>(data: Object | Array<Object>, options?: Object): Promise<U>
-    mapReduce: (
+    mapReduce(
       map: () => any,
       reduce: (key: string, values: Array<any>) => any,
       options: Object
-    ) => Promise<any>
-    remove: (query?: TQuery, options?: Object) => Promise<{
+    ): Promise<any>
+    remove(query?: TQuery, options?: Object): Promise<{
       deletedCount: number,
       result: {
         n: number,
         ok: 1 | 0
       }
     }>
-    stats: (options?: Object) => Promise<{
+    stats(options?: Object): Promise<{
       ns: string,
       count: number,
       size: number,
@@ -137,7 +137,7 @@ declare module 'monk' {
       },
       ok: 1 | 0
     }>
-    update: (query: TQuery, update: Object, options?: Object) => Promise<{
+    update(query: TQuery, update: Object, options?: Object): Promise<{
       ok: 1 | 0,
       nModified: number,
       n: number
