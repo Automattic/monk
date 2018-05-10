@@ -1,3 +1,7 @@
+6.0.6 / 2018-05-10
+=================
+  - Change existing function declarations from properties to functions in order to be able to supply additional typescript definitions to handle a callback scenario
+
 6.0.5 / 2017-10-06
 =================
   - Make `monk.get('collection')` a typescript template so that every methods have more specific types
