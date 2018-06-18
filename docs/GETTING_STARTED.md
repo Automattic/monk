@@ -66,7 +66,7 @@ collection.insert([{a: 1}, {a: 2}, {a: 3}])
 
 You can notice that we are not waiting for the connection to be opened before doing the operation. That's because behind the scene, monk will queue all the operations until the connection is opened and then send them.
 
-We can now run the update **app.js** file.
+We can now run the updated **app.js** file.
 
 ```
 node app.js
