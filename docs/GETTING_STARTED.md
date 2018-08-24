@@ -47,7 +47,7 @@ Let's Add some code to show the different CRUD operations available.
 
 Inserting a Document
 --------------------
-Let's insert some documents in the `documents` collection.
+Let's insert some documents in the `document` collection.
 
 ```js
 const url = 'localhost:27017/myproject'; // Connection URL
@@ -168,7 +168,7 @@ collection.insert([{a: 1}, {a: 2}, {a: 3}])
   .then(() => db.close())
 ```
 
-This query will return all the documents in the **documents** collection. Since we deleted a document the total
+This query will return all the documents in the 'document' collection. Since we deleted a document the total
 documents returned is **2**.
 
 This concludes the Getting Started of connecting and performing some Basic operations using monk.
