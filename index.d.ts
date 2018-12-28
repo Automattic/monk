@@ -30,8 +30,8 @@ declare module 'monk' {
       monkInstance,
     }: { collection: ICollection; monkInstance: IMonkManager }
   ) => (
-    next: (args: Object, method: string) => Promise<any>
-  ) => (args: Object, method: string) => Promise<any>
+      next: (args: Object, method: string) => Promise<any>
+    ) => (args: Object, method: string) => Promise<any>
 
   type TQuery = string | Object
   type TFields = string | Array<string>
@@ -86,6 +86,12 @@ declare module 'monk' {
       update: Object,
       options?: Object
     ): Promise<U | undefined>
+    findOneAndUpdate<U = T>(
+      query: TQuery,
+      update: Object,
+      options?: Object,
+      callback?: (err: Error, data: U) => void
+    ): void;
     geoHaystackSearch<U = T>(
       x: number,
       y: number,
@@ -154,7 +160,7 @@ declare module 'monk' {
   export function id(): IObjectID // returns new generated ObjectId
   export function cast(obj?: Object | Array<any> | any): any
 
-  export default function(
+  export default function (
     database: string | Array<string>,
     options?: {
       collectionOptions?: Object
