@@ -58,7 +58,7 @@ declare module 'monk' {
       callback?: (err: Error | null, data: string) => void
     ): void
     distinct(field: string, query?: TQuery, options?: Object): Promise<number>
-    distinct(field: string, query?: TQuery, options?: Object): Promise<number>
+    distinct(field: string, query?: TQuery, options?: Object, callback?: (err: Error | null, data: number) => void): void
     drop(): Promise<'ns not found' | true>
     drop(callback?: (err: Error | null, data: 'ns not found' | true) => void): void
     dropIndex(
