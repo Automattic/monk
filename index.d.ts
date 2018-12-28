@@ -84,7 +84,8 @@ declare module 'monk' {
     findOneAndUpdate<U = T>(
       query: TQuery,
       update: Object,
-      options?: Object
+      options?: Object,
+      callback?: (err: Error, data: U) => void
     ): Promise<U | undefined>
     geoHaystackSearch<U = T>(
       x: number,
