@@ -85,7 +85,6 @@ declare module 'monk' {
       query: TQuery,
       update: Object,
       options?: Object,
-      callback?: (err: Error, data: U) => void
     ): Promise<U | undefined>
     findOneAndUpdate<U = T>(
       query: TQuery,
