@@ -8,7 +8,7 @@ Find a document and update it in one atomic operation, requires a write lock for
 
 1. `query` *(String|ObjectId|Object)*
 
-2. `update` *(Object)*: Update operations to be performed on the document
+2. `update` *(Object)*: Update operations to be performed on the document. As [specified in MongoDB Node.js native driver 3.x](https://github.com/mongodb/node-mongodb-native/blob/master/CHANGES_3.0.0.md#updateone--updatemany), you need to specify an atomic operator here (like a `$set`, `$unset`, or `$rename`).
 
 3. [`options`] *(Object|String|Array)*: If the `options` is a string, it will be parsed as the fields to select.
 
@@ -23,5 +23,5 @@ A promise.
 #### Example
 
 ```js
-users.findOneAndUpdate({name: 'foo'}, {name: 'bar'}).then((updatedDoc) => {})
+users.findOneAndUpdate({name: 'foo'}, { $set: { name: 'bar'} }).then((updatedDoc) => {})
 ```
