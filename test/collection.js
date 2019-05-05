@@ -644,20 +644,18 @@ test.cb('geoHaystackSearch > callback', (t) => {
     .then(() => users.geoHaystackSearch(50, 50, {search: {a: 1}, maxDistance: 100}, t.end))
 })
 
-// test('geoNear', (t) => {
-//   return users.ensureIndex({loc2: '2d'})
-//     .then(() => users.insert([{a: 1, loc2: [50, 30]}, {a: 1, loc2: [30, 50]}]))
-//     .then(() => users.geoNear(50, 50, {query: {a: 1}, num: 1}))
-//     .then((r) => {
-//       t.is(r.length, 1)
-//     })
-// })
+test('geoNear', async t => {
+  const cmd = users.ensureIndex({loc2: '2d'})
+    .then(() => users.insert([{a: 1, loc2: [50, 30]}, {a: 1, loc2: [30, 50]}]))
+    .then(() => users.geoNear(50, 50, {query: {a: 1}, num: 1}))
+    .then((r) => {
+      t.is(r.length, 1)
+    })
 
-// test.cb('geoNear > callback', (t) => {
-//   users.ensureIndex({loc2: '2d'})
-//     .then(() => users.insert([{a: 1, loc2: [50, 30]}, {a: 1, loc2: [30, 50]}]))
-//     .then(() => users.geoNear(50, 50, t.end))
-// })
+  const err = await t.throws(cmd)
+
+  t.is(err.message, 'geoNear command is not supported anymore (see https://docs.mongodb.com/manual/reference/command/geoNear)')
+})
 
 test('mapReduce', (t) => {
   // Map function
