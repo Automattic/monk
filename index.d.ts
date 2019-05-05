@@ -146,8 +146,6 @@ declare module 'monk' {
       options: Object,
       callback?: (err: Error | null, data: U[]) => void
     ): void
-    geoNear<U = T>(x: number, y: number, options?: Object): Promise<U[]>
-    geoNear<U = T>(x: number, y: number, options?: Object, callback?: (err: Error | null, data: U[]) => void): void
     group<U = any>(
       keys: any,
       condition: any,
