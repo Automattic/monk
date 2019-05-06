@@ -173,6 +173,20 @@ test('findOne > should only provide selected fields', (t) => {
   })
 })
 
+test('find > should project only specified fields using fields options', t => {
+  return users.insert([
+    { a: 1, b: 2 },
+    { a: 1, b: 1 }
+  ]).then(() => {
+    return users.find({ sort: true }, { fields: { a: 1 } })
+  }).then((docs) => {
+    t.is(docs[0].a, 1)
+    t.is(docs[0].b, undefined)
+    t.is(docs[1].a, 1)
+    t.is(docs[1].b, undefined)
+  })
+})
+
 test.cb('findOne > callback', (t) => {
   users.insert({ woot: 'e' }).then((doc) => {
     return users.findOne(doc._id, t.end)
