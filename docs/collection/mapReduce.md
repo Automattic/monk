@@ -1,6 +1,6 @@
 # `collection.mapReduce`
 
-[Mongo documentation <i class="fa fa-external-link" style="position: relative; top: 2px;" />](http://mongodb.github.io/node-mongodb-native/2.0/api/Collection.html#mapReduce)
+[Mongo documentation <i class="fa fa-external-link" style="position: relative; top: 2px;" />](http://mongodb.github.io/node-mongodb-native/3.2/api/Collection.html#mapReduce)
 
 Run Map Reduce across a collection. Be aware that the inline option for out will return an array of results not a collection.
 

@@ -1,6 +1,6 @@
 # `collection.find`
 
-[Mongo documentation <i class="fa fa-external-link" style="position: relative; top: 2px;" />](http://mongodb.github.io/node-mongodb-native/2.0/api/Collection.html#find)
+[Mongo documentation <i class="fa fa-external-link" style="position: relative; top: 2px;" />](http://mongodb.github.io/node-mongodb-native/3.2/api/Collection.html#find)
 
 Selects documents in a collection and return them.
 
@@ -9,7 +9,7 @@ Selects documents in a collection and return them.
 1. `query` *(String|ObjectId|Object)*
 
 2. [`options`] *(Object|String|Array)*: If the `options` is a string, it will be parsed as the fields to select.
-In addition to the mongo options, you can pass the option `rawCursor` in order to get the raw [mongo cursor](http://mongodb.github.io/node-mongodb-native/2.0/api/Cursor.html) when the promise resolve.
+In addition to the mongo options, you can pass the option `rawCursor` in order to get the raw [mongo cursor](http://mongodb.github.io/node-mongodb-native/3.2/api/Cursor.html) when the promise resolve.
 
 3. [`callback`] *(function)*
 
