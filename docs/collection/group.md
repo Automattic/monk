@@ -1,6 +1,6 @@
 # `collection.group`
 
-[Mongo documentation <i class="fa fa-external-link" style="position: relative; top: 2px;" />](http://mongodb.github.io/node-mongodb-native/2.1/api/Collection.html#group)
+[Mongo documentation <i class="fa fa-external-link" style="position: relative; top: 2px;" />](http://mongodb.github.io/node-mongodb-native/3.2/api/Collection.html#group)
 
 Run a group command across a collection.
 

@@ -1,6 +1,6 @@
 # `collection.findOneAndDelete`
 
-[Mongo documentation <i class="fa fa-external-link" style="position: relative; top: 2px;" />](http://mongodb.github.io/node-mongodb-native/2.0/api/Collection.html#findOneAndDelete)
+[Mongo documentation <i class="fa fa-external-link" style="position: relative; top: 2px;" />](http://mongodb.github.io/node-mongodb-native/3.2/api/Collection.html#findOneAndDelete)
 
 Find a document and delete it in one atomic operation, requires a write lock for the duration of the operation.
 

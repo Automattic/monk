@@ -1,6 +1,6 @@
 # `collection.createIndex`
 
-[Mongo documentation <i class="fa fa-external-link" style="position: relative; top: 2px;" />](http://mongodb.github.io/node-mongodb-native/2.0/api/Collection.html#createIndex)
+[Mongo documentation <i class="fa fa-external-link" style="position: relative; top: 2px;" />](http://mongodb.github.io/node-mongodb-native/3.2/api/Collection.html#createIndex)
 
 Creates an index on the db and collection (will not create if already exists)
 
