@@ -154,3 +154,21 @@ test('oid from oid', (t) => {
   const oid = db.oid()
   t.is(db.oid(oid), oid)
 })
+
+test('option useNewUrlParser should be true if not specified', (t) => {
+  return monk('127.0.0.1/monk-test').then((db) => {
+    t.is(db._connectionOptions.useNewUrlParser, true)
+  })
+})
+
+test('option useNewUrlParser should be true if specified', (t) => {
+  return monk('127.0.0.1/monk-test', { useNewUrlParser: true }).then((db) => {
+    t.is(db._connectionOptions.useNewUrlParser, true)
+  })
+})
+
+test('option useNewUrlParser should have the specified value', (t) => {
+  return monk('127.0.0.1/monk-test', { useNewUrlParser: false }).then((db) => {
+    t.is(db._connectionOptions.useNewUrlParser, false)
+  })
+})

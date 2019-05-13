@@ -61,36 +61,36 @@ test('dropIndex > should accept a field string', (t) => {
   return indexCol.index('name2.first').then(indexCol.indexes).then((indexes) => {
     t.not(indexes['name2.first_1'], undefined)
   }).then(() => indexCol.dropIndex('name2.first'))
-  .then(indexCol.indexes).then((indexes) => {
-    t.is(indexes['name2.first_1'], undefined)
-  })
+    .then(indexCol.indexes).then((indexes) => {
+      t.is(indexes['name2.first_1'], undefined)
+    })
 })
 
 test('dropIndex > should accept space-delimited compound indexes', (t) => {
   return indexCol.index('name2 last').then(indexCol.indexes).then((indexes) => {
     t.not(indexes.name2_1_last_1, undefined)
   }).then(() => indexCol.dropIndex('name2 last'))
-  .then(indexCol.indexes).then((indexes) => {
-    t.is(indexes.name2_1_last_1, undefined)
-  })
+    .then(indexCol.indexes).then((indexes) => {
+      t.is(indexes.name2_1_last_1, undefined)
+    })
 })
 
 test('dropIndex > should accept array compound indexes', (t) => {
   return indexCol.index(['nombre2', 'apellido']).then(indexCol.indexes).then((indexes) => {
     t.not(indexes.nombre2_1_apellido_1, undefined)
   }).then(() => indexCol.dropIndex(['nombre2', 'apellido']))
-  .then(indexCol.indexes).then((indexes) => {
-    t.is(indexes.nombre2_1_apellido_1, undefined)
-  })
+    .then(indexCol.indexes).then((indexes) => {
+      t.is(indexes.nombre2_1_apellido_1, undefined)
+    })
 })
 
 test('dropIndex > should accept object compound indexes', (t) => {
   return indexCol.index({ up2: 1, down: -1 }).then(indexCol.indexes).then((indexes) => {
     t.not(indexes['up2_1_down_-1'], undefined)
   }).then(() => indexCol.dropIndex({ up2: 1, down: -1 }))
-  .then(indexCol.indexes).then((indexes) => {
-    t.is(indexes['up2_1_down_'], undefined)
-  })
+    .then(indexCol.indexes).then((indexes) => {
+      t.is(indexes['up2_1_down_'], undefined)
+    })
 })
 
 test.cb('dropIndex > callback', (t) => {
@@ -102,14 +102,14 @@ test.cb('dropIndex > callback', (t) => {
 test('dropIndexes > should drop all indexes', (t) => {
   const col = db.get('indexDrop-' + Date.now())
   return col.index({ up2: 1, down: -1 })
-  .then(col.indexes)
-  .then((indexes) => {
-    t.not(indexes['up2_1_down_-1'], undefined)
-  }).then(() => col.dropIndexes())
-  .then(col.indexes)
-  .then((indexes) => {
-    t.is(indexes['up2_1_down_'], undefined)
-  })
+    .then(col.indexes)
+    .then((indexes) => {
+      t.not(indexes['up2_1_down_-1'], undefined)
+    }).then(() => col.dropIndexes())
+    .then(col.indexes)
+    .then((indexes) => {
+      t.is(indexes['up2_1_down_'], undefined)
+    })
 })
 
 test.cb('dropIndexes > callback', (t) => {
@@ -170,6 +170,20 @@ test('findOne > should only provide selected fields', (t) => {
     t.is(doc.a, 'b')
     t.is(doc.e, 'f')
     t.is(doc.c, undefined)
+  })
+})
+
+test('find > should project only specified fields using fields options', t => {
+  return users.insert([
+    { a: 1, b: 2 },
+    { a: 1, b: 1 }
+  ]).then(() => {
+    return users.find({ sort: true }, { fields: { a: 1 } })
+  }).then((docs) => {
+    t.is(docs[0].a, 1)
+    t.is(docs[0].b, undefined)
+    t.is(docs[1].a, 1)
+    t.is(docs[1].b, undefined)
   })
 })
 
@@ -259,9 +273,9 @@ test('find > should work with streaming option without each', (t) => {
         found++
       }
     })
-    .then(() => {
-      t.is(found, 4)
-    })
+      .then(() => {
+        t.is(found, 4)
+      })
   })
 })
 
@@ -520,22 +534,27 @@ test('findOneAndDelete > should return null if found nothing', (t) => {
 
 test('findOneAndUpdate > should update a document and return it', (t) => {
   return users.insert({ name: 'Jack' }).then((doc) => {
-    return users.findOneAndUpdate({ name: 'Jack' }, { name: 'Jack4' })
+    return users.findOneAndUpdate({ name: 'Jack' }, { $set: { name: 'Jack4' } })
   }).then((doc) => {
     t.is(doc.name, 'Jack4')
   })
 })
 
 test('findOneAndUpdate > should return null if found nothing', (t) => {
-  return users.findOneAndUpdate({ name: 'Jack5' }, { name: 'Jack6' })
+  return users.findOneAndUpdate({ name: 'Jack5' }, { $set: { name: 'Jack6' } })
     .then((doc) => {
       t.is(doc, null)
     })
 })
 
+test('findOneAndUpdate > should return an error if no atomic operations are specified', async t => {
+  const err = await t.throws(users.findOneAndUpdate({ name: 'Jack5' }, { name: 'Jack6' }))
+  t.is(err.message, 'the update operation document must contain atomic operators.')
+})
+
 test.cb('findOneAndUpdate > callback', (t) => {
-  users.insert({ name: 'Jack2' }).then((doc) => {
-    users.findOneAndUpdate({ name: 'Jack2' }, { name: 'Jack3' }, (err, doc) => {
+  users.insert({ name: 'Jack2' }).then(() => {
+    users.findOneAndUpdate({ name: 'Jack2' }, { $set: { name: 'Jack3' } }, (err, doc) => {
       t.is(err, null)
       t.is(doc.name, 'Jack3')
       t.end()
@@ -639,19 +658,17 @@ test.cb('geoHaystackSearch > callback', (t) => {
     .then(() => users.geoHaystackSearch(50, 50, {search: {a: 1}, maxDistance: 100}, t.end))
 })
 
-test('geoNear', (t) => {
-  return users.ensureIndex({loc2: '2d'})
+test('geoNear', async t => {
+  const cmd = users.ensureIndex({loc2: '2d'})
     .then(() => users.insert([{a: 1, loc2: [50, 30]}, {a: 1, loc2: [30, 50]}]))
     .then(() => users.geoNear(50, 50, {query: {a: 1}, num: 1}))
     .then((r) => {
       t.is(r.length, 1)
     })
-})
 
-test.cb('geoNear > callback', (t) => {
-  users.ensureIndex({loc2: '2d'})
-    .then(() => users.insert([{a: 1, loc2: [50, 30]}, {a: 1, loc2: [30, 50]}]))
-    .then(() => users.geoNear(50, 50, t.end))
+  const err = await t.throws(cmd)
+
+  t.is(err.message, 'geoNear command is not supported anymore (see https://docs.mongodb.com/manual/reference/command/geoNear)')
 })
 
 test('mapReduce', (t) => {
