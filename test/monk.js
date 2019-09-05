@@ -172,3 +172,21 @@ test('option useNewUrlParser should have the specified value', (t) => {
     t.is(db._connectionOptions.useNewUrlParser, false)
   })
 })
+
+test('option useUnifiedTopology should be true if not specified', (t) => {
+  return monk('127.0.0.1/monk-test').then(db => {
+    t.is(db._connectionOptions.useUnifiedTopology, true)
+  })
+})
+
+test('option useUnifiedTopology should be true if specified', (t) => {
+  return monk('127.0.0.1/monk-test', { useUnifiedTopology: true }).then(db => {
+    t.is(db._connectionOptions.useUnifiedTopology, true)
+  })
+})
+
+test('option useUnifiedTopology should have the specified value', (t) => {
+  return monk('127.0.0.1/monk-test', { useUnifiedTopology: false }).then(db => {
+    t.is(db._connectionOptions.useUnifiedTopology, false)
+  })
+})
