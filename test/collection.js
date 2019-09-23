@@ -119,33 +119,33 @@ test.cb('dropIndexes > callback', (t) => {
   }).then(() => col.dropIndexes(t.end))
 })
 
-test('insertOne > should force callback in next tick', (t) => {
-  return users.insertOne({ woot: 'a' }).then(() => t.pass())
+test('insert > should force callback in next tick', (t) => {
+  return users.insert({ woot: 'a' }).then(() => t.pass())
 })
 
-test('insertOne > should give you an object with the _id', (t) => {
-  return users.insertOne({ woot: 'b' }).then((obj) => {
+test('insert > should give you an object with the _id', (t) => {
+  return users.insert({ woot: 'b' }).then((obj) => {
     t.is(typeof obj._id, 'object')
     t.not(obj._id.toHexString, undefined)
   })
 })
 
-test('insertMany > should return an array if an array was inserted', (t) => {
-  return users.insertMany([{ woot: 'c' }, { woot: 'd' }]).then((docs) => {
+test('insert > should return an array if an array was inserted', (t) => {
+  return users.insert([{ woot: 'c' }, { woot: 'd' }]).then((docs) => {
     t.true(Array.isArray(docs))
     t.is(docs.length, 2)
   })
 })
 
-test('insertMany > should not fail when inserting an empty array', (t) => {
-  return users.insertMany([]).then((docs) => {
+test('insert > should not fail when inserting an empty array', (t) => {
+  return users.insert([]).then((docs) => {
     t.true(Array.isArray(docs))
     t.is(docs.length, 0)
   })
 })
 
-test.cb('insertOne > callback', (t) => {
-  users.insertOne({ woot: 'a' }, t.end)
+test.cb('insert > callback', (t) => {
+  users.insert({ woot: 'a' }, t.end)
 })
 
 test('findOne > should return null if no document', (t) => {
@@ -156,7 +156,7 @@ test('findOne > should return null if no document', (t) => {
 })
 
 test('findOne > findOne(undefined) should work', (t) => {
-  return users.insertOne({ a: 'b', c: 'd', e: 'f' }).then((doc) => {
+  return users.insert({ a: 'b', c: 'd', e: 'f' }).then((doc) => {
     return users.findOne()
   }).then(() => {
     t.pass()
@@ -164,7 +164,7 @@ test('findOne > findOne(undefined) should work', (t) => {
 })
 
 test('findOne > should only provide selected fields', (t) => {
-  return users.insertOne({ a: 'b', c: 'd', e: 'f' }).then((doc) => {
+  return users.insert({ a: 'b', c: 'd', e: 'f' }).then((doc) => {
     return users.findOne(doc._id, 'a e')
   }).then((doc) => {
     t.is(doc.a, 'b')
@@ -174,7 +174,7 @@ test('findOne > should only provide selected fields', (t) => {
 })
 
 test('find > should project only specified fields using fields options', t => {
-  return users.insertMany([
+  return users.insert([
     { a: 1, b: 2 },
     { a: 1, b: 1 }
   ]).then(() => {
@@ -188,13 +188,13 @@ test('find > should project only specified fields using fields options', t => {
 })
 
 test.cb('findOne > callback', (t) => {
-  users.insertOne({ woot: 'e' }).then((doc) => {
+  users.insert({ woot: 'e' }).then((doc) => {
     return users.findOne(doc._id, t.end)
   })
 })
 
 test('find > should find with nested query', (t) => {
-  return users.insertMany([{ nested: { a: 1 } }, { nested: { a: 2 } }]).then(() => {
+  return users.insert([{ nested: { a: 1 } }, { nested: { a: 2 } }]).then(() => {
     return users.find({ 'nested.a': 1 })
   }).then((docs) => {
     t.is(docs.length, 1)
@@ -203,7 +203,7 @@ test('find > should find with nested query', (t) => {
 })
 
 test('find > should find with nested array query', (t) => {
-  return users.insertMany([{ nestedArray: [{ a: 1 }] }, { nestedArray: [{ a: 2 }] }]).then(() => {
+  return users.insert([{ nestedArray: [{ a: 1 }] }, { nestedArray: [{ a: 2 }] }]).then(() => {
     return users.find({ 'nestedArray.a': 1 })
   }).then((docs) => {
     t.is(docs.length, 1)
@@ -212,7 +212,7 @@ test('find > should find with nested array query', (t) => {
 })
 
 test('find > should sort', (t) => {
-  return users.insertMany([{ sort: true, a: 1, b: 2 }, { sort: true, a: 1, b: 1 }]).then(() => {
+  return users.insert([{ sort: true, a: 1, b: 2 }, { sort: true, a: 1, b: 1 }]).then(() => {
     return users.find({ sort: true }, { sort: '-a b' })
   }).then((docs) => {
     t.is(docs[0].b, 1)
@@ -222,7 +222,7 @@ test('find > should sort', (t) => {
 
 test('find > should return the raw cursor', (t) => {
   const query = { stream: 3 }
-  return users.insertMany([{ stream: 3 }, { stream: 3 }, { stream: 3 }, { stream: 3 }]).then(() => {
+  return users.insert([{ stream: 3 }, { stream: 3 }, { stream: 3 }, { stream: 3 }]).then(() => {
     return users.find(query, {rawCursor: true})
       .then((cursor) => {
         t.truthy(cursor.close)
@@ -236,7 +236,7 @@ test('find > should return the raw cursor', (t) => {
 test('find > should work with streaming', (t) => {
   const query = { stream: 1 }
   let found = 0
-  return users.insertMany([{ stream: 1 }, { stream: 1 }, { stream: 1 }, { stream: 1 }]).then(() => {
+  return users.insert([{ stream: 1 }, { stream: 1 }, { stream: 1 }, { stream: 1 }]).then(() => {
     return users.find(query)
       .each((doc) => {
         t.is(doc.stream, 1)
@@ -251,7 +251,7 @@ test('find > should work with streaming', (t) => {
 test('find > should work with streaming option', (t) => {
   const query = { stream: 2 }
   let found = 0
-  return users.insertMany([{ stream: 2 }, { stream: 2 }, { stream: 2 }, { stream: 2 }]).then(() => {
+  return users.insert([{ stream: 2 }, { stream: 2 }, { stream: 2 }, { stream: 2 }]).then(() => {
     return users.find(query, { stream: true })
       .each((doc) => {
         t.is(doc.stream, 2)
@@ -266,7 +266,7 @@ test('find > should work with streaming option', (t) => {
 test('find > should work with streaming option without each', (t) => {
   const query = { stream: 5 }
   let found = 0
-  return users.insertMany([{ stream: 5 }, { stream: 5 }, { stream: 5 }, { stream: 5 }]).then(() => {
+  return users.insert([{ stream: 5 }, { stream: 5 }, { stream: 5 }, { stream: 5 }]).then(() => {
     return users.find(query, {
       stream (doc) {
         t.is(doc.stream, 5)
@@ -282,7 +282,7 @@ test('find > should work with streaming option without each', (t) => {
 test('find > should allow stream cursor destroy', (t) => {
   const query = { cursor: { $exists: true } }
   let found = 0
-  return users.insertMany([{ cursor: true }, { cursor: true }, { cursor: true }, { cursor: true }]).then(() => {
+  return users.insert([{ cursor: true }, { cursor: true }, { cursor: true }, { cursor: true }]).then(() => {
     return users.find(query)
       .each((doc, {close}) => {
         t.not(doc.cursor, null)
@@ -303,7 +303,7 @@ test('find > should allow stream cursor destroy', (t) => {
 test('find > should allow stream cursor destroy even when paused', (t) => {
   const query = { cursor: { $exists: true } }
   let found = 0
-  return users.insertMany([{ cursor: true }, { cursor: true }, { cursor: true }, { cursor: true }]).then(() => {
+  return users.insert([{ cursor: true }, { cursor: true }, { cursor: true }, { cursor: true }]).then(() => {
     return users.find(query)
       .each((doc, {close, pause, resume}) => {
         pause()
@@ -325,7 +325,7 @@ test('find > should allow stream cursor destroy even when paused', (t) => {
 
 test('find > stream pause and continue', (t) => {
   const query = { stream: 4 }
-  return users.insertMany([{ stream: 4 }, { stream: 4 }, { stream: 4 }, { stream: 4 }]).then(() => {
+  return users.insert([{ stream: 4 }, { stream: 4 }, { stream: 4 }, { stream: 4 }]).then(() => {
     const start = Date.now()
     let index = 0
     return users.find(query)
@@ -348,7 +348,7 @@ test('find > stream pause and continue', (t) => {
 
 test.cb('find > stream callback', (t) => {
   const query = { stream: 3 }
-  users.insertMany([{ stream: 3 }, { stream: 3 }, { stream: 3 }, { stream: 3 }]).then(() => {
+  users.insert([{ stream: 3 }, { stream: 3 }, { stream: 3 }, { stream: 3 }]).then(() => {
     return users.find(query, t.end)
       .each((doc) => {
         t.not(doc.a, null)
@@ -357,13 +357,13 @@ test.cb('find > stream callback', (t) => {
 })
 
 test.cb('find > callback', (t) => {
-  users.insertOne({ woot: 'e' }).then((doc) => {
+  users.insert({ woot: 'e' }).then((doc) => {
     return users.find(doc._id, t.end)
   })
 })
 
 test('group > should work', (t) => {
-  return users.insertMany([{ group: true }, { group: true }]).then(() => {
+  return users.insert([{ group: true }, { group: true }]).then(() => {
     return users.group(
       { group: true },
       {},
@@ -396,7 +396,7 @@ test.cb('group > callback', (t) => {
 test('count > should count', (t) => {
   return users.count({ a: 'counting' }).then((count) => {
     t.is(count, 0)
-    return users.insertOne({ a: 'counting' })
+    return users.insert({ a: 'counting' })
   }).then(() => {
     return users.count({ a: 'counting' })
   }).then((count) => {
@@ -407,7 +407,7 @@ test('count > should count', (t) => {
 test('count > should not ignore options', (t) => {
   return users.count({ b: 'counting' }).then((count) => {
     t.is(count, 0)
-    return users.insertMany([{ b: 'counting' }, { b: 'counting' }, { b: 'counting' }, { b: 'counting' }])
+    return users.insert([{ b: 'counting' }, { b: 'counting' }, { b: 'counting' }, { b: 'counting' }])
   }).then(() => {
     return users.count({ b: 'counting' }, {limit: 2})
   }).then((count) => {
@@ -420,7 +420,7 @@ test.cb('count > callback', (t) => {
 })
 
 test('distinct', (t) => {
-  return users.insertMany([{ distinct: 'a' }, { distinct: 'a' }, { distinct: 'b' }]).then(() => {
+  return users.insert([{ distinct: 'a' }, { distinct: 'a' }, { distinct: 'b' }]).then(() => {
     return users.distinct('distinct')
   }).then((docs) => {
     t.deepEqual(docs, ['a', 'b'])
@@ -428,7 +428,7 @@ test('distinct', (t) => {
 })
 
 test('distinct with options', (t) => {
-  return users.insertMany([{ distinct2: 'a' }, { distinct2: 'a' }, { distinct2: 'b' }]).then(() => {
+  return users.insert([{ distinct2: 'a' }, { distinct2: 'a' }, { distinct2: 'b' }]).then(() => {
     return users.distinct('distinct2', {})
   }).then((docs) => {
     t.deepEqual(docs, ['a', 'b'])
@@ -444,7 +444,7 @@ test.cb('distinct > callback', (t) => {
 })
 
 test('update > should update', (t) => {
-  return users.insertOne({ d: 'e' }).then((doc) => {
+  return users.insert({ d: 'e' }).then((doc) => {
     return users.update({ _id: doc._id }, { $set: { d: 'f' } }).then(() => {
       return users.findOne(doc._id)
     })
@@ -454,7 +454,7 @@ test('update > should update', (t) => {
 })
 
 test('update > should update with 0', (t) => {
-  return users.insertOne({ d: 'e' }).then((doc) => {
+  return users.insert({ d: 'e' }).then((doc) => {
     return users.update({ _id: doc._id }, { $set: { d: 0 } }).then(() => {
       return users.findOne(doc._id)
     })
@@ -468,7 +468,7 @@ test.cb('update > callback', (t) => {
 })
 
 test('update > should update with an objectid', (t) => {
-  return users.insertOne({ d: 'e' }).then((doc) => {
+  return users.insert({ d: 'e' }).then((doc) => {
     return users.update(doc._id, { $set: { d: 'f' } }).then(() => {
       return users.findOne(doc._id)
     })
@@ -478,7 +478,7 @@ test('update > should update with an objectid', (t) => {
 })
 
 test('update > should update with an objectid (string)', (t) => {
-  return users.insertOne({ d: 'e' }).then((doc) => {
+  return users.insert({ d: 'e' }).then((doc) => {
     return users.update(doc._id.toString(), { $set: { d: 'f' } }).then(() => {
       return users.findOne(doc._id)
     })
@@ -488,7 +488,7 @@ test('update > should update with an objectid (string)', (t) => {
 })
 
 test('remove > should remove a document', (t) => {
-  return users.insertOne({ name: 'Tobi' }).then((doc) => {
+  return users.insert({ name: 'Tobi' }).then((doc) => {
     return users.remove({ name: 'Tobi' })
   }).then(() => {
     return users.find({ name: 'Tobi' })
@@ -502,7 +502,7 @@ test.cb('remove > callback', (t) => {
 })
 
 test('findOneAndDelete > should remove a document and return it', (t) => {
-  return users.insertOne({ name: 'Bob' }).then((doc) => {
+  return users.insert({ name: 'Bob' }).then((doc) => {
     return users.findOneAndDelete({ name: 'Bob' })
   }).then((doc) => {
     t.is(doc.name, 'Bob')
@@ -513,7 +513,7 @@ test('findOneAndDelete > should remove a document and return it', (t) => {
 })
 
 test.cb('findOneAndDelete > callback', (t) => {
-  users.insertOne({ name: 'Bob2' }).then((doc) => {
+  users.insert({ name: 'Bob2' }).then((doc) => {
     users.findOneAndDelete({ name: 'Bob2' }, (err, doc) => {
       t.is(err, null)
       t.is(doc.name, 'Bob2')
@@ -533,7 +533,7 @@ test('findOneAndDelete > should return null if found nothing', (t) => {
 })
 
 test('findOneAndUpdate > should update a document and return it', (t) => {
-  return users.insertOne({ name: 'Jack' }).then((doc) => {
+  return users.insert({ name: 'Jack' }).then((doc) => {
     return users.findOneAndUpdate({ name: 'Jack' }, { $set: { name: 'Jack4' } })
   }).then((doc) => {
     t.is(doc.name, 'Jack4')
@@ -553,7 +553,7 @@ test('findOneAndUpdate > should return an error if no atomic operations are spec
 })
 
 test.cb('findOneAndUpdate > callback', (t) => {
-  users.insertOne({ name: 'Jack2' }).then(() => {
+  users.insert({ name: 'Jack2' }).then(() => {
     users.findOneAndUpdate({ name: 'Jack2' }, { $set: { name: 'Jack3' } }, (err, doc) => {
       t.is(err, null)
       t.is(doc.name, 'Jack3')
@@ -608,7 +608,7 @@ test.cb('bulkWrite > callback', (t) => {
 })
 
 test('should allow defaults', (t) => {
-  return users.insertMany([{ f: true }, { f: true }, { g: true }, { g: true }]).then(() => {
+  return users.insert([{ f: true }, { f: true }, { g: true }, { g: true }]).then(() => {
     return users.update({}, { $set: { f: 'g' } })
   }).then(() => {
     users.options.safe = false
@@ -645,7 +645,7 @@ test('not caching collections', (t) => {
 
 test('geoHaystackSearch', (t) => {
   return users.ensureIndex({loc: 'geoHaystack', type: 1}, {bucketSize: 1})
-    .then(() => users.insertMany([{a: 1, loc: [50, 30]}, {a: 1, loc: [30, 50]}]))
+    .then(() => users.insert([{a: 1, loc: [50, 30]}, {a: 1, loc: [30, 50]}]))
     .then(() => users.geoHaystackSearch(50, 50, {search: {a: 1}, limit: 1, maxDistance: 100}))
     .then((r) => {
       t.is(r.length, 1)
@@ -654,13 +654,13 @@ test('geoHaystackSearch', (t) => {
 
 test.cb('geoHaystackSearch > callback', (t) => {
   users.ensureIndex({loc: 'geoHaystack', type: 1}, {bucketSize: 1})
-    .then(() => users.insertMany([{a: 1, loc: [50, 30]}, {a: 1, loc: [30, 50]}]))
+    .then(() => users.insert([{a: 1, loc: [50, 30]}, {a: 1, loc: [30, 50]}]))
     .then(() => users.geoHaystackSearch(50, 50, {search: {a: 1}, maxDistance: 100}, t.end))
 })
 
 test('geoNear', async t => {
   const cmd = users.ensureIndex({loc2: '2d'})
-    .then(() => users.insertMany([{a: 1, loc2: [50, 30]}, {a: 1, loc2: [30, 50]}]))
+    .then(() => users.insert([{a: 1, loc2: [50, 30]}, {a: 1, loc2: [30, 50]}]))
     .then(() => users.geoNear(50, 50, {query: {a: 1}, num: 1}))
     .then((r) => {
       t.is(r.length, 1)
@@ -676,7 +676,7 @@ test('mapReduce', (t) => {
   const map = function () { emit(this.user_id, 1) } // eslint-disable-line
   // Reduce function
   const reduce = function (k, vals) { return 1 }
-  return users.insertMany([{user_id: 1}, {user_id: 2}])
+  return users.insert([{user_id: 1}, {user_id: 2}])
     .then(() => users.mapReduce(map, reduce, {out: {replace: 'tempCollection'}}))
     .then((collection) => collection.findOne({'_id': 1}))
     .then((r) => {
