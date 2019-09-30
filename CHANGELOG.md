@@ -1,3 +1,9 @@
+# 7.1.0 / 2019-09-30
+
+- Fix `insert` deprecation warning (Thanks @RobertoMachorro!)
+- Default to using `useUnifiedTopology` option (Thanks @bobmoff!)
+- `collection.findOneAndUpdate` now _requires_ an atomic operator in the update object (Thanks @mpangrazzi!)
+
 # 7.0.0 / 2019-05-13
 
 - Update mongo to v3 (Thanks @mpangrazzi!)
