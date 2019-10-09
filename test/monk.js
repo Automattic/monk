@@ -20,6 +20,11 @@ test('Should throw if no uri provided', (t) => {
   }
 })
 
+test('Should handle srv connection string', (t) => {
+  const m = monk('mongodb+srv://user:pw@host');
+  t.true('mongodb+srv://user:pw@host' === m._connectionURI);
+})
+
 test.cb('to a regular server', (t) => {
   t.plan(2)
   monk('127.0.0.1/monk-test', (err, db) => {
