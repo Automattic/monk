@@ -1,3 +1,7 @@
+# 7.1.1 / 2019-10-11
+
+- Allow for `mongo+srv` uri (Thanks @s-zimm!)
+
 # 7.1.0 / 2019-09-30
 
 - Fix `insert` deprecation warning (Thanks @RobertoMachorro!)
