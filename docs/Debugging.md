@@ -14,7 +14,7 @@ db.addMiddleware(require('monk-middleware-debug'))
   [debug](http://github.com/visionmedia/debug):
 
   ```bash
-  DEBUG="monk:queries" npm start
+  DEBUG="monk:query" npm start
   ```
 
 * To see all debugging output from monk:
