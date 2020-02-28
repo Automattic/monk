@@ -489,7 +489,7 @@ test('update > should update with an objectid (string)', (t) => {
 
 test('replaceOne > should replace with 0', (t) => {
   return users.insert({ d: 'e' }).then((doc) => {
-    return users.update({ _id: doc._id }, { d: 0 }).then(() => {
+    return users.replaceOne({ _id: doc._id }, { d: 0 }).then(() => {
       return users.findOne(doc._id)
     })
   }).then((doc) => {
