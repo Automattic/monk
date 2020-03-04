@@ -23,6 +23,7 @@
   * [drop](/docs/collection/drop.md)
   * [dropIndex](/docs/collection/dropIndex.md)
   * [dropIndexes](/docs/collection/dropIndexes.md)
+  * [estimatedDocumentCount](/docs/collection/estimatedDocumentCount.md)
   * [find](/docs/collection/find.md)
   * [findOne](/docs/collection/findOne.md)
   * [findOneAndDelete](/docs/collection/findOneAndDelete.md)

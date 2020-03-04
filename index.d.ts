@@ -86,6 +86,8 @@ declare module 'monk' {
       msg?: string
       ok: 1 | 0
     }) => void): void
+    estimatedDocumentCount(options?: Object): Promise<number>
+    estimatedDocumentCount(options?: Object, callback?: (err: Error | null, data: number) => void): void
     find<U = T>(
       query?: TQuery,
       options?: Object
