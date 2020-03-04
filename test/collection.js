@@ -415,8 +415,29 @@ test('count > should not ignore options', (t) => {
   })
 })
 
+test('count > should count with no arguments', (t) => {
+  return users.count({ c: 'counting' }).then((count) => {
+    t.is(count, 0)
+    return users.insert({ c: 'counting' })
+  }).then(() => {
+    return users.count()
+  }).then((count) => {
+    t.is(count, 77)
+  })
+})
+
 test.cb('count > callback', (t) => {
   users.count({ a: 'counting' }, t.end)
+})
+
+test('estimatedDocumentCount > should estimate count', (t) => {
+  return users.estimatedDocumentCount().then((count) => {
+    t.is(count, 51)
+  })
+})
+
+test.cb('estimatedDocumentCount > callback', (t) => {
+  users.estimatedDocumentCount(t.end)
 })
 
 test('distinct', (t) => {
