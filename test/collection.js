@@ -436,6 +436,12 @@ test('estimatedDocumentCount > should estimate count', (t) => {
   })
 })
 
+test('estimatedDocumentCount > should estimate count with options', (t) => {
+  return users.estimatedDocumentCount({ maxTimeMS: 10000 }).then((count) => {
+    t.is(count, 51)
+  })
+})
+
 test.cb('estimatedDocumentCount > callback', (t) => {
   users.estimatedDocumentCount(t.end)
 })
