@@ -246,16 +246,6 @@ declare module 'monk' {
       nModified: number,
       n: number
     }) => void): void
-    replaceOne(query: TQuery, update: Object, options?: Object): Promise<{
-      ok: 1 | 0,
-      nModified: number,
-      n: number
-    }>
-    replaceOne(query: TQuery, update: Object, options?: Object, callback?: (err: Error | null, data: {
-      ok: 1 | 0,
-      nModified: number,
-      n: number
-    }) => void): void
   }
 
   export interface IObjectID {
