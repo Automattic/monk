@@ -12,6 +12,8 @@ Modifies an existing document or documents in a collection. The method can modif
 
 3. [`options`] *(Object)*
 
+if `options.replaceOne` is `true`, it will work like replaceOne.
+
 4. [`callback`] *(function)*
 
 #### Returns
