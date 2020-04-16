@@ -14,6 +14,8 @@ Find a document and update it in one atomic operation, requires a write lock for
 
 `options.returnOriginal` is default to `false`, while `mongodb` set it to `true` for `undefined`.
 
+if `options.replaceOne` is `true`, it will work like findOneAndReplace.
+
 4. [`callback`] *(function)*
 
 #### Returns
