@@ -1,3 +1,7 @@
+# 7.2.0 / 2020-04-16
+
+- Add `replace` option to update methods (Thanks @lakshmipriyamukundan)
+
 # 7.1.1 / 2019-10-11
 
 - Allow for `mongo+srv` uri (Thanks @s-zimm!)
