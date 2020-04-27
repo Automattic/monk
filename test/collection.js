@@ -426,24 +426,20 @@ test('count > should count with no arguments', (t) => {
   })
 })
 
+test('count > should estimate count', (t) => {
+  return users.count({}, { estimate: true }).then((count) => {
+    t.is(count, 51)
+  })
+})
+
+test('count > should estimate count with options', (t) => {
+  return users.count({}, { estimate: true, maxTimeMS: 10000 }).then((count) => {
+    t.is(count, 51)
+  })
+})
+
 test.cb('count > callback', (t) => {
   users.count({ a: 'counting' }, t.end)
-})
-
-test('estimatedDocumentCount > should estimate count', (t) => {
-  return users.estimatedDocumentCount().then((count) => {
-    t.is(count, 51)
-  })
-})
-
-test('estimatedDocumentCount > should estimate count with options', (t) => {
-  return users.estimatedDocumentCount({ maxTimeMS: 10000 }).then((count) => {
-    t.is(count, 51)
-  })
-})
-
-test.cb('estimatedDocumentCount > callback', (t) => {
-  users.estimatedDocumentCount(t.end)
 })
 
 test('distinct', (t) => {
