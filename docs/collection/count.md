@@ -24,9 +24,13 @@ users.count('id') // a bit useless but consistent with the rest of the API
 users.count() 
 ```
 
-[Getting estimated counts](http://mongodb.github.io/node-mongodb-native/3.2/api/Collection.html#estimatedDocumentCount)
+## Getting an estimated count
 
-Returns the estimated count of *all* documents in the collection using collection metadata. The `collection.estimatedDocumentCount()` method does not accept query parameters but instead counts and returns the number of estimated documents in the collection. If you need to filter the number of documents with a query, it is recommended not to use this option.
+[Mongo documentation <i class="fa fa-external-link" style="position: relative; top: 2px;" />](http://mongodb.github.io/node-mongodb-native/3.2/api/Collection.html#estimatedDocumentCount)
+
+If you need to get a fast order of magnitude of the count of *all* documents in your collection, you can use the `estimate` option. 
+
+> ⚠️ The `query` argument will be ignored.
 
 ```js
 users.count({}, { estimate: true })
