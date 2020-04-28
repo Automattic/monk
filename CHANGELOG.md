@@ -1,6 +1,12 @@
+# 7.3.0 / 2020-04-28
+
+- Adjust some TypeScript definitions
+- Update docs for projections (Thanks @mpatino117!)
+- Update the `count` method and add a new `estimate` option (Thanks @bit-cmdr!)
+
 # 7.2.0 / 2020-04-16
 
-- Add `replace` option to update methods (Thanks @lakshmipriyamukundan)
+- Add `replace` option to update methods (Thanks @lakshmipriyamukundan!)
 
 # 7.1.1 / 2019-10-11
 
