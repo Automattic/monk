@@ -415,6 +415,29 @@ test('count > should not ignore options', (t) => {
   })
 })
 
+test('count > should count with no arguments', (t) => {
+  return users.count({ c: 'counting' }).then((count) => {
+    t.is(count, 0)
+    return users.insert({ c: 'counting' })
+  }).then(() => {
+    return users.count()
+  }).then((count) => {
+    t.is(count, 77)
+  })
+})
+
+test('count > should estimate count', (t) => {
+  return users.count({}, { estimate: true }).then((count) => {
+    t.is(count, 51)
+  })
+})
+
+test('count > should estimate count with options', (t) => {
+  return users.count({}, { estimate: true, maxTimeMS: 10000 }).then((count) => {
+    t.is(count, 51)
+  })
+})
+
 test.cb('count > callback', (t) => {
   users.count({ a: 'counting' }, t.end)
 })
