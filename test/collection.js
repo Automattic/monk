@@ -173,12 +173,12 @@ test('findOne > should only provide selected fields', (t) => {
   })
 })
 
-test('find > should project only specified fields using fields options', t => {
+test('find > should project only specified fields using projection options', t => {
   return users.insert([
     { a: 1, b: 2 },
     { a: 1, b: 1 }
   ]).then(() => {
-    return users.find({ sort: true }, { fields: { a: 1 } })
+    return users.find({ sort: true }, { projection: { a: 1 } })
   }).then((docs) => {
     t.is(docs[0].a, 1)
     t.is(docs[0].b, undefined)
