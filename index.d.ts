@@ -70,12 +70,16 @@ declare module "monk" {
       options?: Object,
       callback?: (err: Error | null, data: string) => void
     ): void;
-    distinct(field: string, query?: TQuery, options?: Object): Promise<number>;
-    distinct(
+    distinct<U = any>(
+      field: string,
+      query?: TQuery,
+      options?: Object
+    ): Promise<U[]>;
+    distinct<U = any>(
       field: string,
       query?: TQuery,
       options?: Object,
-      callback?: (err: Error | null, data: number) => void
+      callback?: (err: Error | null, data: U[]) => void
     ): void;
     drop(): Promise<"ns not found" | true>;
     drop(
