@@ -1,0 +1,16 @@
+{
+  "name": "monk-middleware-options",
+  "description": "A monk middleware to parse the options",
+  "version": "0.2.1",
+  "main": "index.js",
+  "keywords": [
+    "monk",
+    "middleware",
+    "options"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/Automattic/monk.git"
+  },
+  "license": "MIT"
+}

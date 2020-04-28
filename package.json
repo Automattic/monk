@@ -1,0 +1,61 @@
+{
+  "name": "monk",
+  "description": "The wise MongoDB API",
+  "version": "7.3.0",
+  "main": "lib/monk.js",
+  "types": "./index.d.ts",
+  "keywords": [
+    "monk",
+    "mongodb",
+    "mongo",
+    "driver"
+  ],
+  "files": [
+    "lib",
+    "index.d.ts"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/Automattic/monk.git"
+  },
+  "dependencies": {
+    "debug": "*",
+    "mongodb": "^3.2.3",
+    "monk-middleware-cast-ids": "^0.2.1",
+    "monk-middleware-fields": "^0.2.0",
+    "monk-middleware-handle-callback": "^0.2.0",
+    "monk-middleware-options": "^0.2.1",
+    "monk-middleware-query": "^0.2.0",
+    "monk-middleware-wait-for-connection": "^0.2.0",
+    "object-assign": "^4.1.1"
+  },
+  "devDependencies": {
+    "ava": "^0.19.1",
+    "codecov": "^2.2.0",
+    "eslint": "^3.19.0",
+    "eslint-config-standard": "^10.2.1",
+    "eslint-plugin-ava": "^4.2.0",
+    "eslint-plugin-import": "2.2.0",
+    "eslint-plugin-node": "4.2.2",
+    "eslint-plugin-promise": "^3.5.0",
+    "eslint-plugin-standard": "^3.0.1",
+    "gitbook-cli": "^2.3.0",
+    "gitbook-plugin-anker-enable": "^0.0.4",
+    "gitbook-plugin-custom-favicon": "0.0.4",
+    "gitbook-plugin-edit-link": "2.0.2",
+    "gitbook-plugin-github": "^2.0.0",
+    "gitbook-plugin-prism": "^2.2.0",
+    "monk-middleware-debug": "^0.2.0",
+    "nyc": "^15.0.0"
+  },
+  "license": "MIT",
+  "scripts": {
+    "test": "make test",
+    "coverage": "nyc report --reporter=text-lcov > coverage.lcov && codecov"
+  },
+  "nyc": {
+    "include": [
+      "lib/**"
+    ]
+  }
+}

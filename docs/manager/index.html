@@ -1,0 +1,754 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>Manager · Monk</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.3">
+        
+        
+        
+    
+    <link rel="stylesheet" href="../../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-prism/prism.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="close.html" />
+    
+    
+    <link rel="prev" href="../writing-middleware.html" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        <li class="header">Monk</li>
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../../">
+            
+                <a href="../../">
+            
+                    
+                    Introduction
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="../GETTING_STARTED.html">
+            
+                <a href="../GETTING_STARTED.html">
+            
+                    
+                    Getting Started
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">Guides</li>
+        
+        
+    
+        <li class="chapter " data-level="2.1" data-path="../middlewares.html">
+            
+                <a href="../middlewares.html">
+            
+                    
+                    Middlewares
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.2" data-path="../Debugging.html">
+            
+                <a href="../Debugging.html">
+            
+                    
+                    Debugging
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.3" data-path="../writing-middleware.html">
+            
+                <a href="../writing-middleware.html">
+            
+                    
+                    Writing a middleware
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">API Reference</li>
+        
+        
+    
+        <li class="chapter active" data-level="3.1" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    Manager
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="3.1.1" data-path="close.html">
+            
+                <a href="close.html">
+            
+                    
+                    close
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="3.1.2" data-path="create.html">
+            
+                <a href="create.html">
+            
+                    
+                    create
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="3.1.3" data-path="get.html">
+            
+                <a href="get.html">
+            
+                    
+                    get
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="3.1.4" data-path="addMiddleware.html">
+            
+                <a href="addMiddleware.html">
+            
+                    
+                    addMiddleware
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="3.2" data-path="../collection/">
+            
+                <a href="../collection/">
+            
+                    
+                    Collection
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="3.2.1" data-path="../collection/aggregate.html">
+            
+                <a href="../collection/aggregate.html">
+            
+                    
+                    aggregate
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="3.2.2" data-path="../collection/bulkWrite.html">
+            
+                <a href="../collection/bulkWrite.html">
+            
+                    
+                    bulkWrite
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="3.2.3" data-path="../collection/count.html">
+            
+                <a href="../collection/count.html">
+            
+                    
+                    count
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="3.2.4" data-path="../collection/createIndex.html">
+            
+                <a href="../collection/createIndex.html">
+            
+                    
+                    createIndex
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="3.2.5" data-path="../collection/distinct.html">
+            
+                <a href="../collection/distinct.html">
+            
+                    
+                    distinct
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="3.2.6" data-path="../collection/drop.html">
+            
+                <a href="../collection/drop.html">
+            
+                    
+                    drop
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="3.2.7" data-path="../collection/dropIndex.html">
+            
+                <a href="../collection/dropIndex.html">
+            
+                    
+                    dropIndex
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="3.2.8" data-path="../collection/dropIndexes.html">
+            
+                <a href="../collection/dropIndexes.html">
+            
+                    
+                    dropIndexes
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="3.2.9" data-path="../collection/find.html">
+            
+                <a href="../collection/find.html">
+            
+                    
+                    find
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="3.2.10" data-path="../collection/findOne.html">
+            
+                <a href="../collection/findOne.html">
+            
+                    
+                    findOne
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="3.2.11" data-path="../collection/findOneAndDelete.html">
+            
+                <a href="../collection/findOneAndDelete.html">
+            
+                    
+                    findOneAndDelete
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="3.2.12" data-path="../collection/findOneAndUpdate.html">
+            
+                <a href="../collection/findOneAndUpdate.html">
+            
+                    
+                    findOneAndUpdate
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="3.2.13" data-path="../collection/geoHaystackSearch.html">
+            
+                <a href="../collection/geoHaystackSearch.html">
+            
+                    
+                    geoHaystackSearch
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="3.2.14" data-path="../collection/geoNear.html">
+            
+                <a href="../collection/geoNear.html">
+            
+                    
+                    geoNear
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="3.2.15" data-path="../collection/group.html">
+            
+                <a href="../collection/group.html">
+            
+                    
+                    group
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="3.2.16" data-path="../collection/indexes.html">
+            
+                <a href="../collection/indexes.html">
+            
+                    
+                    indexes
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="3.2.17" data-path="../collection/insert.html">
+            
+                <a href="../collection/insert.html">
+            
+                    
+                    insert
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="3.2.18" data-path="../collection/mapReduce.html">
+            
+                <a href="../collection/mapReduce.html">
+            
+                    
+                    mapReduce
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="3.2.19" data-path="../collection/remove.html">
+            
+                <a href="../collection/remove.html">
+            
+                    
+                    remove
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="3.2.20" data-path="../collection/stats.html">
+            
+                <a href="../collection/stats.html">
+            
+                    
+                    stats
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="3.2.21" data-path="../collection/update.html">
+            
+                <a href="../collection/update.html">
+            
+                    
+                    update
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="3.3" data-path="../id.html">
+            
+                <a href="../id.html">
+            
+                    
+                    id
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="divider"></li>
+        
+        
+    
+        <li class="chapter " data-level="4.1" data-path="../../CHANGELOG.html">
+            
+                <a href="../../CHANGELOG.html">
+            
+                    
+                    Change Log
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="4.2" >
+            
+                <a target="_blank" href="https://github.com/Automattic/monk/graphs/contributors">
+            
+                    
+                    Contributors
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="../.." >Manager</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="manager">Manager</h1>
+<p>Monk constructor.</p>
+<h4 id="arguments">Arguments</h4>
+<ol>
+<li><p><code>uri</code> <em>(string or Array)</em>: A <a href="https://docs.mongodb.com/manual/reference/connection-string/" target="_blank">mongo connection string URI</a>. Replica sets can be an array or comma separated.</p>
+</li>
+<li><p>[<code>options</code>] <em>(Object)</em>: You may optionally specify <a href="http://mongodb.github.io/node-mongodb-native/3.2/reference/connecting/connection-settings/" target="_blank">options</a>.</p>
+</li>
+<li><p>[<code>callback</code>] <em>(Function)</em>: You may optionally specify a callback which will be called once the connection to the mongo database is opened or throws an error.</p>
+</li>
+</ol>
+<h4 id="returns">Returns</h4>
+<p>A Manager instance with the following methods:</p>
+<ul>
+<li><a href="../../close.md">close</a></li>
+<li><a href="../../create.md">create</a></li>
+<li><a href="../../get.md">get</a></li>
+</ul>
+<h4 id="example">Example</h4>
+<pre class="language-"><code class="lang-js"><span class="token keyword">const</span> db <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">&apos;monk&apos;</span><span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token string">&apos;localhost/mydb&apos;</span><span class="token punctuation">,</span> options<span class="token punctuation">)</span>
+</code></pre>
+<pre class="language-"><code class="lang-js"><span class="token keyword">const</span> db <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">&apos;monk&apos;</span><span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token string">&apos;localhost/mydb,192.168.1.1&apos;</span><span class="token punctuation">)</span> <span class="token comment">// replica set</span>
+</code></pre>
+<pre class="language-"><code class="lang-js"><span class="token function">require</span><span class="token punctuation">(</span><span class="token string">&apos;monk&apos;</span><span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token string">&apos;localhost/mydb,192.168.1.1&apos;</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">then</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">db</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+  <span class="token comment">// db is the connected instance of the Manager</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">catch</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">err</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+  <span class="token comment">// error connecting to the database</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
+</code></pre>
+<h4 id="options">Options</h4>
+<p>You can set options to pass to every query. By default, monk doesn&apos;t set any options.</p>
+<p>Set options like this:</p>
+<pre class="language-"><code class="lang-js">db<span class="token punctuation">.</span>options <span class="token operator">=</span> <span class="token punctuation">{</span>
+  poolSize<span class="token operator">:</span> <span class="token number">7</span>
+<span class="token punctuation">}</span>
+</code></pre>
+
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="../writing-middleware.html" class="navigation navigation-prev " aria-label="Previous page: Writing a middleware">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="close.html" class="navigation navigation-next " aria-label="Next page: close">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"Manager","level":"3.1","depth":1,"next":{"title":"close","level":"3.1.1","depth":2,"path":"docs/manager/close.md","ref":"docs/manager/close.md","articles":[]},"previous":{"title":"Writing a middleware","level":"2.3","depth":1,"path":"docs/writing-middleware.md","ref":"docs/writing-middleware.md","articles":[]},"dir":"ltr"},"config":{"plugins":["edit-link","prism","-highlight","github","anker-enable","custom-favicon"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"prism":{},"github":{"url":"https://github.com/Automattic/monk/"},"anker-enable":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"favicon":"assets/favicon.ico","custom-favicon":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"edit-link":{"label":"Edit This Page","base":"https://github.com/Automattic/monk/redux/tree/master"},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"Monk","gitbook":">=3.2.2","description":"The wise MongoDB API"},"file":{"path":"docs/manager/README.md","mtime":"2019-05-13T19:04:47.130Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-04-28T07:44:25.852Z"},"basePath":"../..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../../gitbook/gitbook.js"></script>
+    <script src="../../gitbook/theme.js"></script>
+    
+        
+        <script src="../../gitbook/gitbook-plugin-edit-link/plugin.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-github/plugin.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-anker-enable/anker.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+

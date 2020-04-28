@@ -1,0 +1,16 @@
+{
+  "name": "monk-middleware-fields",
+  "description": "A monk middleware to parse the fields",
+  "version": "0.2.0",
+  "main": "index.js",
+  "keywords": [
+    "monk",
+    "middleware",
+    "fields"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/Automattic/monk.git"
+  },
+  "license": "MIT"
+}

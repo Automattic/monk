@@ -1,0 +1,16 @@
+{
+  "name": "monk-middleware-cast-ids",
+  "description": "A monk middleware to parse the ids",
+  "version": "0.2.1",
+  "main": "index.js",
+  "keywords": [
+    "monk",
+    "middleware",
+    "ids"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/Automattic/monk.git"
+  },
+  "license": "MIT"
+}

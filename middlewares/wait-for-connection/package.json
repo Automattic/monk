@@ -1,0 +1,17 @@
+{
+  "name": "monk-middleware-wait-for-connection",
+  "description": "A monk middleware to wait for the connection",
+  "version": "0.2.0",
+  "main": "index.js",
+  "keywords": [
+    "monk",
+    "middleware",
+    "wait",
+    "connection"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/Automattic/monk.git"
+  },
+  "license": "MIT"
+}

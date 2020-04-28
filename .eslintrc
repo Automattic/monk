@@ -1,0 +1,10 @@
+{
+  "extends": ["standard", "plugin:ava/recommended"],
+  "ignorePath": ".gitignore",
+  "plugins": [
+    "ava"
+  ],
+  "rules": {
+    "ava/prefer-async-await": 0
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "name": "monk-middleware-handle-callback",
+  "description": "A monk middleware to handle callback",
+  "version": "0.2.2",
+  "main": "index.js",
+  "keywords": [
+    "monk",
+    "middleware",
+    "callback"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/Automattic/monk.git"
+  },
+  "license": "MIT"
+}

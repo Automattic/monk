@@ -1,0 +1,16 @@
+{
+  "name": "monk-middleware-query",
+  "description": "A monk middleware to parse the query",
+  "version": "0.2.0",
+  "main": "index.js",
+  "keywords": [
+    "monk",
+    "middleware",
+    "query"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/Automattic/monk.git"
+  },
+  "license": "MIT"
+}
