@@ -19,17 +19,17 @@ A promise.
 #### Example
 
 ```js
-users.findOne({ name: 'foo' }).then((doc) => {});
+users.findOne({name: 'foo'}).then((doc) => {});
 ```
 
 ```js
-users.findOne({ name: 'foo' }, 'name').then((doc) => {
+users.findOne({name: 'foo'}, 'name').then((doc) => {
   // only the name projection will be selected
 });
-users.findOne({ name: 'foo' }, { projection: { name: 1 } }); // equivalent
+users.findOne({name: 'foo'}, { projection: { name: 1 } }); // equivalent
 
-users.findOne({ name: 'foo' }, '-name').then((doc) => {
+users.findOne({name: 'foo'}, '-name').then((doc) => {
   // all the fields except the name projection will be selected
 });
-users.findOne({ name: 'foo' }, { projection: { name: -1 } }); // equivalent
+users.findOne({name: 'foo'}, { projection: {name: -1} }); // equivalent
 ```
