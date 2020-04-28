@@ -119,12 +119,14 @@ declare module "monk" {
       options?: Object
     ): Promise<U[]> & {
       readonly each: (
-        record: U,
-        cursor: {
-          readonly close: () => void;
-          readonly resume: () => void;
-          readonly pause: () => void;
-        }
+        listener: (
+          record: U,
+          cursor: {
+            readonly close: () => void;
+            readonly resume: () => void;
+            readonly pause: () => void;
+          }
+        ) => any
       ) => any;
     };
     find<U = T>(
