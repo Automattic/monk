@@ -19,6 +19,7 @@
     "url": "git://github.com/Automattic/monk.git"
   },
   "dependencies": {
+    "@types/mongodb": "^3.5.25",
     "debug": "*",
     "mongodb": "^3.2.3",
     "monk-middleware-cast-ids": "^0.2.1",

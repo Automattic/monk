@@ -1,4 +1,74 @@
 declare module "monk" {
+  import {
+    CollectionAggregationOptions,
+    MongoCountPreferences,
+    BulkWriteOpResultObject,
+    FilterQuery,
+    FindOneOptions,
+    UpdateQuery,
+    UpdateOneOptions,
+    CollectionInsertOneOptions,
+    Cursor,
+    FindOneAndDeleteOption,
+    FindOneAndUpdateOption,
+    FindOneAndReplaceOption,
+    GeoHaystackSearchOptions,
+    CollectionMapFunction,
+    CollectionReduceFunction,
+    MapReduceOptions,
+    CommonOptions,
+    DeleteWriteOpResultObject,
+    ClientSession,
+    CollStats,
+    UpdateWriteOpResult,
+    IndexOptions,
+    CollectionBulkWriteOptions,
+    BulkWriteOperation,
+    MongoDistinctPreferences,
+  } from "mongodb";
+
+  // Utils
+  type SingleOrArray<T> = T | Array<T>;
+  type WithID<T> = { _id: IObjectID } & T;
+  type Callback<T> = (err: Error | null, data: T) => void;
+
+  // Inputs
+  type SingleMulti = { single?: boolean; multi?: boolean };
+  type CreateIndexInput<T> = string | { [key in keyof T]?: 1 | -1 };
+  type CollectionInsertOneOptionsMonk = CollectionInsertOneOptions & {
+    castIds: boolean;
+  };
+  type DropIndexInput<T> = CreateIndexInput<T> & string[];
+  type DropIndexOptions = CommonOptions & { maxTimeMS?: number };
+  type FindOptions = FindOneOptions & { rawCursor?: boolean };
+  type RemoveOptions = CommonOptions & SingleMulti;
+  type StatsOptions = { scale: number; session?: ClientSession };
+
+  // Returns
+  type DropResult = "ns not found" | true;
+  type DropIndexResult = { nIndexesWas: number; ok: 1 | 0 };
+  type DropIndexesResult = DropIndexResult & { msg?: string };
+  type FindRawResult<T> = Cursor<WithID<T>>;
+  type FindResult<T> = WithID<T>[] & {
+    readonly each: (
+      listener: (
+        record: T,
+        cursor: {
+          readonly close: () => void;
+          readonly resume: () => void;
+          readonly pause: () => void;
+        }
+      ) => any
+    ) => any;
+  };
+  type FindOneResult<T> = WithID<T> | null;
+  type GeoHaystackSearchResult<T> = T[];
+  type InsertResult<T> = WithID<T>;
+  type IndexesResult<T> = {
+    [name: string]: [keyof T, 1 | -1][];
+  };
+  type UpdateResult = UpdateWriteOpResult["result"];
+
   export class IMonkManager {
     readonly _state: "closed" | "opening" | "open";
 
@@ -13,7 +83,7 @@ declare module "monk" {
     readonly close: () => Promise<void>;
     readonly listCollections: (query?: Object) => Array<ICollection>;
 
-    get<T = any>(name: string, options?: Object): ICollection<T>;
+    get<T extends Object = {}>(name: string, options?: Object): ICollection<T>;
     create<T = any>(
       name: string,
       creationOption?: Object,
@@ -37,294 +107,228 @@ declare module "monk" {
   type TQuery = string | Object;
   type TFields = string | Array<string>;
 
-  export class ICollection<T = any> {
+  export class ICollection<T extends Object = {}> {
     readonly manager: IMonkManager;
     readonly name: string;
     options: Object;
     readonly middlewares: Array<TMiddleware>;
 
-    aggregate<U = any>(stages: Array<any>, options?: Object): Promise<U>;
     aggregate<U = any>(
-      stages: Array<any>,
-      options?: Object,
-      callback?: (err: Error | null, data: U) => void
+      pipeline: Object[],
+      options?: CollectionAggregationOptions
+    ): Promise<U>;
+    aggregate<U = any>(
+      stages: Object[],
+      options: CollectionAggregationOptions,
+      callback: Callback<U>
     ): void;
-    bulkWrite<U = any>(operations: Array<any>, options?: Object): Promise<U>;
-    bulkWrite<U = any>(
-      operations: Array<any>,
-      options?: Object,
-      callback?: (err: Error | null, data: U) => void
+
+    bulkWrite(
+      operations: BulkWriteOperation<T>[],
+      options?: CollectionBulkWriteOptions
+    ): Promise<BulkWriteOpResultObject>;
+    bulkWrite(
+      operations: BulkWriteOperation<T>[],
+      options: CollectionBulkWriteOptions,
+      callback: Callback<BulkWriteOpResultObject>
     ): void;
-    count(query?: TQuery, options?: Object): Promise<number>;
+
+    /**
+     * http://mongodb.github.io/node-mongodb-native/3.1/api/Collection.html#count
+     * @deprecated Use countDocuments or estimatedDocumentCount
+     */
     count(
-      query?: TQuery,
-      options?: Object,
-      callback?: (err: Error | null, data: number) => void
+      query?: FilterQuery<T>,
+      options?: MongoCountPreferences
+    ): Promise<number>;
+    count(
+      query: FilterQuery<T>,
+      options: MongoCountPreferences,
+      callback?: Callback<number>
     ): void;
+
     createIndex(
-      fields?: TFields | { [key: string]: 1 | -1 },
-      options?: Object
+      fields: CreateIndexInput<T>,
+      options?: IndexOptions
     ): Promise<string>;
     createIndex(
-      fields?: TFields | { [key: string]: 1 | -1 },
-      options?: Object,
-      callback?: (err: Error | null, data: string) => void
+      fields: CreateIndexInput<T>,
+      options: IndexOptions,
+      callback: Callback<string>
     ): void;
-    distinct<U = any>(
-      field: string,
-      query?: TQuery,
-      options?: Object
-    ): Promise<U[]>;
-    distinct<U = any>(
-      field: string,
-      query?: TQuery,
-      options?: Object,
-      callback?: (err: Error | null, data: U[]) => void
+
+    distinct<K extends keyof T | string>(
+      field: K,
+      query?: FilterQuery<T>,
+      options?: MongoDistinctPreferences
+    ): Promise<T[K][]>;
+    distinct<K extends keyof T | string>(
+      field: K,
+      query: FilterQuery<T>,
+      options: MongoDistinctPreferences,
+      callback: Callback<T[K][]>
     ): void;
-    drop(): Promise<"ns not found" | true>;
-    drop(
-      callback?: (err: Error | null, data: "ns not found" | true) => void
-    ): void;
+
+    drop(): Promise<DropResult>;
+    drop(callback: Callback<DropResult>): void;
+
     dropIndex(
-      fields?: TFields,
-      options?: Object
-    ): Promise<{
-      nIndexesWas: number;
-      ok: 1 | 0;
-    }>;
+      fields: DropIndexInput<T>,
+      options?: DropIndexOptions
+    ): Promise<DropIndexResult>;
     dropIndex(
-      fields?: TFields,
-      options?: Object,
-      callback?: (
-        err: Error | null,
-        data: {
-          nIndexesWas: number;
-          ok: 1 | 0;
-        }
-      ) => void
+      fields: DropIndexInput<T>,
+      options: DropIndexOptions,
+      callback: Callback<DropIndexResult>
     ): void;
-    dropIndexes(): Promise<{
-      nIndexesWas: number;
-      msg?: string;
-      ok: 1 | 0;
-    }>;
-    dropIndexes(
-      callback?: (
-        err: Error | null,
-        data: {
-          nIndexesWas: number;
-          msg?: string;
-          ok: 1 | 0;
-        }
-      ) => void
+
+    dropIndexes(): Promise<DropIndexesResult>;
+    dropIndexes(callback?: Callback<DropIndexesResult>): void;
+
+    // Raw
+    find(
+      query: FilterQuery<T>,
+      options?: FindOptions & { rawCursor: true }
+    ): Promise<FindRawResult<T>>;
+    find(
+      query: FilterQuery<T>,
+      options: FindOneOptions & { rawCursor: true },
+      callback: Callback<FindRawResult<T>>
     ): void;
-    find<U = T>(
-      query?: TQuery,
-      options?: Object
-    ): Promise<U[]> & {
-      readonly each: (
-        listener: (
-          record: U,
-          cursor: {
-            readonly close: () => void;
-            readonly resume: () => void;
-            readonly pause: () => void;
-          }
-        ) => any
-      ) => any;
-    };
-    find<U = T>(
-      query?: TQuery,
-      options?: Object,
-      callback?: (
-        err: Error | null,
-        data: U[] & {
-          readonly each: (
-            record: U,
-            cursor: {
-              readonly close: () => void;
-              readonly resume: () => void;
-              readonly pause: () => void;
-            }
-          ) => any;
-        }
-      ) => void
+    // Normal
+    find(query?: FilterQuery<T>, options?: FindOptions): Promise<FindResult<T>>;
+    find(
+      query: FilterQuery<T>,
+      options: FindOneOptions,
+      callback: Callback<FindResult<T>>
     ): void;
-    findOne<U = T>(query?: TQuery, options?: Object): Promise<U | undefined>;
-    findOne<U = T>(
-      query?: TQuery,
-      options?: Object,
-      callback?: (err: Error | null, data: U | undefined) => void
+
+    findOne(
+      query?: FilterQuery<T>,
+      options?: FindOneOptions
+    ): Promise<FindOneResult<T>>;
+    findOne(
+      query: FilterQuery<T>,
+      options: FindOneOptions,
+      callback: Callback<FindOneResult<T>>
     ): void;
-    findOneAndDelete<U = T>(
-      query?: TQuery,
-      options?: Object
-    ): Promise<U | undefined>;
-    findOneAndDelete<U = T>(
-      query?: TQuery,
-      options?: Object,
-      callback?: (err: Error | null, data: U | undefined) => void
+
+    findOneAndDelete(
+      query: FilterQuery<T>,
+      options?: FindOneAndDeleteOption
+    ): Promise<FindOneResult<T>>;
+    findOneAndDelete(
+      query: FilterQuery<T>,
+      options: FindOneAndDeleteOption,
+      callback: Callback<FindOneResult<T>>
     ): void;
-    findOneAndUpdate<U = T>(
-      query: TQuery,
-      update: Object,
-      options?: Object
-    ): Promise<U | undefined>;
-    findOneAndUpdate<U = T>(
-      query: TQuery,
-      update: Object,
-      options?: Object,
-      callback?: (err: Error | null, data: U) => void
+
+    // Update
+    findOneAndUpdate(
+      query: FilterQuery<T>,
+      update: UpdateQuery<T> | Partial<T>,
+      options?: FindOneAndUpdateOption & { replaceOne?: false }
+    ): Promise<FindOneResult<T>>;
+    findOneAndUpdate(
+      query: FilterQuery<T>,
+      update: UpdateQuery<T> | Partial<T>,
+      options?: FindOneAndUpdateOption & { replaceOne?: false },
+      callback?: Callback<FindOneResult<T>>
     ): void;
-    geoHaystackSearch<U = T>(
+    // Replace
+    findOneAndUpdate(
+      query: FilterQuery<T>,
+      update: T,
+      options?: FindOneAndReplaceOption & { replaceOne: true }
+    ): Promise<FindOneResult<T>>;
+    findOneAndUpdate(
+      query: FilterQuery<T>,
+      update: T,
+      options: FindOneAndReplaceOption & { replaceOne: true },
+      callback: Callback<FindOneResult<T>>
+    ): void;
+
+    geoHaystackSearch(
       x: number,
       y: number,
-      options: Object
-    ): Promise<U[]>;
-    geoHaystackSearch<U = T>(
+      options?: GeoHaystackSearchOptions
+    ): Promise<GeoHaystackSearchResult<T>>;
+    geoHaystackSearch(
       x: number,
       y: number,
-      options: Object,
-      callback?: (err: Error | null, data: U[]) => void
+      options: GeoHaystackSearchOptions,
+      callback: Callback<GeoHaystackSearchResult<T>>
     ): void;
+
+    /** @deprecated MongoDB 3.6 or higher no longer supports the group command. We recommend rewriting using the aggregation framework. */
     group<U = any>(
       keys: any,
-      condition: any,
-      initial: any,
-      reduce: any,
-      finalize: any,
-      command: any,
+      condition: Object,
+      initial: Object,
+      reduce: Function,
+      finalize: Function,
+      command: Boolean,
       options?: Object
     ): Promise<any>;
     group<U = any>(
       keys: any,
-      condition: any,
-      initial: any,
-      reduce: any,
-      finalize: any,
-      command: any,
+      condition: Object,
+      initial: Object,
+      reduce: Function,
+      finalize: Function,
+      command: Boolean,
       options?: Object,
-      callback?: (err: Error | null, data: any) => void
+      callback?: Callback<any>
     ): void;
-    indexes(): Promise<
-      {
-        [index: string]: [string, 1 | -1][];
-      }[]
-    >;
-    indexes(
-      callback?: (
-        err: Error | null,
-        data: {
-          [index: string]: [string, 1 | -1][];
-        }[]
-      ) => void
+
+    indexes(): Promise<IndexesResult<T>>;
+    indexes(callback: Callback<IndexesResult<T>>): void;
+
+    insert(
+      data: SingleOrArray<T>,
+      options?: CollectionInsertOneOptionsMonk
+    ): Promise<InsertResult<T>>;
+    insert(
+      data: SingleOrArray<T>,
+      options: CollectionInsertOneOptionsMonk,
+      callback: Callback<InsertResult<T>>
     ): void;
-    insert<U = T>(data: Object | Array<Object>, options?: Object): Promise<U>;
-    insert<U = T>(
-      data: Object | Array<Object>,
-      options?: Object,
-      callback?: (err: Error | null, data: U) => void
-    ): void;
-    mapReduce(
-      map: () => any,
-      reduce: (key: string, values: Array<any>) => any,
-      options: Object
+
+    mapReduce<TKey, TValue>(
+      map: CollectionMapFunction<T>,
+      reduce: CollectionReduceFunction<TKey, TValue>,
+      options: MapReduceOptions
     ): Promise<any>;
-    mapReduce(
-      map: () => any,
-      reduce: (key: string, values: Array<any>) => any,
-      options: Object,
-      callback?: (err: Error | null, data: any) => void
+    mapReduce<TKey, TValue>(
+      map: CollectionMapFunction<T>,
+      reduce: CollectionReduceFunction<TKey, TValue>,
+      options: MapReduceOptions,
+      callback: Callback<any>
     ): void;
+
     remove(
-      query?: TQuery,
-      options?: Object
-    ): Promise<{
-      deletedCount: number;
-      result: {
-        n: number;
-        ok: 1 | 0;
-      };
-    }>;
+      query?: FilterQuery<T>,
+      options?: RemoveOptions
+    ): Promise<DeleteWriteOpResultObject>;
     remove(
-      query?: TQuery,
-      options?: Object,
-      callback?: (
-        err: Error | null,
-        data: {
-          deletedCount: number;
-          result: {
-            n: number;
-            ok: 1 | 0;
-          };
-        }
-      ) => void
+      query: FilterQuery<T>,
+      options: RemoveOptions,
+      callback: Callback<DeleteWriteOpResultObject>
     ): void;
-    stats(
-      options?: Object
-    ): Promise<{
-      ns: string;
-      count: number;
-      size: number;
-      avgObjSize: number;
-      storageSize: number;
-      capped: boolean;
-      wiredTiger: any;
-      nindexes: number;
-      indexDetails: {
-        [index: string]: any;
-      };
-      totalIndexSize: number;
-      indexSizes: {
-        [index: string]: number;
-      };
-      ok: 1 | 0;
-    }>;
-    stats(
-      options?: Object,
-      callback?: (
-        err: Error | null,
-        data: {
-          ns: string;
-          count: number;
-          size: number;
-          avgObjSize: number;
-          storageSize: number;
-          capped: boolean;
-          wiredTiger: any;
-          nindexes: number;
-          indexDetails: {
-            [index: string]: any;
-          };
-          totalIndexSize: number;
-          indexSizes: {
-            [index: string]: number;
-          };
-          ok: 1 | 0;
-        }
-      ) => void
-    ): void;
+
+    stats(options?: StatsOptions): Promise<CollStats>;
+    stats(options: StatsOptions, callback: Callback<CollStats>): void;
+
     update(
-      query: TQuery,
-      update: Object,
-      options?: Object
-    ): Promise<{
-      ok: 1 | 0;
-      nModified: number;
-      n: number;
-    }>;
+      query: FilterQuery<T>,
+      update: UpdateQuery<T> | Partial<T>,
+      options?: UpdateOneOptions
+    ): Promise<UpdateWriteOpResult>;
     update(
-      query: TQuery,
-      update: Object,
-      options?: Object,
-      callback?: (
-        err: Error | null,
-        data: {
-          ok: 1 | 0;
-          nModified: number;
-          n: number;
-        }
-      ) => void
+      query: FilterQuery<T>,
+      update: UpdateQuery<T> | Partial<T>,
+      options: UpdateOneOptions,
+      callback: Callback<UpdateWriteOpResult>
     ): void;
   }
 
