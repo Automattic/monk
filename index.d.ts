@@ -25,6 +25,8 @@ declare module "monk" {
     CollectionBulkWriteOptions,
     BulkWriteOperation,
     MongoDistinctPreferences,
+    CollectionCreateOptions,
+    MongoClientOptions,
   } from "mongodb";
 
   // Utils
@@ -69,6 +71,20 @@ declare module "monk" {
   };
   type UpdateResult = UpdateWriteOpResult["result"];
 
+  export type TMiddleware = ({
+    collection,
+    monkInstance,
+  }: {
+    collection: ICollection;
+    monkInstance: IMonkManager;
+  }) => (
+    next: (args: Object, method: string) => Promise<any>
+  ) => (args: Object, method: string) => Promise<any>;
+
+  type CollectionOptions = {
+    middlewares?: TMiddleware[];
+  };
+
   export class IMonkManager {
     readonly _state: "closed" | "opening" | "open";
 
@@ -83,31 +99,23 @@ declare module "monk" {
     readonly close: () => Promise<void>;
     readonly listCollections: (query?: Object) => Array<ICollection>;
 
-    get<T extends Object = {}>(name: string, options?: Object): ICollection<T>;
+    get<T = any>(name: string, options?: CollectionOptions): ICollection<T>;
     create<T = any>(
       name: string,
-      creationOption?: Object,
-      options?: Object
+      creationOption?: CollectionCreateOptions,
+      options?: CollectionOptions
     ): ICollection<T>;
 
-    readonly setDefaultCollectionOptions: (collectionOptions?: Object) => void;
+    readonly setDefaultCollectionOptions: (
+      collectionOptions?: CollectionOptions
+    ) => void;
     readonly addMiddleware: (middleware: TMiddleware) => void;
   }
-
-  export type TMiddleware = ({
-    collection,
-    monkInstance,
-  }: {
-    collection: ICollection;
-    monkInstance: IMonkManager;
-  }) => (
-    next: (args: Object, method: string) => Promise<any>
-  ) => (args: Object, method: string) => Promise<any>;
 
   type TQuery = string | Object;
   type TFields = string | Array<string>;
 
-  export class ICollection<T extends Object = {}> {
+  export class ICollection<T extends { [key: string]: any } = any> {
     readonly manager: IMonkManager;
     readonly name: string;
     options: Object;
@@ -269,7 +277,7 @@ declare module "monk" {
       finalize: Function,
       command: Boolean,
       options?: Object
-    ): Promise<any>;
+    ): Promise<U>;
     group<U = any>(
       keys: any,
       condition: Object,
@@ -278,7 +286,7 @@ declare module "monk" {
       finalize: Function,
       command: Boolean,
       options?: Object,
-      callback?: Callback<any>
+      callback?: Callback<U>
     ): void;
 
     indexes(): Promise<IndexesResult<T>>;
@@ -344,42 +352,8 @@ declare module "monk" {
 
   export default function (
     database: string | Array<string>,
-    options?: {
-      collectionOptions?: Object;
-      poolSize?: number;
-      ssl?: boolean;
-      sslValidate?: boolean;
-      sslCA?: Array<string | Buffer>;
-      sslCert?: string | Buffer;
-      sslKey?: string | Buffer;
-      sslPass?: string | Buffer;
-      autoReconnect?: boolean;
-      noDelay?: boolean;
-      keepAlive?: number;
-      connectTimeoutMS?: number;
-      socketTimeoutMS?: number;
-      reconnectTries?: number;
-      reconnectInterval?: number;
-      ha?: boolean;
-      haInterval?: number;
-      replicaSet?: string;
-      secondaryAcceptableLatencyMS?: number;
-      acceptableLatencyMS?: number;
-      connectWithNoPrimary?: boolean;
-      authSource?: string;
-      w?: string | number;
-      wtimeout?: number;
-      j?: boolean;
-      forceServerObjectId?: boolean;
-      serializeFunctions?: boolean;
-      ignoreUndefined?: boolean;
-      raw?: boolean;
-      promoteLongs?: boolean;
-      bufferMaxEntries?: number;
-      readPreference?: Object | null;
-      pkFactory?: Object | null;
-      promiseLibrary?: Object | null;
-      readConcern?: Object | null;
+    options?: MongoClientOptions & {
+      collectionOptions?: CollectionOptions;
     }
   ): Promise<IMonkManager> & IMonkManager;
 }
