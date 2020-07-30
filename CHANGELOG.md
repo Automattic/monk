@@ -1,3 +1,7 @@
+# 7.3.1 / 2020-07-30
+
+- Adjust some TypeScript definitions (Thanks @cupcakearmy!)
+
 # 7.3.0 / 2020-04-28
 
 - Adjust some TypeScript definitions
