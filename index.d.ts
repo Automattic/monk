@@ -42,7 +42,7 @@ declare module "monk" {
   };
   type DropIndexInput<T> = CreateIndexInput<T> & string[];
   type DropIndexOptions = CommonOptions & { maxTimeMS?: number };
-  type FindOptions = FindOneOptions & { rawCursor?: boolean };
+  type FindOptions<T> = FindOneOptions<T> & { rawCursor?: boolean };
   type RemoveOptions = CommonOptions & SingleMulti;
   type StatsOptions = { scale: number; session?: ClientSession };
 
@@ -196,38 +196,41 @@ declare module "monk" {
     // Raw
     find(
       query: FilterQuery<T>,
-      options?: FindOptions & { rawCursor: true }
+      options?: FindOptions<T> & { rawCursor: true }
     ): Promise<FindRawResult<T>>;
     find(
       query: FilterQuery<T>,
-      options: FindOneOptions & { rawCursor: true },
+      options: FindOneOptions<T> & { rawCursor: true },
       callback: Callback<FindRawResult<T>>
     ): void;
     // Normal
-    find(query?: FilterQuery<T>, options?: FindOptions): Promise<FindResult<T>>;
+    find(
+      query?: FilterQuery<T>,
+      options?: FindOptions<T>
+    ): Promise<FindResult<T>>;
     find(
       query: FilterQuery<T>,
-      options: FindOneOptions,
+      options: FindOneOptions<T>,
       callback: Callback<FindResult<T>>
     ): void;
 
     findOne(
       query?: FilterQuery<T>,
-      options?: FindOneOptions
+      options?: FindOneOptions<T>
     ): Promise<FindOneResult<T>>;
     findOne(
       query: FilterQuery<T>,
-      options: FindOneOptions,
+      options: FindOneOptions<T>,
       callback: Callback<FindOneResult<T>>
     ): void;
 
     findOneAndDelete(
       query: FilterQuery<T>,
-      options?: FindOneAndDeleteOption
+      options?: FindOneAndDeleteOption<T>
     ): Promise<FindOneResult<T>>;
     findOneAndDelete(
       query: FilterQuery<T>,
-      options: FindOneAndDeleteOption,
+      options: FindOneAndDeleteOption<T>,
       callback: Callback<FindOneResult<T>>
     ): void;
 
@@ -235,24 +238,24 @@ declare module "monk" {
     findOneAndUpdate(
       query: FilterQuery<T>,
       update: UpdateQuery<T> | Partial<T>,
-      options?: FindOneAndUpdateOption & { replaceOne?: false }
+      options?: FindOneAndUpdateOption<T> & { replaceOne?: false }
     ): Promise<FindOneResult<T>>;
     findOneAndUpdate(
       query: FilterQuery<T>,
       update: UpdateQuery<T> | Partial<T>,
-      options?: FindOneAndUpdateOption & { replaceOne?: false },
+      options?: FindOneAndUpdateOption<T> & { replaceOne?: false },
       callback?: Callback<FindOneResult<T>>
     ): void;
     // Replace
     findOneAndUpdate(
       query: FilterQuery<T>,
       update: T,
-      options?: FindOneAndReplaceOption & { replaceOne: true }
+      options?: FindOneAndReplaceOption<T> & { replaceOne: true }
     ): Promise<FindOneResult<T>>;
     findOneAndUpdate(
       query: FilterQuery<T>,
       update: T,
-      options: FindOneAndReplaceOption & { replaceOne: true },
+      options: FindOneAndReplaceOption<T> & { replaceOne: true },
       callback: Callback<FindOneResult<T>>
     ): void;
 
