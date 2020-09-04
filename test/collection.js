@@ -4,7 +4,8 @@ const monk = require('../lib/monk')
 
 const db = monk('127.0.0.1/monk')
 db.addMiddleware(require('monk-middleware-debug'))
-const users = db.get('users-' + Date.now())
+const usersName = 'users-' + Date.now()
+const users = db.get(usersName)
 const indexCol = db.get('index-' + Date.now())
 
 test.after(() => {
@@ -723,4 +724,14 @@ test('stats', (t) => {
 
 test.cb('stats > callback', (t) => {
   users.stats(t.end)
+})
+
+test('findOne with a mongo client passed to the manager', (t) => {
+  return users.insert({ a: 'b', c: 'd', e: 'f' }).then((doc) => {
+    return monk(db._client).then((db2) => {
+      return db2.get(usersName).findOne(doc._id).then(doc => {
+        t.is(doc.a, 'b')
+      })
+    })
+  })
 })
