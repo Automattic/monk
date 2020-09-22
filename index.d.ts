@@ -97,7 +97,7 @@ declare module "monk" {
     ) => void;
 
     readonly close: () => Promise<void>;
-    readonly listCollections: (query?: Object) => Array<ICollection>;
+    readonly listCollections: (query?: Object) => Promise<Array<ICollection>>;
 
     get<T = any>(name: string, options?: CollectionOptions): ICollection<T>;
     create<T = any>(
