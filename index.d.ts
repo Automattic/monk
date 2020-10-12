@@ -333,12 +333,12 @@ declare module "monk" {
     update(
       query: FilterQuery<T>,
       update: UpdateQuery<T> | Partial<T>,
-      options?: UpdateOneOptions
+      options?: UpdateOneOptions & { multi?: boolean }
     ): Promise<UpdateWriteOpResult>;
     update(
       query: FilterQuery<T>,
       update: UpdateQuery<T> | Partial<T>,
-      options: UpdateOneOptions,
+      options: UpdateOneOptions & { multi?: boolean },
       callback: Callback<UpdateWriteOpResult>
     ): void;
   }
