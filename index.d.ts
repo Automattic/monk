@@ -7,6 +7,8 @@ declare module "monk" {
     FindOneOptions,
     UpdateQuery,
     UpdateOneOptions,
+    UpdateManyOptions,
+    ReplaceOneOptions,
     CollectionInsertOneOptions,
     Cursor,
     FindOneAndDeleteOption,
@@ -238,24 +240,24 @@ declare module "monk" {
     findOneAndUpdate(
       query: FilterQuery<T>,
       update: UpdateQuery<T> | Partial<T>,
-      options?: FindOneAndUpdateOption<T> & { replaceOne?: false }
+      options?: FindOneAndUpdateOption<T> & { replace?: false }
     ): Promise<FindOneResult<T>>;
     findOneAndUpdate(
       query: FilterQuery<T>,
       update: UpdateQuery<T> | Partial<T>,
-      options?: FindOneAndUpdateOption<T> & { replaceOne?: false },
+      options?: FindOneAndUpdateOption<T> & { replace?: false },
       callback?: Callback<FindOneResult<T>>
     ): void;
     // Replace
     findOneAndUpdate(
       query: FilterQuery<T>,
       update: T,
-      options?: FindOneAndReplaceOption<T> & { replaceOne: true }
+      options?: FindOneAndReplaceOption<T> & { replace: true }
     ): Promise<FindOneResult<T>>;
     findOneAndUpdate(
       query: FilterQuery<T>,
       update: T,
-      options: FindOneAndReplaceOption<T> & { replaceOne: true },
+      options: FindOneAndReplaceOption<T> & { replace: true },
       callback: Callback<FindOneResult<T>>
     ): void;
 
@@ -330,15 +332,40 @@ declare module "monk" {
     stats(options?: StatsOptions): Promise<CollStats>;
     stats(options: StatsOptions, callback: Callback<CollStats>): void;
 
+    // single
     update(
       query: FilterQuery<T>,
       update: UpdateQuery<T> | Partial<T>,
-      options?: UpdateOneOptions
+      options?: UpdateOneOptions & { single?: true, multi?: false, replace?: false}
     ): Promise<UpdateWriteOpResult>;
     update(
       query: FilterQuery<T>,
       update: UpdateQuery<T> | Partial<T>,
-      options: UpdateOneOptions,
+      options: UpdateOneOptions & { single?: true, multi?: false, replace?: false},
+      callback: Callback<UpdateWriteOpResult>
+    ): void;
+    // multi
+    update(
+      query: FilterQuery<T>,
+      update: UpdateQuery<T> | Partial<T>,
+      options?: UpdateManyOptions & ({ single?: false, multi: true, replace?: false} | { single: false, multi?: true, replace?: false})
+    ): Promise<UpdateWriteOpResult>;
+    update(
+      query: FilterQuery<T>,
+      update: UpdateQuery<T> | Partial<T>,
+      options: UpdateOneOptions & ({ single?: false, multi: true, replace?: false} | { single: false, multi?: true, replace?: false}),
+      callback: Callback<UpdateWriteOpResult>
+    ): void;
+    // replace
+    update(
+      query: FilterQuery<T>,
+      update: UpdateQuery<T> | Partial<T>,
+      options?: ReplaceOneOptions & { single?: true, multi?: false, replace: true}
+    ): Promise<UpdateWriteOpResult>;
+    update(
+      query: FilterQuery<T>,
+      update: UpdateQuery<T> | Partial<T>,
+      options: ReplaceOneOptions & { single?: true, multi?: false, replace: true},
       callback: Callback<UpdateWriteOpResult>
     ): void;
   }
