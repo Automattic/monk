@@ -13,9 +13,9 @@ Monk constructor.
 #### Returns
 
 A Manager instance with the following methods:
-  * [close](/close.md)
-  * [create](/create.md)
-  * [get](/get.md)
+  * [close](close.md)
+  * [create](create.md)
+  * [get](get.md)
 
 #### Example
 
