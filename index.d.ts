@@ -198,7 +198,7 @@ declare module "monk" {
     // Raw
     find(
       query: FilterQuery<T>,
-      options?: FindOptions<T> & { rawCursor: true }
+      options: FindOptions<T> & { rawCursor: true }
     ): Promise<FindRawResult<T>>;
     find(
       query: FilterQuery<T>,
