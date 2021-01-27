@@ -1,3 +1,7 @@
+# 7.3.3 / 2021-01-27
+
+- Fixes bug in .d.ts where all queries are assumed to be rawCursor queries (Thanks @zkldi!)
+
 # 7.3.2 / 2020-08-31
 
 - Adjust some TypeScript definitions (Thanks @cupcakearmy!)
