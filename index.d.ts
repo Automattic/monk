@@ -144,8 +144,7 @@ declare module "monk" {
     ): void;
 
     /**
-     * http://mongodb.github.io/node-mongodb-native/3.1/api/Collection.html#count
-     * @deprecated Use countDocuments or estimatedDocumentCount
+     * http://mongodb.github.io/node-mongodb-native/3.1/api/Collection.html#countDocuments
      */
     count(
       query?: FilterQuery<T>,
