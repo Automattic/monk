@@ -336,36 +336,36 @@ declare module "monk" {
       query: FilterQuery<T>,
       update: UpdateQuery<T> | Partial<T>,
       options?: UpdateOneOptions & { single?: true, multi?: false, replace?: false}
-    ): Promise<UpdateWriteOpResult>;
+    ): Promise<UpdateResult>;
     update(
       query: FilterQuery<T>,
       update: UpdateQuery<T> | Partial<T>,
       options: UpdateOneOptions & { single?: true, multi?: false, replace?: false},
-      callback: Callback<UpdateWriteOpResult>
+      callback: Callback<UpdateResult>
     ): void;
     // multi
     update(
       query: FilterQuery<T>,
       update: UpdateQuery<T> | Partial<T>,
       options?: UpdateManyOptions & ({ single?: false, multi: true, replace?: false} | { single: false, multi?: true, replace?: false})
-    ): Promise<UpdateWriteOpResult>;
+    ): Promise<UpdateResult>;
     update(
       query: FilterQuery<T>,
       update: UpdateQuery<T> | Partial<T>,
       options: UpdateOneOptions & ({ single?: false, multi: true, replace?: false} | { single: false, multi?: true, replace?: false}),
-      callback: Callback<UpdateWriteOpResult>
+      callback: Callback<UpdateResult>
     ): void;
     // replace
     update(
       query: FilterQuery<T>,
       update: UpdateQuery<T> | Partial<T>,
       options?: ReplaceOneOptions & { single?: true, multi?: false, replace: true}
-    ): Promise<UpdateWriteOpResult>;
+    ): Promise<UpdateResult>;
     update(
       query: FilterQuery<T>,
       update: UpdateQuery<T> | Partial<T>,
       options: ReplaceOneOptions & { single?: true, multi?: false, replace: true},
-      callback: Callback<UpdateWriteOpResult>
+      callback: Callback<UpdateResult>
     ): void;
   }
 
