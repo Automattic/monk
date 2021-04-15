@@ -1,3 +1,7 @@
+# 7.3.3 / 2021-04-15
+
+- Fixes bug in .d.ts
+
 # 7.3.3 / 2021-01-27
 
 - Fixes bug in .d.ts where all queries are assumed to be rawCursor queries (Thanks @zkldi!)
