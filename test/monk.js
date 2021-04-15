@@ -34,9 +34,28 @@ test.cb('to a regular server', (t) => {
   })
 })
 
+test('connect with an existing mongo client instance', (t) => {
+  t.plan(3)
+  return monk('127.0.0.1/monk-test', (err, db) => {
+    t.falsy(err)
+    return monk(db._client, (err, db) => {
+      t.falsy(err)
+      t.true(db instanceof monk)
+    })
+  })
+})
+
 test('connect with promise', (t) => {
   return monk('127.0.0.1/monk-test').then((db) => {
     t.true(db instanceof monk)
+  })
+})
+
+test('connect with an existing mongo client instance with a promise', (t) => {
+  return monk('127.0.0.1/monk-test').then((db) => {
+    return monk(db._client).then((db2) => {
+      t.true(db2 instanceof monk)
+    })
   })
 })
 
